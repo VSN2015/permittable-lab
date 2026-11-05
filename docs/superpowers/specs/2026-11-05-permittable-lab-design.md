@@ -54,6 +54,10 @@ Thành công nghĩa là: khi gem có bản mới hoặc tính năng mới, tác 
 - **Cách thử trên trình duyệt:** dùng app như người dùng thật, **có bảng Inspector bên cạnh** (phương án A trong mockup).
 - **Gem sai so với README thì test báo đỏ ngay.**
 - **Ghim bản cũ trên RubyGems:** mỗi spec được gắn nhãn phiên bản gem mà tính năng của nó ra đời (ví dụ `since: "0.13.0"`). Khi ghim một bản cũ hơn, các spec có nhãn mới hơn không chạy, nhưng báo cáo **phải ghi rõ** "N ca không áp dụng cho bản X" kèm danh sách. Nhãn này chỉ được dựa theo bản ghim, không bao giờ dùng để bỏ qua một ca đang đỏ. Với bản local thì mọi spec đều chạy.
+- **Ghim bản gem quá cũ so với DSL mà code dùng chung cần:** app không boot được thì `bin/matrix` báo bản đó đỏ hoặc "không chạy được". Như vậy là chấp nhận được.
+- **Database:** dùng PostgreSQL, chạy như một service trong Compose, để thử được các quy tắc riêng cho cột mảng của PG. *(Tác giả chọn thêm PostgreSQL. Việc dùng nó làm DB duy nhất, bỏ SQLite, là lựa chọn của mình.)*
+- **Hai chỗ README chưa rõ, tác giả đã trả lời:** trường `nullable:` có `normalize: :squish` nhận `"   "` cho ra `nil`. Mảng scalar chỉ nhận `[""]` cho ra `[]`.
+- **Inspector** hiện raw params nguyên văn, kể cả trường `sensitive`, vì nó chỉ chạy ở dev/test.
 - **Engine:** có **cả hai** loại. Một engine nằm trong app (trong `Rails.root`) và một engine cài như gem (ngoài `Rails.root`), để thử cả hành vi mặc định lẫn `audit_ignore_outside_root`.
 
 ## 4. Bố cục repo (đề xuất của mình)
