@@ -1,1 +1,16 @@
 .superpowers/
+apps/*/log/*
+!apps/*/log/.keep
+apps/*/tmp/*
+!apps/*/tmp/.keep
+apps/*/storage/*
+!apps/*/storage/.keep
+apps/*/.bundle/
+apps/*/Gemfile.lock
+apps/*/.lab-source
+apps/*/shared/
+apps/*/db/schema.rb
+apps/*/node_modules/
+tmp/
+apps/*/config/master.key
+apps/*/config/credentials/*.key
