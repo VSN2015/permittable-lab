@@ -10,7 +10,7 @@ esac
 
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 SLUG="rails-${VERSION/./_}"
-VOL="bundle-${VERSION/./_}"
+VOL="permittable-lab_bundle-${VERSION/./_}"  # fixed name set in compose.yml
 cd "$ROOT"
 
 if [ -e "apps/$SLUG" ]; then

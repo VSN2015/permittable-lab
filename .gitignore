@@ -11,6 +11,6 @@ apps/*/.lab-source
 apps/*/shared/
 apps/*/db/schema.rb
 apps/*/node_modules/
-tmp/
+/tmp/
 apps/*/config/master.key
 apps/*/config/credentials/*.key

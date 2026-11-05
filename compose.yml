@@ -35,7 +35,8 @@ services:
       - ./apps/rails-8_1:/app
       - ./shared:/app/shared
       - bundle-8_1:/bundle
-      - type: bind
+      - &permittable-gem
+        type: bind
         source: ${PERMITTABLE_PATH:-${HOME}/Projects/individual-projects/permittable}
         target: /permittable
         read_only: true
@@ -45,3 +46,4 @@ services:
 volumes:
   pgdata:
   bundle-8_1:
+    name: permittable-lab_bundle-8_1
