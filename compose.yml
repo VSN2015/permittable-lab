@@ -44,7 +44,35 @@ services:
         bind:
           create_host_path: false
 
+  rails-7_2:
+    <<: *lab-app
+    command: sh -c "bin/rails db:create db:migrate db:seed && bin/rails server -b 0.0.0.0 -p 3072"
+    ports:
+      - "3072:3072"
+    volumes:
+      - ./apps/rails-7_2:/app
+      - ./shared:/app/shared
+      - ./docs:/app/docs:ro
+      - bundle-7_2:/bundle
+      - *permittable-gem
+
+  rails-8_0:
+    <<: *lab-app
+    command: sh -c "bin/rails db:create db:migrate db:seed && bin/rails server -b 0.0.0.0 -p 3080"
+    ports:
+      - "3080:3080"
+    volumes:
+      - ./apps/rails-8_0:/app
+      - ./shared:/app/shared
+      - ./docs:/app/docs:ro
+      - bundle-8_0:/bundle
+      - *permittable-gem
+
 volumes:
   pgdata:
   bundle-8_1:
     name: permittable-lab_bundle-8_1
+  bundle-7_2:
+    name: permittable-lab_bundle-7_2
+  bundle-8_0:
+    name: permittable-lab_bundle-8_0
