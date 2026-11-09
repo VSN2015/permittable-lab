@@ -358,8 +358,8 @@
   feature: "default: is handed out cast to the declared type"
   readme: "Field options"
   since: "0.9.0"
-  plan: 1
-  status: "shared/spec/controllers/orders_contract_spec.rb"
+  plan: 3
+  status: "chưa phủ"
   question: null
   reason: null
   also: []

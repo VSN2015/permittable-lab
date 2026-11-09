@@ -2,7 +2,7 @@ require "permittable/rspec"
 
 # README: Testing contracts (RSpec matchers)
 RSpec.describe OrdersController, since: "0.12.0",
-  covers: %w[matcher-permit-param matcher-accept-reject matcher-negated matcher-preset absent-blank-array-only-result absent-default opt-default-cast opt-nullable absent-nullable-normalize-blank] do
+  covers: %w[matcher-permit-param matcher-accept-reject matcher-negated matcher-preset absent-blank-array-only-result absent-default opt-nullable absent-nullable-normalize-blank] do
   def accepting(overrides = {})
     accept_params(OrderPayloads.form_params(overrides)).for_action(:create)
   end
@@ -64,11 +64,18 @@ RSpec.describe OrdersController, since: "0.12.0",
     expect(described_class).not_to reject_params(OrderPayloads.form_params).for_action(:create)
   end
 
+  it "fails negated matchers when no rule covers the action" do
+    fails = RSpec::Expectations::ExpectationNotMetError
+    expect { expect(described_class).not_to permit_param(:status).for_action(:index) }.to raise_error(fails)
+    expect { expect(described_class).not_to accept_params(OrderPayloads.form_params).for_action(:index) }.to raise_error(fails)
+    expect { expect(described_class).not_to reject_params(OrderPayloads.form_params).for_action(:index) }.to raise_error(fails)
+  end
+
   it "raises on a qualified negated permit_param" do
     expect { expect(described_class).not_to permit_param(:status).for_action(:create).required }.to raise_error(ArgumentError)
   end
 
   it "raises when returning is chained onto reject_params" do
-    expect { reject_params(OrderPayloads.form_params).returning({}) }.to raise_error(ArgumentError)
+    expect { reject_params(OrderPayloads.form_params).returning({}) }.to raise_error(ArgumentError, /belongs to accept_params/)
   end
 end
