@@ -37,9 +37,9 @@ Each serves `/` (shows the Rails version), `/orders`, and `/inspector/last` (dev
 
 ## Adding a spec
 
-1. Pick a row in `docs/coverage-matrix.yml` and put `covers: "row-id"` in the example metadata
-   (one row per claim; a row may have several examples).
-2. Put a `# README:` comment above the example quoting or pointing to the README line it checks.
+1. Pick a row in `docs/coverage-matrix.yml` and add the row id to `covers: %w[row-id ...]` on the describe block
+   (a row may be covered by several specs).
+2. Put a `# README:` comment at the top of the file quoting or pointing to the README line it checks.
 3. Use `since: "x.y.z"` only when the behaviour arrived in that gem version. It is about gem versions
    only, never Rails versions.
 4. Flip the row's status in the matrix to covered and run `bin/coverage-report --strict`.
