@@ -1,5 +1,6 @@
 class BaseController < ActionController::Base
   include Permittable
+  prepend Inspector::ControllerObserver if Inspector.enabled?
   layout "lab"
 
   prepend_around_action :switch_locale

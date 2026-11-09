@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="<%= I18n.locale %>">
+  <head>
+    <meta charset="utf-8">
+    <title>Inspector</title>
+    <style>
+      body { font: 13px/1.4 system-ui, sans-serif; margin: 8px; }
+      h2 { font-size: 14px; margin: 14px 0 4px; border-bottom: 1px solid #ccc; }
+      pre { white-space: pre-wrap; word-break: break-all; background: #f4f4f4; padding: 4px; margin: 0; }
+      table { border-collapse: collapse; width: 100%; }
+      td, th { border: 1px solid #ddd; padding: 2px 4px; text-align: left; vertical-align: top; word-break: break-all; }
+    </style>
+  </head>
+  <body>
+    <% if @entry %>
+      <%= render "inspector/entry", entry: @entry %>
+    <% else %>
+      <p id="inspector-empty"><%= t("lab.inspector.empty") %></p>
+    <% end %>
+  </body>
+</html>

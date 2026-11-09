@@ -46,6 +46,18 @@ vi:
         code: Mã đơn
         status: Trạng thái
         total: Tổng tiền
+    inspector:
+      empty: Chưa có yêu cầu nào được ghi lại
+      status: Trạng thái
+      raw_params: Tham số gốc
+      permitted: Tham số được phép
+      rejected: Bị từ chối
+      not_read: Action chưa đọc permitted_params
+      violations: Vi phạm
+      response: Phản hồi
+      log: Nhật ký
+      events: Sự kiện
+      config: Cấu hình
   permittable:
     errors:
       missing: "là bắt buộc"

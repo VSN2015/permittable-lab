@@ -16,6 +16,10 @@ module Lab
         config.eager_load_paths << dir
       end
 
+      # Constants that initializers use (the Inspector middleware) must load
+      # before the main autoloader is set up, and are never reloaded.
+      config.autoload_once_paths << shared.join("app/inspector").to_s
+
       paths = config.paths
       paths["app/views"] << shared.join("app/views").to_s
       paths["app/helpers"] << shared.join("app/helpers").to_s

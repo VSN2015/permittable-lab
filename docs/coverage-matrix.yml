@@ -425,7 +425,7 @@
   readme: "Field options"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/inspector_spec.rb"
   question: null
   reason: null
   also: []
@@ -1690,7 +1690,7 @@
   readme: "Instrumentation"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/inspector_spec.rb"
   question: null
   reason: null
   also: []
@@ -1712,7 +1712,7 @@
   readme: "Instrumentation"
   since: "0.8.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/inspector_spec.rb"
   question: null
   reason: null
   also: []

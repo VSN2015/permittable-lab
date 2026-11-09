@@ -4,6 +4,10 @@
     <title>permittable-lab</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
+    <style>
+      #lab-columns { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 420px); gap: 12px; }
+      #inspector-frame { width: 100%; height: 90vh; border: 1px solid #ccc; }
+    </style>
   </head>
   <body>
     <nav id="lab-nav">
@@ -14,6 +18,11 @@
       <%= link_to "English", url_for(locale: "en"), id: "locale-en" %>
       <span id="lab-gem-label"><%= lab_gem_label %></span>
     </nav>
-    <main><%= yield %></main>
+    <div id="lab-columns">
+      <main><%= yield %></main>
+      <% if Inspector.enabled? %>
+        <iframe id="inspector-frame" src="/inspector/last" title="Inspector"></iframe>
+      <% end %>
+    </div>
   </body>
 </html>

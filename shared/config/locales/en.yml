@@ -40,6 +40,18 @@ en:
         code: Code
         status: Status
         total: Total
+    inspector:
+      empty: No request recorded yet
+      status: Status
+      raw_params: Raw parameters
+      permitted: Permitted parameters
+      rejected: Rejected
+      not_read: The action did not read permitted_params
+      violations: Violations
+      response: Response
+      log: Log
+      events: Events
+      config: Config
   permittable:
     errors:
       missing: "is required"

@@ -1,0 +1,68 @@
+<section id="inspector-status">
+  <h2><%= t("lab.inspector.status") %></h2>
+  <p><strong><%= entry.method %> <%= entry.path %></strong> &rarr; <%= entry.status %></p>
+  <p><small>request_id: <%= entry.request_id %></small></p>
+</section>
+
+<section id="inspector-raw-params">
+  <h2><%= t("lab.inspector.raw_params") %></h2>
+  <table>
+    <% entry.raw_params.each do |key, value| %>
+      <tr><td><%= Inspector.clip(key) %></td><td><%= Inspector.clip(value) %></td></tr>
+    <% end %>
+  </table>
+</section>
+
+<section id="inspector-permitted">
+  <h2><%= t("lab.inspector.permitted") %></h2>
+  <% if entry.rejected %>
+    <p><strong><%= t("lab.inspector.rejected") %></strong></p>
+  <% elsif entry.permitted.nil? %>
+    <p><%= t("lab.inspector.not_read") %></p>
+  <% else %>
+    <pre><%= Inspector.clip(PP.pp(entry.permitted, +"", 80)) %></pre>
+  <% end %>
+</section>
+
+<section id="inspector-violations">
+  <h2><%= t("lab.inspector.violations") %></h2>
+  <% if entry.violations.empty? %>
+    <p>-</p>
+  <% else %>
+    <table>
+      <tr><th>param</th><th>code</th><th>message</th></tr>
+      <% entry.violations.each do |v| %>
+        <tr><td><%= Inspector.clip(v[:param]) %></td><td><%= v[:code] %></td><td><%= Inspector.clip(v[:message]) %></td></tr>
+      <% end %>
+    </table>
+  <% end %>
+</section>
+
+<section id="inspector-response">
+  <h2><%= t("lab.inspector.response") %></h2>
+  <p><small><%= entry.content_type %></small></p>
+  <pre><%= entry.response_body %></pre>
+</section>
+
+<section id="inspector-log">
+  <h2><%= t("lab.inspector.log") %></h2>
+  <pre><%= entry.log_lines.map { |l| Inspector.clip(l.gsub(/\e\[[\d;]*m/, ""), Inspector::LINE_LIMIT) }.join("\n") %></pre>
+</section>
+
+<section id="inspector-events">
+  <h2><%= t("lab.inspector.events") %></h2>
+  <% if entry.events.empty? %>
+    <p>-</p>
+  <% else %>
+    <% entry.events.each do |event| %>
+      <pre><%= Inspector.clip(PP.pp(event, +"", 80)) %></pre>
+    <% end %>
+  <% end %>
+</section>
+
+<section id="inspector-config">
+  <h2><%= t("lab.inspector.config") %></h2>
+  <% entry.config.each do |key, value| %>
+    <div><%= key %>: <%= value %></div>
+  <% end %>
+</section>
