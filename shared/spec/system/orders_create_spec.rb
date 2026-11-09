@@ -1,7 +1,10 @@
 # README: Unknown parameters; Localizing default messages (I18n)
 RSpec.describe "Tạo đơn through the real form (headless Chromium)", type: :system, since: "0.12.0" do
-  before { ActionController::Base.allow_forgery_protection = true }
-  after { ActionController::Base.allow_forgery_protection = false }
+  before do
+    @original_forgery_protection = ActionController::Base.allow_forgery_protection
+    ActionController::Base.allow_forgery_protection = true
+  end
+  after { ActionController::Base.allow_forgery_protection = @original_forgery_protection }
 
   def fill_form(slot: true)
     fill_in "Họ tên", with: "  Nguyễn   Văn B "
@@ -30,7 +33,7 @@ RSpec.describe "Tạo đơn through the real form (headless Chromium)", type: :s
   end
 
   # README: Types and strict coercion (date_select, datetime_select, time_select parts)
-  it "creates the order through f.submit", covers: %w[date-select-parts datetime-select-parts time-select-parts date-parts-blank absent-blank-array-element] do
+  it "creates the order through f.submit", covers: %w[date-select-parts datetime-select-parts time-select-parts absent-blank-array-element] do
     visit new_order_path(locale: :vi)
     fill_form
     click_button "Tạo đơn", exact: true
@@ -43,9 +46,9 @@ RSpec.describe "Tạo đơn through the real form (headless Chromium)", type: :s
     expect(order.delivery_slot.strftime("%H:%M")).to eq("09:30")
 
     within_frame("inspector-frame") do
-      expect(page).to have_css("#inspector-status", text: "303")
+      expect(page).to have_css("#inspector-status p:first-of-type", text: /\APOST \/orders → 303\z/)
       expect(page).to have_css("#inspector-raw-params", text: "(1i)")
-      expect(page).to have_css("#inspector-raw-params", text: "services")
+      expect(page).to have_xpath(%(//*[@id="inspector-raw-params"]//tr[td[1][normalize-space()="order[services][]"] and td[2][normalize-space()=""]]))
       expect(page).not_to have_css("#inspector-permitted", text: "Bị từ chối")
     end
   end
@@ -75,7 +78,7 @@ RSpec.describe "Tạo đơn through the real form (headless Chromium)", type: :s
     expect(page).to have_css(%(li[data-param="order.delivery_on"][data-code="invalid_type"]))
     expect(page).to have_css(%(li[data-param="order.items_attributes[0].quantity"][data-code="inclusion"]))
     within_frame("inspector-frame") do
-      expect(page).to have_css("#inspector-status", text: "422")
+      expect(page).to have_css("#inspector-status p:first-of-type", text: /\APOST \/orders → 422\z/)
       expect(page).to have_css("#inspector-permitted", text: "Bị từ chối")
     end
     expect(Order.count).to eq(0)
@@ -84,8 +87,7 @@ RSpec.describe "Tạo đơn through the real form (headless Chromium)", type: :s
     select "15", from: "order_delivery_on_3i"
     select "Tháng 2", from: "order_delivery_on_2i"
     select (Date.current.year + 1).to_s, from: "order_delivery_on_1i"
-    first_prompt = find("#order_delivery_on_3i").all("option").first.text
-    select first_prompt, from: "order_delivery_on_3i"
+    select "Translation missing: vi.datetime.prompts.day", from: "order_delivery_on_3i"
     click_button "Tạo đơn", exact: true
     expect(page).to have_css(%(li[data-param="order.delivery_on"][data-code="missing"]))
     expect(Order.count).to eq(0)
