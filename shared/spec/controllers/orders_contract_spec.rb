@@ -2,7 +2,7 @@ require "permittable/rspec"
 
 # README: Testing contracts (RSpec matchers)
 RSpec.describe OrdersController, since: "0.12.0",
-  covers: %w[matcher-permit-param matcher-accept-reject matcher-negated matcher-preset absent-blank-array-only-result absent-default opt-nullable absent-nullable-normalize-blank] do
+  covers: %w[kind-scalar opt-in-list matcher-permit-param matcher-accept-reject matcher-negated matcher-preset absent-blank-array-only-result absent-default opt-nullable absent-nullable-normalize-blank] do
   def accepting(overrides = {})
     accept_params(OrderPayloads.form_params(overrides)).for_action(:create)
   end
@@ -16,6 +16,35 @@ RSpec.describe OrdersController, since: "0.12.0",
     expect(described_class).to permit_param(:services).for_action(:create).as_array(of: :string)
     expect(described_class).to permit_param("items_attributes.quantity").for_action(:create).as(:integer).within(1..99)
     expect(described_class).to permit_param("shipping_address.city").for_action(:create).as(:string).required
+  end
+
+  # README "The field DSL": the type of a scalar defaults to :string (sku is declared without one).
+  it "declares an untyped scalar as :string" do
+    expect(described_class).to permit_param("items_attributes.sku").for_action(:create).as(:string).required.with_length(1..40)
+  end
+
+  describe "in: takes any list" do
+    # README "Field options": a Range, or a list (Array, Set, Enumerator, Hash read as its keys, or a subclass keeping include?).
+    ordered = Class.new(Array)
+    lists = {
+      "an Array" => -> { %w[red green] },
+      "a Set" => -> { Set.new(%w[red green]) },
+      "an Enumerator" => -> { %w[red green].each },
+      "an Array subclass" => -> { ordered.new(%w[red green]) },
+      "a Hash (its keys)" => -> { { "red" => 1, "green" => 2 } }
+    }
+    lists.each do |label, make|
+      it "accepts a member and rejects a stranger for #{label}" do
+        list = make.call
+        klass = Class.new(BaseController) do
+          permit_params :create, root: :paint do
+            required :colour, :string, in: list
+          end
+        end
+        expect(klass).to accept_params("paint" => { "colour" => "green" }).for_action(:create)
+        expect(klass).to reject_params("paint" => { "colour" => "blue" }).for_action(:create).with_violation("paint.colour", :inclusion)
+      end
+    end
   end
 
   it "does not declare the server-owned columns" do

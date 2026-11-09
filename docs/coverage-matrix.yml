@@ -39,8 +39,8 @@
   feature: "unknown: option selects ignore, log or error"
   readme: "Declaring a contract"
   since: "0.1.0"
-  plan: 1
-  status: "shared/spec/requests/orders_create_spec.rb"
+  plan: 5
+  status: "chưa phủ"
   question: null
   reason: null
   also: []
@@ -128,7 +128,7 @@
   readme: "The field DSL"
   since: "0.1.0"
   plan: 1
-  status: "shared/spec/requests/orders_create_spec.rb"
+  status: "shared/spec/controllers/orders_contract_spec.rb"
   question: null
   reason: null
   also: []
@@ -216,7 +216,7 @@
   readme: "Field options"
   since: "0.1.0"
   plan: 1
-  status: "shared/spec/requests/orders_create_spec.rb"
+  status: "shared/spec/controllers/orders_contract_spec.rb"
   question: null
   reason: null
   also: []

@@ -1,6 +1,6 @@
 # README: Declaring a contract; Unknown parameters; Violations and error responses; Localizing default messages (I18n)
 RSpec.describe "Tao don (create order)", type: :request, since: "0.12.0",
-  covers: %w[pp-root pp-model pp-unknown pp-enforce-true kind-nested kind-array-hash kind-array-fields-for-hash kind-array-scalar kind-scalar opt-in-range opt-in-list opt-format-regexp opt-length-string opt-length-array opt-normalize-squish opt-normalize-email preset-email type-integer type-decimal type-date type-datetime absent-blank-array-element absent-required-missing err-code-missing err-code-invalid-type err-code-inclusion err-code-format err-code-length err-code-unknown err-status-400-root-missing err-status-400-root-wrong-shape err-status-422-field err-path-dotted-indexed err-render-error-custom err-render-error-private i18n-default-messages i18n-per-request-locale unknown-error unknown-every-level date-select-parts datetime-select-parts time-select-parts date-parts-blank date-parts-invalid use-group] do
+  covers: %w[pp-root pp-model pp-enforce-true kind-nested kind-array-hash kind-array-fields-for-hash kind-array-scalar kind-scalar opt-in-range opt-in-list opt-format-regexp opt-length-string opt-length-array opt-normalize-squish opt-normalize-email preset-email type-integer type-decimal type-date type-datetime absent-blank-array-element absent-required-missing err-code-missing err-code-invalid-type err-code-inclusion err-code-format err-code-length err-code-unknown err-status-400-root-missing err-status-400-root-wrong-shape err-status-422-field err-path-dotted-indexed err-render-error-custom err-render-error-private i18n-default-messages i18n-per-request-locale unknown-error unknown-every-level date-select-parts datetime-select-parts time-select-parts date-parts-blank date-parts-invalid use-group] do
   def doc
     Nokogiri::HTML(response.body)
   end
@@ -104,6 +104,7 @@ RSpec.describe "Tao don (create order)", type: :request, since: "0.12.0",
       ["order.customer.phone", "length", { "customer" => { "phone" => "12" } }],
       ["order.items_attributes[0].quantity", "inclusion", { "items_attributes" => { "0" => { "quantity" => "0" } } }],
       ["order.items_attributes[0].quantity", "invalid_type", { "items_attributes" => { "0" => { "quantity" => "abc" } } }],
+      ["order.items_attributes[0].unit_price", "invalid_type", { "items_attributes" => { "0" => { "unit_price" => "abc" } } }],
       ["order.items_attributes[0].unit_price", "inclusion", { "items_attributes" => { "0" => { "unit_price" => "-1" } } }],
       ["order.coupon_code", "format", { "coupon_code" => "abc" }],
       ["order.priority", "inclusion", { "priority" => "overnight" }],
@@ -126,13 +127,90 @@ RSpec.describe "Tao don (create order)", type: :request, since: "0.12.0",
       "order.status" => { "status" => "delivered" },
       "order.code" => { "code" => "X" },
       "order.customer_id" => { "customer_id" => "1" },
-      "order.customer.admin" => { "customer" => { "admin" => "1" } }
+      "order.customer.admin" => { "customer" => { "admin" => "1" } },
+      "order.shipping_address.admin" => { "shipping_address" => { "admin" => "1" } },
+      "order.items_attributes[0].admin" => { "items_attributes" => { "0" => { "admin" => "1" } } }
     }.each do |param, overrides|
       it "rejects #{param} as unknown" do
         expect { post orders_path, params: valid(overrides) }.not_to change { [Order.count, Customer.count] }
         expect(response).to have_http_status(422)
         expect(violation(param, "unknown").size).to eq 1
       end
+    end
+  end
+
+  describe "contract wiring" do
+    # README "The schema-drift guard": model: checks every non-virtual scalar against the columns at class load.
+    it "model: raises at class load for a field that is not a column" do
+      expect do
+        Class.new(BaseController) do
+          permit_params :create, root: :order, model: Order do
+            required :nope, :string
+          end
+        end
+      end.to raise_error(/'nope' does not exist in the database \(table: orders\)/)
+    end
+
+    it "model: loads a contract whose fields are columns" do
+      expect do
+        Class.new(BaseController) do
+          permit_params :create, root: :order, model: Order do
+            required :priority, :string
+          end
+        end
+      end.not_to raise_error
+    end
+
+    # README "Declaring a contract": enforce: true validates in a before_action, so the action never sees bad input.
+    it "enforce: true stops an invalid post before the action body runs" do
+      ran = []
+      allow_any_instance_of(OrdersController).to receive(:create).and_wrap_original { |m, *a| ran << :create; m.call(*a) }
+      post orders_path, params: valid("customer" => { "name" => "" })
+      expect(response).to have_http_status(422)
+      expect(ran).to eq []
+      post orders_path, params: valid
+      expect(response).to have_http_status(303)
+      expect(ran).to eq [:create]
+    end
+
+    # README "Types and strict coercion": the action receives the cast value, not the String it was sent.
+    it "hands the action a BigDecimal, an Integer and a Date, not Strings or Floats" do
+      seen = nil
+      allow(Order).to receive(:build_from_contract).and_wrap_original { |m, attrs| seen = attrs.to_h; m.call(attrs) }
+      post orders_path, params: valid
+      expect(response).to have_http_status(303)
+      item = seen["items_attributes"].first
+      expect(item["unit_price"]).to be_a(BigDecimal)
+      expect(item["unit_price"]).to eq BigDecimal("199.5")
+      expect(item["quantity"]).to be_an(Integer)
+      expect(seen["delivery_on"]).to be_a(Date)
+    end
+
+    # README "The field DSL": a scalar's type defaults to :string (the contract leaves sku untyped).
+    it "reads a Numeric sent for an untyped scalar as its String" do
+      body = valid("items_attributes" => { "0" => { "sku" => 4711 } }).to_json
+      post orders_path, params: body, headers: { "CONTENT_TYPE" => "application/json" }
+      expect(response).to have_http_status(303)
+      expect(Order.last.items.first.sku).to eq "4711"
+    end
+
+    # README "The field DSL": an array of scalars reports a failing element by its index.
+    it "names the index of a failing element in an array of scalars" do
+      body = valid("services" => ["gift_wrap", ["x"]]).to_json
+      expect { post orders_path, params: body, headers: { "CONTENT_TYPE" => "application/json" } }.not_to change(Order, :count)
+      expect(response).to have_http_status(422)
+      expect(violation("order.services[1]", "invalid_type").size).to eq 1
+      expect(doc.css("li[data-param]").size).to eq 1
+    end
+
+    # README "The field DSL": the array block also takes the index-keyed Hash fields_for sends; order of keys is kept.
+    it "reads two fields_for rows in the order they were sent" do
+      items = { "0" => { "sku" => "FIRST", "quantity" => "1", "unit_price" => "1" },
+                "1" => { "sku" => "SECOND", "quantity" => "2", "unit_price" => "2.5" } }
+      expect { post orders_path, params: valid("items_attributes" => items) }.to change(OrderItem, :count).by(2)
+      expect(response).to have_http_status(303)
+      expect(Order.last.items.order(:id).map(&:sku)).to eq %w[FIRST SECOND]
+      expect(Order.last.items.order(:id).map(&:quantity)).to eq [1, 2]
     end
   end
 

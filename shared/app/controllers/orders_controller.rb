@@ -16,7 +16,7 @@ class OrdersController < BaseController
     optional :note, :string, length: 1..200, normalize: :squish, nullable: true
     array :services, of: :string, length: 0..3
     array :items_attributes, required: true, length: 1..20 do
-      required :sku, :string, length: 1..40
+      required :sku, length: 1..40
       required :quantity, :integer, in: 1..99
       required :unit_price, :decimal, in: BigDecimal("0")..BigDecimal("9999.99")
     end
