@@ -16,6 +16,7 @@ File.write(File.join(app, ".rspec"), <<~RSPEC)
   --default-path shared/spec
   --require spec_helper
   --format progress
+  --format Lab::ReportFormatter
 RSPEC
 
 # Hook shared/ into config/application.rb (Lab::Boot).
