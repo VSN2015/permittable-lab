@@ -359,7 +359,7 @@
   readme: "Field options"
   since: "0.9.0"
   plan: 1
-  status: "shared/spec/requests/orders_create_spec.rb"
+  status: "chưa phủ"
   question: null
   reason: null
   also: []
@@ -535,7 +535,7 @@
   readme: "Explicit nulls (nullable:)"
   since: "0.6.0"
   plan: 1
-  status: "shared/spec/requests/orders_create_spec.rb"
+  status: "chưa phủ"
   question: null
   reason: null
   also: []
@@ -755,7 +755,7 @@
   readme: "Explicit nulls (nullable:)"
   since: "0.6.0"
   plan: 1
-  status: "shared/spec/requests/orders_create_spec.rb"
+  status: "chưa phủ"
   question: null
   reason: null
   also: []
@@ -798,8 +798,8 @@
   feature: "an absent optional is omitted, so a partial update never nils a column"
   readme: "Absence, defaults, and partial updates"
   since: "0.1.0"
-  plan: 1
-  status: "shared/spec/requests/orders_create_spec.rb"
+  plan: 2
+  status: "chưa phủ"
   question: null
   reason: null
   also: []
@@ -821,7 +821,7 @@
   readme: "Absence, defaults, and partial updates"
   since: "0.1.0"
   plan: 1
-  status: "shared/spec/requests/orders_create_spec.rb"
+  status: "chưa phủ"
   question: null
   reason: null
   also: []

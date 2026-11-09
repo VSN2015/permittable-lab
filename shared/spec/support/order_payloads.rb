@@ -11,7 +11,7 @@ module OrderPayloads
       "delivery_on(1i)" => "2030", "delivery_on(2i)" => "1", "delivery_on(3i)" => "15",
       "pickup_at(1i)" => "", "pickup_at(2i)" => "", "pickup_at(3i)" => "",
       "pickup_at(4i)" => "", "pickup_at(5i)" => "",
-      "delivery_slot(1i)" => "", "delivery_slot(2i)" => "", "delivery_slot(3i)" => "",
+      "delivery_slot(1i)" => "1", "delivery_slot(2i)" => "1", "delivery_slot(3i)" => "1",
       "delivery_slot(4i)" => "", "delivery_slot(5i)" => "",
       "priority" => "standard",
       "coupon_code" => "",
@@ -24,13 +24,17 @@ module OrderPayloads
 
   # README: absent optionals are omitted; "" is absent; priority defaults;
   # note is nullable so "" gives nil; "" elements of services are dropped;
-  # date parts are assembled into a Date; blank pickup_at/delivery_slot parts
-  # read as absent.
+  # date parts are assembled into a Date. An untouched datetime_select
+  # (pickup_at, every part blank) reads as absent and is omitted. An untouched
+  # time_select (delivery_slot) posts the hidden date 1,1,1 with blank hour and
+  # minute: README "Unknown parameters" gives 0001-01-01T00:00:00, which a
+  # :datetime casts to a UTC Time.
   def contract_output
     {
       "customer" => { "name" => "Nguyen Van A", "email" => "ana@example.com", "phone" => "0901234567" },
       "shipping_address" => { "line1" => "1 Le Loi", "city" => "Ho Chi Minh", "postcode" => "700000" },
       "delivery_on" => Date.new(2030, 1, 15),
+      "delivery_slot" => Time.utc(1, 1, 1, 0, 0, 0),
       "priority" => "standard",
       "note" => nil,
       "services" => ["gift_wrap"],

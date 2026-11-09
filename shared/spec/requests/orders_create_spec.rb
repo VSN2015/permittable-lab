@@ -1,6 +1,6 @@
 # README: Declaring a contract; Unknown parameters; Violations and error responses; Localizing default messages (I18n)
 RSpec.describe "Tao don (create order)", type: :request, since: "0.12.0",
-  covers: %w[pp-root pp-model pp-unknown pp-enforce-true kind-nested kind-array-hash kind-array-fields-for-hash kind-array-scalar kind-scalar opt-in-range opt-in-list opt-format-regexp opt-length-string opt-length-array opt-default-cast opt-normalize-squish opt-normalize-email opt-nullable preset-email type-integer type-decimal type-date type-datetime absent-blank-array-element absent-nullable-normalize-blank absent-optional-omitted absent-required-missing absent-default err-code-missing err-code-invalid-type err-code-inclusion err-code-format err-code-length err-code-unknown err-status-400-root-missing err-status-400-root-wrong-shape err-status-422-field err-path-dotted-indexed err-render-error-custom err-render-error-private i18n-default-messages i18n-per-request-locale unknown-error unknown-every-level date-select-parts datetime-select-parts time-select-parts date-parts-blank date-parts-invalid use-group] do
+  covers: %w[pp-root pp-model pp-unknown pp-enforce-true kind-nested kind-array-hash kind-array-fields-for-hash kind-array-scalar kind-scalar opt-in-range opt-in-list opt-format-regexp opt-length-string opt-length-array opt-normalize-squish opt-normalize-email preset-email type-integer type-decimal type-date type-datetime absent-blank-array-element absent-required-missing err-code-missing err-code-invalid-type err-code-inclusion err-code-format err-code-length err-code-unknown err-status-400-root-missing err-status-400-root-wrong-shape err-status-422-field err-path-dotted-indexed err-render-error-custom err-render-error-private i18n-default-messages i18n-per-request-locale unknown-error unknown-every-level date-select-parts datetime-select-parts time-select-parts date-parts-blank date-parts-invalid use-group] do
   def doc
     Nokogiri::HTML(response.body)
   end
@@ -22,6 +22,16 @@ RSpec.describe "Tao don (create order)", type: :request, since: "0.12.0",
     expect(doc.css(%(input[type=hidden][name="order[services][]"]))[0]["value"]).to eq ""
     %w[customer shipping_address].zip([%w[name email phone], %w[line1 city postcode]]).each do |group, keys|
       keys.each { |k| expect(doc.css(%(input[name="order[#{group}][#{k}]"]))).not_to be_empty }
+    end
+    posted = valid["order"]
+    %w[pickup_at delivery_slot].each do |field|
+      (1..5).each do |n|
+        name = "#{field}(#{n}i)"
+        node = doc.css(%([name="order[#{name}]"])).first
+        expect(node).not_to be_nil, "form has no #{name}"
+        rendered = node["type"] == "hidden" ? node["value"] : (node.css("option[selected]").first&.[]("value") || "")
+        expect(posted[name]).to eq(rendered), "#{name}: payload #{posted[name].inspect}, form #{rendered.inspect}"
+      end
     end
     expect(doc.css(%(select[name="order[pickup_at(4i)]"]))).not_to be_empty
     expect(doc.css(%(select[name="order[delivery_slot(4i)]"]))).not_to be_empty
@@ -67,6 +77,13 @@ RSpec.describe "Tao don (create order)", type: :request, since: "0.12.0",
     expect(response).to have_http_status(303)
     expect(Order.last.note).to be_nil
     expect(Order.last.services).to eq []
+  end
+
+  it "accepts the untouched time_select (hidden date 1,1,1, blank time)" do
+    post orders_path, params: valid
+    expect(response).to have_http_status(303)
+    expect(Order.last.pickup_at).to be_nil
+    expect(Order.last.delivery_slot.utc.strftime("%H:%M:%S")).to eq "00:00:00"
   end
 
   it "does not break on the keys the form adds (commit, button)" do
@@ -188,6 +205,8 @@ RSpec.describe "Tao don (create order)", type: :request, since: "0.12.0",
 
     it "creates no order without the token" do
       expect { post orders_path, params: valid }.not_to change(Order, :count)
+      expect(response).to have_http_status(422)
+      expect(doc.css("li[data-param]")).to be_empty
     end
   end
 
