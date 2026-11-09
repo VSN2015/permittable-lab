@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+# Usage: bin/matrix [VERSION...]   (default: 7.2 8.0 8.1). Host Ruby >= 2.7, stdlib only.
+require "json"
+require "fileutils"
+require_relative "../shared/lib/lab/matrix_report"
+
+root = File.expand_path("..", __dir__)
+versions = ARGV.empty? ? %w[7.2 8.0 8.1] : ARGV
+log_dir = File.join(root, "tmp", "matrix")
+FileUtils.mkdir_p(log_dir)
+
+rows = versions.map do |v|
+  log = File.join(log_dir, "#{v}.log")
+  report_path = File.join(root, "apps", "rails-#{v.tr('.', '_')}", "tmp", "lab-report.json")
+  File.delete(report_path) if File.exist?(report_path)
+  $stderr.puts "== bin/test #{v} (log: #{log})"
+  ok = system(File.join(root, "bin", "test"), v, out: log, err: log)
+  status = ok.nil? ? 127 : $?.exitstatus.to_i
+  report =
+    begin
+      File.exist?(report_path) ? JSON.parse(File.read(report_path)) : nil
+    rescue JSON::ParserError
+      nil
+    end
+  Lab::MatrixReport.row(version: v, report: report, exit_status: status, log_path: log)
+end
+
+puts Lab::MatrixReport.render(rows)
+exit Lab::MatrixReport.exit_code(rows)
