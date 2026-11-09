@@ -17,3 +17,19 @@ File.write(File.join(app, ".rspec"), <<~RSPEC)
   --require spec_helper
   --format progress
 RSPEC
+
+# Hook shared/ into config/application.rb (Lab::Boot).
+appcfg = File.join(app, "config", "application.rb")
+if File.file?(appcfg)
+  src = File.read(appcfg)
+  req = 'require_relative "../shared/lib/lab/boot"'
+  cfg = 'Lab::Boot.configure(config, root: Pathname.new(File.expand_path("..", __dir__)))'
+  unless src.include?(req)
+    src = src.sub(/^(Bundler\.require\(.*\)\n)/) { "#{$1}#{req}\n" } or abort("no Bundler.require in application.rb")
+  end
+  unless src.include?(cfg)
+    src = src.sub(/^(\s*)(config\.load_defaults .*\n)/) { "#{$1}#{$2}#{$1}#{cfg}\n" }
+    abort("no config.load_defaults in application.rb") unless src.include?(cfg)
+  end
+  File.write(appcfg, src)
+end

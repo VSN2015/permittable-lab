@@ -1,0 +1,8 @@
+vi:
+  lab:
+    nav:
+      home: Trang chủ
+      orders: Đơn hàng
+      new_order: Tạo đơn
+      locale_vi: Tiếng Việt
+      locale_en: English

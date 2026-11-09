@@ -1,0 +1,8 @@
+en:
+  lab:
+    nav:
+      home: Home
+      orders: Orders
+      new_order: New order
+      locale_vi: Tiếng Việt
+      locale_en: English
