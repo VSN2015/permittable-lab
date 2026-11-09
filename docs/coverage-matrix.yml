@@ -1,0 +1,2945 @@
+# Coverage matrix: which README/CHANGELOG feature is tested by which spec. See bin/coverage-report.
+# A spec declares covers: %w[row-id ...] and the row's status is that spec's repo-relative path.
+
+- id: pp-root
+  area: declaring
+  feature: "root: wraps the fields under one top-level key"
+  readme: "Declaring a contract"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: pp-model
+  area: declaring
+  feature: "model: Class checks fields against the model's columns"
+  readme: "Declaring a contract"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: pp-model-true-infer
+  area: declaring
+  feature: "model: true infers the model from controller_name"
+  readme: "Declaring a contract"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: pp-unknown
+  area: declaring
+  feature: "unknown: option selects ignore, log or error"
+  readme: "Declaring a contract"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: pp-enforce-true
+  area: declaring
+  feature: "enforce: true validates in a before_action"
+  readme: "Declaring a contract"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: pp-enforce-lazy
+  area: declaring
+  feature: "without enforce: validation is lazy, on permitted_params"
+  readme: "How a request flows"
+  since: "0.1.0"
+  plan: 2
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: pp-mode-monitor
+  area: declaring
+  feature: "mode: :monitor on permit_params"
+  readme: "Monitor mode (roll out without rejecting)"
+  since: "0.4.0"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: pp-desc
+  area: declaring
+  feature: "desc: on permit_params is documentation only"
+  readme: "Declaring a contract"
+  since: "0.3.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: pp-catch-all
+  area: declaring
+  feature: "permit_params with no actions is a catch-all"
+  readme: "Declaring a contract"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: pp-last-rule-wins
+  area: declaring
+  feature: "the last matching rule wins"
+  readme: "Declaring a contract"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: pp-subclass-override
+  area: declaring
+  feature: "a subclass inherits rules copy-on-write and can override"
+  readme: "Declaring a contract"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: kind-scalar
+  area: field-kind
+  feature: "scalar fields (required/optional) default to :string"
+  readme: "The field DSL"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: kind-nested
+  area: field-kind
+  feature: "nested hash via a block; violation paths are dotted"
+  readme: "The field DSL"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: kind-array-scalar
+  area: field-kind
+  feature: "array of scalars with of:; element failures carry their index"
+  readme: "The field DSL"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: kind-array-hash
+  area: field-kind
+  feature: "array of hashes via a block"
+  readme: "The field DSL"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: kind-array-fields-for-hash
+  area: field-kind
+  feature: "array block accepts the index-keyed Hash a fields_for form sends"
+  readme: "The field DSL"
+  since: "0.11.1"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: kind-array-length-short-circuit
+  area: field-kind
+  feature: "length: on an array is checked before the elements"
+  readme: "The field DSL"
+  since: "0.8.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: kind-json
+  area: field-kind
+  feature: ":json takes any hash, uncast and unfiltered, with bounds"
+  readme: "Free-form hashes (:json)"
+  since: "0.6.0"
+  plan: 3
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-in-range
+  area: field-option
+  feature: "in: Range is bounds-checked with cover?"
+  readme: "Field options"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-in-list
+  area: field-option
+  feature: "in: list (Array, Set, Enumerator, subclass keeping include?)"
+  readme: "Field options"
+  since: "0.1.0"
+  plan: 2
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.12.0"]
+- id: opt-in-live-include
+  area: field-option
+  feature: "in: any object answering include?, used as given and read live"
+  readme: "Field options"
+  since: "0.1.0"
+  plan: 3
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-in-enum-hash
+  area: field-option
+  feature: "in: Hash read as its keys, so in: Post.statuses works"
+  readme: "Field options"
+  since: "0.9.0"
+  plan: 2
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-format-regexp
+  area: field-option
+  feature: "format: Regexp"
+  readme: "Field options"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-length-string
+  area: field-option
+  feature: "length: Range on a string counts characters"
+  readme: "Field options"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-length-array
+  area: field-option
+  feature: "length: on an array counts elements"
+  readme: "Field options"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-length-integer-exact
+  area: field-option
+  feature: "length: Integer means exactly that many"
+  readme: "Field options"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-normalize-squish
+  area: field-option
+  feature: "normalize: :squish"
+  readme: "Field options"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-normalize-strip
+  area: field-option
+  feature: "normalize: :strip"
+  readme: "Field options"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-normalize-downcase
+  area: field-option
+  feature: "normalize: :downcase"
+  readme: "Field options"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-normalize-upcase
+  area: field-option
+  feature: "normalize: :upcase"
+  readme: "Field options"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-normalize-email
+  area: field-option
+  feature: "normalize: :email"
+  readme: "Field options"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-normalize-proc
+  area: field-option
+  feature: "normalize: with a Proc"
+  readme: "Field options"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-default-cast
+  area: field-option
+  feature: "default: is handed out cast to the declared type"
+  readme: "Field options"
+  since: "0.9.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-default-as-authored-with-transform
+  area: field-option
+  feature: "default: on a field with transform: is stored as authored, transform untouched"
+  readme: "Field options"
+  since: "0.1.0"
+  plan: 3
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-validate-falsy
+  area: field-option
+  feature: "validate: falsy result fails as invalid"
+  readme: "Field options"
+  since: "0.1.0"
+  plan: 3
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-validate-symbol-code
+  area: field-option
+  feature: "validate: returning a Symbol makes it the violation code"
+  readme: "Field options"
+  since: "0.1.0"
+  plan: 3
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-transform
+  area: field-option
+  feature: "transform: applied after cast and validation"
+  readme: "Field options"
+  since: "0.1.0"
+  plan: 3
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-virtual
+  area: field-option
+  feature: "virtual: exempts a field from the drift guard"
+  readme: "Field options"
+  since: "0.1.0"
+  plan: 3
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-sensitive
+  area: field-option
+  feature: "sensitive: registers the field for log redaction"
+  readme: "Field options"
+  since: "0.1.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-sensitive-cascade
+  area: field-option
+  feature: "sensitive: on a nested block or array cascades to sub-fields"
+  readme: "Sensitive parameters and log redaction"
+  since: "0.8.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-sensitive-false-opt-out
+  area: field-option
+  feature: "sensitive: false opts a sub-field out of the cascade"
+  readme: "Sensitive parameters and log redaction"
+  since: "0.8.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-message-string
+  area: field-option
+  feature: "message: String covers every code on the field"
+  readme: "Custom error messages (message:)"
+  since: "0.2.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-message-hash
+  area: field-option
+  feature: "message: Hash targets specific codes"
+  readme: "Custom error messages (message:)"
+  since: "0.2.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-of
+  area: field-option
+  feature: "of: element type for an array of scalars"
+  readme: "Field options"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-max-depth
+  area: field-option
+  feature: "max_depth: bounds :json nesting"
+  readme: "Free-form hashes (:json)"
+  since: "0.6.0"
+  plan: 3
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-required-array
+  area: field-option
+  feature: "required: true on an array"
+  readme: "Field options"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-desc
+  area: field-option
+  feature: "desc: on a field is documentation only"
+  readme: "Field options"
+  since: "0.3.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-example
+  area: field-option
+  feature: "example: is validated against the field's own contract"
+  readme: "Field options"
+  since: "0.3.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-nullable
+  area: field-option
+  feature: "nullable: explicit null clears the column"
+  readme: "Explicit nulls (nullable:)"
+  since: "0.6.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-nullable-required
+  area: field-option
+  feature: "nullable: with required: an explicit null is accepted"
+  readme: "Explicit nulls (nullable:)"
+  since: "0.6.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-nullable-default-nil
+  area: field-option
+  feature: "default: nil is allowed on a nullable field"
+  readme: "Explicit nulls (nullable:)"
+  since: "0.6.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-nullable-array-nested
+  area: field-option
+  feature: "nullable: on an array or nested block"
+  readme: "Explicit nulls (nullable:)"
+  since: "0.6.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: opt-check-order
+  area: field-option
+  feature: "checks run normalize, cast, length, in, format, validate; first failure wins"
+  readme: "Field options"
+  since: "0.8.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: preset-email
+  area: preset
+  feature: "format: :email"
+  readme: "`format:` presets"
+  since: "0.9.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: preset-uuid
+  area: preset
+  feature: "format: :uuid"
+  readme: "`format:` presets"
+  since: "0.9.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: preset-url
+  area: preset
+  feature: "format: :url"
+  readme: "`format:` presets"
+  since: "0.9.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: preset-slug
+  area: preset
+  feature: "format: :slug"
+  readme: "`format:` presets"
+  since: "0.9.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: preset-hostname
+  area: preset
+  feature: "format: :hostname"
+  readme: "`format:` presets"
+  since: "0.9.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: type-string
+  area: type
+  feature: ":string coercion"
+  readme: "Types and strict coercion"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: type-integer
+  area: type
+  feature: ":integer strict coercion"
+  readme: "Types and strict coercion"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: type-float
+  area: type
+  feature: ":float strict coercion"
+  readme: "Types and strict coercion"
+  since: "0.1.0"
+  plan: 3
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: type-decimal
+  area: type
+  feature: ":decimal strict coercion"
+  readme: "Types and strict coercion"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: type-boolean
+  area: type
+  feature: ":boolean coercion"
+  readme: "Types and strict coercion"
+  since: "0.1.0"
+  plan: 3
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: type-date
+  area: type
+  feature: ":date strict coercion"
+  readme: "Types and strict coercion"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: type-datetime
+  area: type
+  feature: ":datetime strict coercion"
+  readme: "Types and strict coercion"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: type-json
+  area: type
+  feature: ":json type"
+  readme: "Types and strict coercion"
+  since: "0.6.0"
+  plan: 3
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: type-confusion-array-for-scalar
+  area: type
+  feature: "?age[]=1 type confusion is a violation, not a 500"
+  readme: "Types and strict coercion"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: type-string-encoding
+  area: type
+  feature: "invalid or foreign-encoded strings do not crash normalize or format"
+  readme: "Types and strict coercion"
+  since: "0.9.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: absent-nullable-normalize-blank
+  area: absence
+  feature: "a nullable: + normalize: :squish field receiving \"   \" gives nil"
+  readme: "Explicit nulls (nullable:)"
+  since: "0.6.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: absent-blank-array-only-result
+  area: absence
+  feature: "a scalar array receiving only [\"\"] gives []"
+  readme: "Absence, defaults, and partial updates"
+  since: "0.12.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: absent-nil-and-empty
+  area: absence
+  feature: "nil and \"\" are both absent"
+  readme: "Absence, defaults, and partial updates"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: absent-normalize-first
+  area: absence
+  feature: "normalize: runs before the absence rule"
+  readme: "Absence, defaults, and partial updates"
+  since: "0.7.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: absent-optional-omitted
+  area: absence
+  feature: "an absent optional is omitted, so a partial update never nils a column"
+  readme: "Absence, defaults, and partial updates"
+  since: "0.1.0"
+  plan: 2
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: absent-required-missing
+  area: absence
+  feature: "an absent required field is missing"
+  readme: "Absence, defaults, and partial updates"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: absent-default
+  area: absence
+  feature: "default: fills absence"
+  readme: "Absence, defaults, and partial updates"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: absent-blank-array-element
+  area: absence
+  feature: "a scalar array drops the blank element a hidden field sends"
+  readme: "Absence, defaults, and partial updates"
+  since: "0.12.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.12.0"]
+- id: absent-false-is-present
+  area: absence
+  feature: "false is a present value"
+  readme: "Absence, defaults, and partial updates"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: err-code-missing
+  area: error
+  feature: "violation code missing"
+  readme: "Violations and error responses"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: err-code-invalid-type
+  area: error
+  feature: "violation code invalid_type"
+  readme: "Violations and error responses"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: err-code-inclusion
+  area: error
+  feature: "violation code inclusion"
+  readme: "Violations and error responses"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: err-code-format
+  area: error
+  feature: "violation code format"
+  readme: "Violations and error responses"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: err-code-length
+  area: error
+  feature: "violation code length"
+  readme: "Violations and error responses"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: err-code-unknown
+  area: error
+  feature: "violation code unknown for an undeclared key"
+  readme: "Violations and error responses"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: err-code-invalid
+  area: error
+  feature: "violation code invalid from a falsy validate:"
+  readme: "Violations and error responses"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: err-code-custom-symbol
+  area: error
+  feature: "custom violation code from a Symbol"
+  readme: "Violations and error responses"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: err-status-400-root-missing
+  area: error
+  feature: "400 when the root: key is missing"
+  readme: "Violations and error responses"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: err-status-400-root-wrong-shape
+  area: error
+  feature: "400 when the root: key has the wrong shape"
+  readme: "Violations and error responses"
+  since: "0.8.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: err-status-422-field
+  area: error
+  feature: "422 for a field violation"
+  readme: "Violations and error responses"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: err-path-dotted-indexed
+  area: error
+  feature: "violation path is dotted and indexed (items[1].sku)"
+  readme: "Violations and error responses"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: err-details-complete-message-bounded
+  area: error
+  feature: "details are complete but the exception message is bounded"
+  readme: "Violations and error responses"
+  since: "0.8.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: err-envelope-json
+  area: error
+  feature: "default JSON error envelope is labelled JSON"
+  readme: "Violations and error responses"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: err-render-error-custom
+  area: error
+  feature: "a host render_error is delegated to"
+  readme: "Violations and error responses"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: err-render-error-private
+  area: error
+  feature: "a private render_error is delegated to"
+  readme: "Violations and error responses"
+  since: "0.12.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.12.0"]
+- id: err-render-error-three-keyword
+  area: error
+  feature: "render_error(message:, status:, code:) gets no errors: keyword"
+  readme: "Violations and error responses"
+  since: "0.11.1"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: err-rescue-from-order
+  area: error
+  feature: "a catch-all rescue_from declared after include Permittable wins"
+  readme: "Declaring a contract"
+  since: "0.1.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.13.1"]
+- id: i18n-default-messages
+  area: i18n
+  feature: "default copy from permittable.errors.<code>"
+  readme: "Localizing default messages (I18n)"
+  since: "0.5.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: i18n-fallback-order
+  area: i18n
+  feature: "message: beats I18n, I18n beats built-in text"
+  readme: "Localizing default messages (I18n)"
+  since: "0.5.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: i18n-per-request-locale
+  area: i18n
+  feature: "a locale switch must wrap the enforce check"
+  readme: "Localizing default messages (I18n)"
+  since: "0.5.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: msg-string
+  area: i18n
+  feature: "message: String on a violation"
+  readme: "Custom error messages (message:)"
+  since: "0.2.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: msg-hash
+  area: i18n
+  feature: "message: Hash code to String"
+  readme: "Custom error messages (message:)"
+  since: "0.2.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: msg-violate-keyword
+  area: i18n
+  feature: "violate!(param, code, message:) in finalize"
+  readme: "Custom error messages (message:)"
+  since: "0.2.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: problem-format
+  area: problem
+  feature: "error_format :problem renders problem+json"
+  readme: "RFC 9457 problem+json"
+  since: "0.9.0"
+  plan: 3
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: problem-title-by-status
+  area: problem
+  feature: "problem title follows the status"
+  readme: "RFC 9457 problem+json"
+  since: "0.9.0"
+  plan: 3
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: problem-base-uri
+  area: problem
+  feature: "problem type uses problem_base_uri"
+  readme: "RFC 9457 problem+json"
+  since: "0.9.0"
+  plan: 3
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: problem-instance
+  area: problem
+  feature: "problem instance member"
+  readme: "RFC 9457 problem+json"
+  since: "0.9.0"
+  plan: 3
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: problem-opts-out-render-error
+  area: problem
+  feature: ":problem format is rendered even when the host defines render_error"
+  readme: "RFC 9457 problem+json"
+  since: "0.9.0"
+  plan: 3
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: unknown-ignore
+  area: unknown-params
+  feature: "unknown: :ignore drops undeclared keys silently"
+  readme: "Unknown parameters"
+  since: "0.1.0"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: unknown-log
+  area: unknown-params
+  feature: "unknown: :log warns and lets the request through"
+  readme: "Unknown parameters"
+  since: "0.1.0"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: unknown-error
+  area: unknown-params
+  feature: "unknown: :error rejects undeclared keys"
+  readme: "Unknown parameters"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: unknown-every-level
+  area: unknown-params
+  feature: "unknown: applies at every nesting level"
+  readme: "Unknown parameters"
+  since: "0.1.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: unknown-exempt-router-keys
+  area: unknown-params
+  feature: "controller, action and format are exempt"
+  readme: "Unknown parameters"
+  since: "0.1.0"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: unknown-exempt-csrf
+  area: unknown-params
+  feature: "authenticity_token is exempt"
+  readme: "Unknown parameters"
+  since: "0.7.0"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: unknown-exempt-csrf-renamed
+  area: unknown-params
+  feature: "a renamed request_forgery_protection_token is exempt"
+  readme: "Unknown parameters"
+  since: "0.10.0"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: unknown-exempt-form-keys
+  area: unknown-params
+  feature: "_method and utf8 are exempt"
+  readme: "Unknown parameters"
+  since: "0.7.0"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: unknown-exempt-commit
+  area: unknown-params
+  feature: "commit from f.submit is exempt"
+  readme: "Unknown parameters"
+  since: "0.7.0"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: unknown-exempt-button
+  area: unknown-params
+  feature: "button from f.button is exempt"
+  readme: "Unknown parameters"
+  since: "0.11.1"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: unknown-exempt-image-submit
+  area: unknown-params
+  feature: "x and y of an image submit are exempt as a pair"
+  readme: "Unknown parameters"
+  since: "0.11.1"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: unknown-exempt-path-params
+  area: unknown-params
+  feature: "route path parameters are exempt on a rootless contract"
+  readme: "Unknown parameters"
+  since: "0.9.0"
+  plan: 2
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: unknown-wrapper-key
+  area: unknown-params
+  feature: "ParamsWrapper's copy of a JSON body is not flagged"
+  readme: "Unknown parameters"
+  since: "0.9.0"
+  plan: 3
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.0"]
+- id: date-select-parts
+  area: type
+  feature: "date_select parts (1i 2i 3i) read as a :date"
+  readme: "Types and strict coercion"
+  since: "0.12.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.12.0"]
+- id: datetime-select-parts
+  area: type
+  feature: "datetime_select parts read as a :datetime"
+  readme: "Types and strict coercion"
+  since: "0.12.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.12.0"]
+- id: time-select-parts
+  area: type
+  feature: "time_select parts read as a :datetime"
+  readme: "Types and strict coercion"
+  since: "0.12.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.12.0"]
+- id: date-parts-blank
+  area: type
+  feature: "blank date parts are absent"
+  readme: "Types and strict coercion"
+  since: "0.12.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: date-parts-invalid
+  area: type
+  feature: "invalid date parts are a violation"
+  readme: "Types and strict coercion"
+  since: "0.12.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: date-parts-own-key-wins
+  area: type
+  feature: "a field's own key beats its date parts"
+  readme: "Types and strict coercion"
+  since: "0.12.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: date-parts-time-zone-recipe
+  area: type
+  feature: "time zone recipe for datetime parts"
+  readme: "Types and strict coercion"
+  since: "0.12.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: use-group
+  area: reuse
+  feature: "use splices a Permittable.fields group"
+  readme: "Reusing fields (Permittable.fields and use)"
+  since: "0.7.0"
+  plan: 2
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: use-compose
+  area: reuse
+  feature: "several groups compose in one contract"
+  readme: "Reusing fields (Permittable.fields and use)"
+  since: "0.7.0"
+  plan: 2
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: use-optional
+  area: reuse
+  feature: "use G, optional: true relaxes required and drops default:"
+  readme: "Reusing fields (Permittable.fields and use)"
+  since: "0.7.0"
+  plan: 2
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.12.0"]
+- id: use-only-except
+  area: reuse
+  feature: "use with only: or except:"
+  readme: "Reusing fields (Permittable.fields and use)"
+  since: "0.7.0"
+  plan: 2
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: use-contract
+  area: reuse
+  feature: "use a standalone Contract's fields"
+  readme: "Reusing fields (Permittable.fields and use)"
+  since: "0.7.0"
+  plan: 2
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: use-refuses-finalize
+  area: reuse
+  feature: "use refuses a Contract that declares finalize"
+  readme: "Reusing fields (Permittable.fields and use)"
+  since: "0.12.0"
+  plan: 2
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.12.0"]
+- id: use-override-duplicate
+  area: reuse
+  feature: "redeclaring a spliced field fails at class load"
+  readme: "Reusing fields (Permittable.fields and use)"
+  since: "0.7.0"
+  plan: 2
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: transform-field
+  area: reshape
+  feature: "transform: reshapes a field after validation"
+  readme: "Output reshaping (transform: and finalize)"
+  since: "0.1.0"
+  plan: 3
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: transform-default-authored
+  area: reshape
+  feature: "a default: is delivered as authored, sub-field transforms applied to array defaults"
+  readme: "Output reshaping (transform: and finalize)"
+  since: "0.10.0"
+  plan: 3
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: finalize-basic
+  area: reshape
+  feature: "finalize block returns the final Hash"
+  readme: "Output reshaping (transform: and finalize)"
+  since: "0.1.0"
+  plan: 2
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: finalize-violate
+  area: reshape
+  feature: "violate! raises a cross-field violation"
+  readme: "Output reshaping (transform: and finalize)"
+  since: "0.1.0"
+  plan: 2
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: finalize-bare-runner
+  area: reshape
+  feature: "finalize runs on a bare runner, controller state unreachable"
+  readme: "Output reshaping (transform: and finalize)"
+  since: "0.1.0"
+  plan: 2
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: drift-missing-column
+  area: drift
+  feature: "a field with no column fails at class load"
+  readme: "The schema-drift guard"
+  since: "0.1.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: drift-migration-hint
+  area: drift
+  feature: "the failure carries a copy-paste migration hint"
+  readme: "The schema-drift guard"
+  since: "0.1.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: drift-ignored-columns
+  area: drift
+  feature: "an ignored_columns column is not reported missing"
+  readme: "The schema-drift guard"
+  since: "0.13.1"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.13.1"]
+- id: drift-virtual
+  area: drift
+  feature: "virtual: skips the guard"
+  readme: "The schema-drift guard"
+  since: "0.1.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: drift-nested-implicit-virtual
+  area: drift
+  feature: "nested and array fields are implicitly virtual"
+  readme: "The schema-drift guard"
+  since: "0.1.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: drift-schema-unreachable
+  area: drift
+  feature: "the guard skips when the schema is unreachable"
+  readme: "The schema-drift guard"
+  since: "0.1.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: drift-check-types
+  area: drift
+  feature: "check_column_types compares field type with column type"
+  readme: "Checking types too (opt-in)"
+  since: "0.9.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: drift-type-groups
+  area: drift
+  feature: "compatible type groups pass"
+  readme: "Checking types too (opt-in)"
+  since: "0.9.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: drift-enum
+  area: drift
+  feature: "enum columns need an in: list"
+  readme: "Checking types too (opt-in)"
+  since: "0.9.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: drift-pg-array-column
+  area: drift
+  feature: "check_column_types refuses a scalar declared over a PostgreSQL array column"
+  readme: "Checking types too (opt-in)"
+  since: "0.12.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.12.0"]
+- id: log-filter-params
+  area: logging
+  feature: "sensitive names reach config.filter_parameters"
+  readme: "Sensitive parameters and log redaction"
+  since: "0.1.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: log-filter-non-string
+  area: logging
+  feature: "non-string sensitive values are redacted"
+  readme: "Sensitive parameters and log redaction"
+  since: "0.7.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: log-filter-sql-bind
+  area: logging
+  feature: "sensitive values are redacted in the SQL bind log"
+  readme: "Sensitive parameters and log redaction"
+  since: "0.11.1"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: log-registry-swap
+  area: logging
+  feature: "swapping filter_parameter_registry keeps redaction working"
+  readme: "Sensitive parameters and log redaction"
+  since: "0.7.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: log-assign-heals
+  area: logging
+  feature: "filter_parameter_registry= carries existing entries across and validates"
+  readme: "Sensitive parameters and log redaction"
+  since: "0.7.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: event-payload
+  area: events
+  feature: "invalid_parameters.permittable payload"
+  readme: "Instrumentation"
+  since: "0.1.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: event-mode
+  area: events
+  feature: "the payload carries mode: enforce or monitor"
+  readme: "Instrumentation"
+  since: "0.4.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: event-once-per-request
+  area: events
+  feature: "a rejection is instrumented once per request"
+  readme: "Instrumentation"
+  since: "0.8.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: monitor-pass-through
+  area: monitor
+  feature: "permitted_params returns the raw pass-through"
+  readme: "Monitor mode (roll out without rejecting)"
+  since: "0.4.0"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: monitor-violations
+  area: monitor
+  feature: "permittable_violations returns the recorded details"
+  readme: "Monitor mode (roll out without rejecting)"
+  since: "0.4.0"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: monitor-env
+  area: monitor
+  feature: "Permittable.mode from PERMITTABLE_MODE"
+  readme: "Monitor mode (roll out without rejecting)"
+  since: "0.4.0"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: monitor-rule-beats-global
+  area: monitor
+  feature: "a rule's own mode: beats the global in both directions"
+  readme: "Monitor mode (roll out without rejecting)"
+  since: "0.4.0"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: monitor-eager
+  area: monitor
+  feature: "monitor rules validate eagerly in the before_action"
+  readme: "Monitor mode (roll out without rejecting)"
+  since: "0.4.0"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: monitor-uncheckable-logged
+  area: monitor
+  feature: "a body that cannot be checked is logged, the action runs"
+  readme: "Monitor mode (roll out without rejecting)"
+  since: "0.11.1"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: rake-audit-table
+  area: rake
+  feature: "permittable:audit prints the table and summary"
+  readme: "Auditing coverage (permittable:audit)"
+  since: "0.9.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: rake-audit-strict
+  area: rake
+  feature: "permittable:audit[strict] exits 1 on an unguarded write action"
+  readme: "Auditing coverage (permittable:audit)"
+  since: "0.9.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: rake-audit-stale
+  area: rake
+  feature: "stale contracts and unmatched ignores are listed"
+  readme: "Auditing coverage (permittable:audit)"
+  since: "0.9.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.0", "0.11.1"]
+- id: rake-audit-ignore
+  area: rake
+  feature: "audit_ignore leaves controllers and actions out of the audit"
+  readme: "Ignoring controllers and actions"
+  since: "0.11.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.0"]
+- id: rake-audit-outside-root
+  area: rake
+  feature: "controllers outside Rails.root are left out"
+  readme: "Ignoring controllers and actions"
+  since: "0.11.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: rake-audit-engines
+  area: rake
+  feature: "the audit follows mounted engines"
+  readme: "Auditing coverage (permittable:audit)"
+  since: "0.13.0"
+  plan: 4
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.13.0"]
+- id: rake-audit-metal
+  area: rake
+  feature: "the audit reads ActionController::Metal controllers"
+  readme: "Auditing coverage (permittable:audit)"
+  since: "0.13.0"
+  plan: 4
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.13.0"]
+- id: rake-audit-routes-order
+  area: rake
+  feature: "routes Rails never dispatches to are not audited"
+  readme: "Auditing coverage (permittable:audit)"
+  since: "0.11.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.0"]
+- id: rake-openapi-stdout
+  area: rake
+  feature: "permittable:openapi prints JSON to stdout"
+  readme: "Exporting OpenAPI (docs that cannot drift)"
+  since: "0.3.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: rake-openapi-file
+  area: rake
+  feature: "permittable:openapi[file] writes a file"
+  readme: "Exporting OpenAPI (docs that cannot drift)"
+  since: "0.3.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: rake-openapi-engines
+  area: rake
+  feature: "the export follows mounted engines, engines: false opts out"
+  readme: "Exporting OpenAPI (docs that cannot drift)"
+  since: "0.13.0"
+  plan: 4
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.13.0"]
+- id: rake-openapi-metal
+  area: rake
+  feature: "the export reads Metal controllers and no longer lists framework methods"
+  readme: "Exporting OpenAPI (docs that cannot drift)"
+  since: "0.13.0"
+  plan: 4
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.13.0", "0.13.1"]
+- id: rake-openapi-path-params
+  area: rake
+  feature: "templated path variables are declared as path parameters"
+  readme: "Exporting OpenAPI (docs that cannot drift)"
+  since: "0.8.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.13.0"]
+- id: rake-openapi-problem
+  area: rake
+  feature: "the export follows error_format :problem"
+  readme: "Exporting OpenAPI (docs that cannot drift)"
+  since: "0.9.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: rake-openapi-monitor-extension
+  area: rake
+  feature: "x-permittable-mode: monitor on operations"
+  readme: "Exporting OpenAPI (docs that cannot drift)"
+  since: "0.4.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: rake-generate-all
+  area: rake
+  feature: "permittable:generate drafts every controller without a contract"
+  readme: "Generating draft contracts (permittable:generate)"
+  since: "0.5.0"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.13.0"]
+- id: rake-generate-one
+  area: rake
+  feature: "permittable:generate[Controller] drafts one controller"
+  readme: "Generating draft contracts (permittable:generate)"
+  since: "0.5.0"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: rake-generate-expect-permit
+  area: rake
+  feature: "the draft reads params.permit and params.expect calls"
+  readme: "Generating draft contracts (permittable:generate)"
+  since: "0.9.0"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: rake-generate-monitor-draft
+  area: rake
+  feature: "drafts deploy as mode: :monitor"
+  readme: "Generating draft contracts (permittable:generate)"
+  since: "0.5.0"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: rake-generate-ignore
+  area: rake
+  feature: "the sweep skips audit_ignore and outside-root controllers"
+  readme: "Generating draft contracts (permittable:generate)"
+  since: "0.11.0"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.0"]
+- id: rake-generate-pg-array
+  area: rake
+  feature: "a PostgreSQL array column is drafted as an array"
+  readme: "Generating draft contracts (permittable:generate)"
+  since: "0.12.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.12.0"]
+- id: matcher-permit-param
+  area: beyond-controller
+  feature: "permit_param asserts the declaration"
+  readme: "Testing contracts (RSpec matchers)"
+  since: "0.5.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.12.0"]
+- id: matcher-accept-reject
+  area: beyond-controller
+  feature: "accept_params and reject_params assert behaviour"
+  readme: "Testing contracts (RSpec matchers)"
+  since: "0.7.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.12.0"]
+- id: matcher-negated
+  area: beyond-controller
+  feature: "negated matchers fail on an unknown action"
+  readme: "Testing contracts (RSpec matchers)"
+  since: "0.9.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.12.0"]
+- id: matcher-preset
+  area: beyond-controller
+  feature: "matching(:email) asserts a preset by name"
+  readme: "Testing contracts (RSpec matchers)"
+  since: "0.9.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: contract-call
+  area: beyond-controller
+  feature: "Contract#call returns a result and never raises"
+  readme: "Standalone contracts (no controller)"
+  since: "0.5.0"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: contract-call-bang
+  area: beyond-controller
+  feature: "Contract#call! raises on violation"
+  readme: "Standalone contracts (no controller)"
+  since: "0.5.0"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: contract-json-schema
+  area: beyond-controller
+  feature: "Contract#json_schema"
+  readme: "Standalone contracts (no controller)"
+  since: "0.5.0"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: contract-always-enforces
+  area: beyond-controller
+  feature: "a Contract always enforces"
+  readme: "Standalone contracts (no controller)"
+  since: "0.5.0"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: contract-no-router-exemption
+  area: beyond-controller
+  feature: "a Contract exempts no router or form keys"
+  readme: "Standalone contracts (no controller)"
+  since: "0.5.0"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: contract-no-memo
+  area: beyond-controller
+  feature: "a Contract does not memoize between calls"
+  readme: "Standalone contracts (no controller)"
+  since: "0.5.0"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: contract-input-errors
+  area: beyond-controller
+  feature: "Contract input errors, including nested Parameters"
+  readme: "Standalone contracts (no controller)"
+  since: "0.5.0"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: contract-unknown-log
+  area: beyond-controller
+  feature: "unknown: :log logs through Rails.logger for a Contract"
+  readme: "Standalone contracts (no controller)"
+  since: "0.11.1"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: audit-entries-plain
+  area: beyond-controller
+  feature: "Permittable::Audit.entries from plain Ruby"
+  readme: "Reference > API"
+  since: "0.9.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: generator-draft-plain
+  area: beyond-controller
+  feature: "Permittable::Generator.draft from plain Ruby"
+  readme: "Reference > API"
+  since: "0.5.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: registry-swap
+  area: beyond-controller
+  feature: "Permittable.filter_parameter_registry= swaps the registry"
+  readme: "Reference > API"
+  since: "0.7.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: alias-concerns-on-rails
+  area: beyond-controller
+  feature: "ConcernsOnRails::Controllers::Permittable aliases the module"
+  readme: "Compatibility"
+  since: "0.1.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: cfg-mode
+  area: config
+  feature: "Permittable.mode / mode="
+  readme: "Reference > API"
+  since: "0.4.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: cfg-error-format
+  area: config
+  feature: "Permittable.error_format / error_format="
+  readme: "Reference > API"
+  since: "0.9.0"
+  plan: 3
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: cfg-problem-base-uri
+  area: config
+  feature: "Permittable.problem_base_uri / problem_base_uri="
+  readme: "Reference > API"
+  since: "0.9.0"
+  plan: 3
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: cfg-check-column-types
+  area: config
+  feature: "Permittable.check_column_types / ="
+  readme: "Reference > API"
+  since: "0.9.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: cfg-audit-ignore
+  area: config
+  feature: "Permittable.audit_ignore / ="
+  readme: "Reference > API"
+  since: "0.11.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.0"]
+- id: cfg-audit-ignore-outside-root
+  area: config
+  feature: "Permittable.audit_ignore_outside_root / ="
+  readme: "Reference > API"
+  since: "0.11.0"
+  plan: 4
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: classload-duplicate-field
+  area: classload
+  feature: "a field declared twice in one contract"
+  readme: "Errors caught at class load"
+  since: "0.1.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: classload-unknown-option
+  area: classload
+  feature: "an unknown option for the field's kind"
+  readme: "Errors caught at class load"
+  since: "0.1.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: classload-unknown-type
+  area: classload
+  feature: "an unknown type"
+  readme: "Errors caught at class load"
+  since: "0.1.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: classload-unknown-preset
+  area: classload
+  feature: "an unknown normalize: or format: preset"
+  readme: "Errors caught at class load"
+  since: "0.9.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: classload-format-not-regexp
+  area: classload
+  feature: "a format: that is neither a Regexp nor a preset"
+  readme: "Errors caught at class load"
+  since: "0.9.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: classload-string-only-options
+  area: classload
+  feature: "format:, length: or normalize: on a non-:string field"
+  readme: "Errors caught at class load"
+  since: "0.1.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: classload-length-in-bounds
+  area: classload
+  feature: "malformed length: or in: (negative or fractional end, String in:, non-list)"
+  readme: "Errors caught at class load"
+  since: "0.1.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.12.0"]
+- id: classload-in-member-uncastable
+  area: classload
+  feature: "an in: member the field's type cannot cast, or incomparable Range endpoints"
+  readme: "Errors caught at class load"
+  since: "0.9.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: classload-unsatisfiable-bound
+  area: classload
+  feature: "a bound no value could satisfy"
+  readme: "Errors caught at class load"
+  since: "0.7.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: classload-datetime-nanosecond
+  area: classload
+  feature: "a Time in:, default: or example: finer than a nanosecond on :datetime"
+  readme: "Errors caught at class load"
+  since: "0.12.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.12.0", "0.13.1"]
+- id: classload-not-callable
+  area: classload
+  feature: "validate: or transform: that isn't callable"
+  readme: "Errors caught at class load"
+  since: "0.1.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: classload-default-violates
+  area: classload
+  feature: "a default: or example: that violates its own contract"
+  readme: "Errors caught at class load"
+  since: "0.1.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: classload-nil-not-nullable
+  area: classload
+  feature: "default: nil or example: nil on a non-nullable field"
+  readme: "Errors caught at class load"
+  since: "0.6.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: classload-json-default
+  area: classload
+  feature: "a :json default:/example: that is not a Hash or breaks its bounds"
+  readme: "Errors caught at class load"
+  since: "0.6.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.13.1"]
+- id: classload-max-depth
+  area: classload
+  feature: "a max_depth: that isn't a positive Integer"
+  readme: "Errors caught at class load"
+  since: "0.6.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: classload-required-with-default
+  area: classload
+  feature: "required: true combined with default:"
+  readme: "Errors caught at class load"
+  since: "0.9.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: classload-type-and-block
+  area: classload
+  feature: "a field given both a type and a nested block, or an array with of: and a block"
+  readme: "Errors caught at class load"
+  since: "0.1.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: classload-empty-contract
+  area: classload
+  feature: "an empty contract or an empty nested block"
+  readme: "Errors caught at class load"
+  since: "0.1.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: classload-finalize-misuse
+  area: classload
+  feature: "finalize declared twice, without a block, nested, or in a field group"
+  readme: "Errors caught at class load"
+  since: "0.1.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: classload-use-misuse
+  area: classload
+  feature: "use given a non-group, both only: and except:, an unknown name, or an empty selection"
+  readme: "Errors caught at class load"
+  since: "0.7.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: classload-empty-group
+  area: classload
+  feature: "a field group with no fields, or Permittable.fields without a block"
+  readme: "Errors caught at class load"
+  since: "0.7.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: classload-no-block-or-bad-unknown
+  area: classload
+  feature: "permit_params without a block, or an invalid unknown: mode"
+  readme: "Errors caught at class load"
+  since: "0.1.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: classload-root-single-key
+  area: classload
+  feature: "a root: that isn't a single key"
+  readme: "Errors caught at class load"
+  since: "0.5.1"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: classload-invalid-mode
+  area: classload
+  feature: "an invalid mode:, mode=, error_format= or check_column_types= value"
+  readme: "Errors caught at class load"
+  since: "0.4.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: classload-column-type-mismatch
+  area: classload
+  feature: "a field whose type disagrees with its column's under check_column_types"
+  readme: "Errors caught at class load"
+  since: "0.9.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: classload-bad-model
+  area: classload
+  feature: "a model: that isn't an ActiveRecord class, or model: true that can't be inferred"
+  readme: "Errors caught at class load"
+  since: "0.1.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: []
+- id: cl-0_13_1-1
+  area: changelog
+  feature: "an array example: written with date parts is exported as the date it spells"
+  readme: "Exporting OpenAPI (docs that cannot drift)"
+  since: "0.13.1"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.13.1"]
+- id: cl-0_13_1-2
+  area: changelog
+  feature: "a midnight-UTC Time sent to a :date before 1582 reads as the day it names"
+  readme: "Types and strict coercion"
+  since: "0.13.1"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.13.1"]
+- id: cl-0_13_1-3
+  area: changelog
+  feature: "a pre-1582 DateTime reads correctly without ActiveSupport"
+  readme: "Types and strict coercion"
+  since: "0.13.1"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.13.1"]
+- id: cl-0_12_0-1
+  area: changelog
+  feature: "a :date reads a Time or DateTime only at midnight UTC"
+  readme: "Types and strict coercion"
+  since: "0.12.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.12.0"]
+- id: cl-0_12_0-2
+  area: changelog
+  feature: "a :datetime string is read as Gregorian, and an unhonourable zone is refused"
+  readme: "Types and strict coercion"
+  since: "0.12.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.12.0"]
+- id: cl-0_12_0-3
+  area: changelog
+  feature: "a :decimal that underflowed to zero is invalid_type"
+  readme: "Types and strict coercion"
+  since: "0.12.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.12.0"]
+- id: cl-0_12_0-4
+  area: changelog
+  feature: "a :decimal string whose plain form would dwarf the request is invalid_type"
+  readme: "Types and strict coercion"
+  since: "0.12.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.12.0"]
+- id: cl-0_12_0-5
+  area: changelog
+  feature: "a Numeric a cast cannot hold is invalid_type, never 0.0 or a raise"
+  readme: "Types and strict coercion"
+  since: "0.12.0"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.12.0"]
+- id: cl-0_12_0-6
+  area: changelog
+  feature: "a json column whose default is an array gets a TODO"
+  readme: "Generating draft contracts (permittable:generate)"
+  since: "0.12.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.12.0"]
+- id: cl-0_12_0-7
+  area: changelog
+  feature: "returning on reject_params and with_violation on accept_params raise"
+  readme: "Testing contracts (RSpec matchers)"
+  since: "0.12.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.12.0"]
+- id: cl-0_12_0-8
+  area: changelog
+  feature: "a :json default: reaches the action as a frozen string-keyed copy"
+  readme: "Free-form hashes (:json)"
+  since: "0.12.0"
+  plan: 3
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.12.0"]
+- id: cl-0_11_1-1
+  area: changelog
+  feature: "an array's default:/example: export withholds a sensitive sub-field"
+  readme: "Sensitive parameters and log redaction"
+  since: "0.11.1"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: cl-0_11_1-2
+  area: changelog
+  feature: "a sensitive field's in: list and format: pattern are not exported"
+  readme: "Sensitive parameters and log redaction"
+  since: "0.11.1"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: cl-0_11_1-3
+  area: changelog
+  feature: "a standalone Contract#call rejection is instrumented with action \"call\""
+  readme: "Instrumentation"
+  since: "0.11.1"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: cl-0_11_1-4
+  area: changelog
+  feature: "a :decimal accepts a Rational"
+  readme: "Types and strict coercion"
+  since: "0.11.1"
+  plan: 1
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: cl-0_11_1-5
+  area: changelog
+  feature: "an example: under transform: is published with the right type"
+  readme: "Exporting OpenAPI (docs that cannot drift)"
+  since: "0.11.1"
+  plan: 3
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: cl-0_11_1-6
+  area: changelog
+  feature: "verbs OpenAPI does not define are not exported"
+  readme: "Exporting OpenAPI (docs that cannot drift)"
+  since: "0.11.1"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: cl-0_11_1-7
+  area: changelog
+  feature: "optional-group route variants Rails never dispatches are not documented"
+  readme: "Exporting OpenAPI (docs that cannot drift)"
+  since: "0.11.1"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: cl-0_11_1-8
+  area: changelog
+  feature: "a rule's finalize is flagged x-permittable-finalize"
+  readme: "Exporting OpenAPI (docs that cannot drift)"
+  since: "0.11.1"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: cl-0_11_1-9
+  area: changelog
+  feature: "a required decimal, date or datetime exports minLength: 1"
+  readme: "Exporting OpenAPI (docs that cannot drift)"
+  since: "0.11.1"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: cl-0_11_1-10
+  area: changelog
+  feature: "editing an exported description does not rewrite the contract"
+  readme: "Exporting OpenAPI (docs that cannot drift)"
+  since: "0.11.1"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: cl-0_11_1-11
+  area: changelog
+  feature: "user_params.permit is not read as a rootless params.permit"
+  readme: "Generating draft contracts (permittable:generate)"
+  since: "0.11.1"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: cl-0_11_1-12
+  area: changelog
+  feature: "the generator reads a %i[...] list"
+  readme: "Generating draft contracts (permittable:generate)"
+  since: "0.11.1"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: cl-0_11_1-13
+  area: changelog
+  feature: "the generator reads permit and expect without parentheses, and String roots"
+  readme: "Generating draft contracts (permittable:generate)"
+  since: "0.11.1"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: cl-0_11_1-14
+  area: changelog
+  feature: "a draft covers only the actions the controller defines"
+  readme: "Generating draft contracts (permittable:generate)"
+  since: "0.11.1"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: cl-0_11_1-15
+  area: changelog
+  feature: "the generator finds a permitted primary key or timestamp"
+  readme: "Generating draft contracts (permittable:generate)"
+  since: "0.11.1"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: cl-0_11_1-16
+  area: changelog
+  feature: "a matcher instruments a rejection with the real controller and action"
+  readme: "Testing contracts (RSpec matchers)"
+  since: "0.11.1"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: cl-0_11_1-17
+  area: changelog
+  feature: "with_default on a :json field accepts either key spelling"
+  readme: "Testing contracts (RSpec matchers)"
+  since: "0.11.1"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: cl-0_11_1-18
+  area: changelog
+  feature: "a matcher's failure message names the right kind of subject"
+  readme: "Testing contracts (RSpec matchers)"
+  since: "0.11.1"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.1"]
+- id: cl-0_11_0-1
+  area: changelog
+  feature: "colliding operationIds are ranked by the operation itself"
+  readme: "Exporting OpenAPI (docs that cannot drift)"
+  since: "0.11.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.0"]
+- id: cl-0_11_0-2
+  area: changelog
+  feature: "optional route segments are expanded as Rails matches them"
+  readme: "Exporting OpenAPI (docs that cannot drift)"
+  since: "0.11.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.11.0"]
+- id: scope-rails-below-7-2
+  area: out-of-scope
+  feature: "README Compatibility: Rails 6.1 to 7.1 are supported"
+  readme: "Compatibility"
+  since: "0.1.0"
+  status: "ngoài phạm vi"
+  question: null
+  reason: "The lab runs Rails 7.2, 8.0 and 8.1 only"
+  also: []
+  changelog: []
+- id: scope-ruby-ci-matrix
+  area: out-of-scope
+  feature: "README Compatibility: CI over Ruby 3.2 to 4.0 and ActiveSupport 6.1 to 8.1"
+  readme: "Compatibility"
+  since: "0.1.0"
+  status: "ngoài phạm vi"
+  question: null
+  reason: "The lab runs one Ruby (3.3) and three Rails versions; the gem's own CI covers the wider matrix"
+  also: []
+  changelog: []
+- id: scope-activesupport-only-install
+  area: out-of-scope
+  feature: "README Compatibility: the built gem installs and works with only activesupport"
+  readme: "Compatibility"
+  since: "0.1.0"
+  status: "ngoài phạm vi"
+  question: null
+  reason: "The lab apps always bundle Rails; the gem's own runtime-deps CI job proves this"
+  also: []
+  changelog: []
+- id: scope-benchmark
+  area: out-of-scope
+  feature: "benchmark/overhead.rb: contract versus bare params.permit"
+  readme: "Development"
+  since: "0.1.0"
+  status: "ngoài phạm vi"
+  question: null
+  reason: "Performance measurement, not behaviour; belongs to the gem's own repo"
+  also: []
+  changelog: []
+- id: scope-docs-comparison
+  area: out-of-scope
+  feature: "docs/comparison.md: comparison with params.permit, expect, rails_param and others"
+  readme: "Why"
+  since: "0.1.0"
+  status: "ngoài phạm vi"
+  question: null
+  reason: "Prose comparison with other libraries, nothing to execute"
+  also: []
+  changelog: []
+- id: scope-development-section
+  area: out-of-scope
+  feature: "README Development: bundle, rspec, rubocop and the release process"
+  readme: "Development"
+  since: "0.1.0"
+  status: "ngoài phạm vi"
+  question: null
+  reason: "Gem repository tooling, not behaviour of the gem inside an app"
+  also: []
+  changelog: []

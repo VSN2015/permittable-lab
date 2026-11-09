@@ -34,6 +34,7 @@ services:
     volumes:
       - ./apps/rails-8_1:/app
       - ./shared:/app/shared
+      - ./docs:/app/docs:ro
       - bundle-8_1:/bundle
       - &permittable-gem
         type: bind
