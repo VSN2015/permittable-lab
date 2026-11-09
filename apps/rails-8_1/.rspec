@@ -1,0 +1,3 @@
+--default-path shared/spec
+--require spec_helper
+--format progress

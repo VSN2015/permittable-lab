@@ -52,3 +52,5 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 end
+
+eval_gemfile File.expand_path("shared/gemfile.rb", __dir__)
