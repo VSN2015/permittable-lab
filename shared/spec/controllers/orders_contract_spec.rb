@@ -72,7 +72,7 @@ RSpec.describe OrdersController, since: "0.12.0",
   end
 
   it "raises on a qualified negated permit_param" do
-    expect { expect(described_class).not_to permit_param(:status).for_action(:create).required }.to raise_error(ArgumentError)
+    expect { expect(described_class).not_to permit_param(:status).for_action(:create).required }.to raise_error(ArgumentError, /cannot take qualifiers/)
   end
 
   it "raises when returning is chained onto reject_params" do
