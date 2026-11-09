@@ -75,6 +75,7 @@ module Lab
         out << "#{label}: status #{AWAITING} needs a question" if row["question"].to_s.strip.empty?
       elsif status == OUT_OF_SCOPE
         out << "#{label}: status #{OUT_OF_SCOPE} needs a reason" if row["reason"].to_s.strip.empty?
+        out << "#{label}: status #{OUT_OF_SCOPE} needs area #{OUT_AREA}" unless row["area"] == OUT_AREA
       elsif path_status?(status)
         out.concat(path_problems(label, status, spec_root, covering: true))
       else

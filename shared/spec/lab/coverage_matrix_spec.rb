@@ -97,6 +97,10 @@ RSpec.describe Lab::CoverageMatrix, covers: %w[] do
     expect_problem([good("area" => "out-of-scope", "plan" => nil, "status" => OUT)], "r1")
   end
 
+  it "reports an out-of-scope status on a row whose area is not out-of-scope" do
+    expect_problem([good("plan" => nil, "status" => OUT, "reason" => "x")], "r1")
+  end
+
   it("reports a status outside the four forms") { expect_problem([good("status" => "done")], "r1") }
   it("reports a since that is not a version") { expect_problem([good("since" => "soon")], "r1") }
   it("reports a non-string since") { expect_problem([good("since" => 0.6)], "r1") }
