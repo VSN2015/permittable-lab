@@ -15,4 +15,5 @@ slug="${version/./_}"
 [[ -d "apps/rails-$slug" ]] || { echo "missing apps/rails-$slug" >&2; usage; }
 
 rm -f "apps/rails-$slug/tmp/lab-report.json"
-exec docker compose run --rm -T "rails-$slug" bundle exec rspec "$@"
+exec docker compose run --rm -T "rails-$slug" bash -c \
+  'RAILS_ENV=test bin/rails db:create db:migrate && exec bundle exec rspec "$@"' --  "$@"
