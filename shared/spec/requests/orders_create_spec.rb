@@ -20,6 +20,10 @@ RSpec.describe "Tao don (create order)", type: :request, since: "0.12.0",
     expect(doc.css(%(select[name="order[delivery_on(1i)]"]))).not_to be_empty
     expect(doc.css(%(input[type=checkbox][name="order[services][]"]))).not_to be_empty
     expect(doc.css(%(input[type=hidden][name="order[services][]"]))[0]["value"]).to eq ""
+    %i[vi en].each do |locale|
+      get new_order_path(locale: locale)
+      expect(response.body).not_to match(/translation[ _]missing/i)
+    end
     %w[customer shipping_address].zip([%w[name email phone], %w[line1 city postcode]]).each do |group, keys|
       keys.each { |k| expect(doc.css(%(input[name="order[#{group}][#{k}]"]))).not_to be_empty }
     end

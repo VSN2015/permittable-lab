@@ -87,7 +87,7 @@ RSpec.describe "Tạo đơn through the real form (headless Chromium)", type: :s
     select "15", from: "order_delivery_on_3i"
     select "Tháng 2", from: "order_delivery_on_2i"
     select (Date.current.year + 1).to_s, from: "order_delivery_on_1i"
-    select "Translation missing: vi.datetime.prompts.day", from: "order_delivery_on_3i"
+    select "Ngày", from: "order_delivery_on_3i"
     click_button "Tạo đơn", exact: true
     expect(page).to have_css(%(li[data-param="order.delivery_on"][data-code="missing"]))
     expect(Order.count).to eq(0)
