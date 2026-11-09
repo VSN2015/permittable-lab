@@ -33,6 +33,7 @@ patched by `shared/bin/patch_app.rb`, and run the same code and specs from `shar
 | 8.0 | 3080 |
 | 8.1 | 3081 |
 
+Ports are published on `127.0.0.1` only, so the apps are not reachable from other machines.
 Each serves `/` (shows the Rails version), `/orders`, and `/inspector/last` (dev/test only).
 
 ## Adding a spec
@@ -43,7 +44,8 @@ Each serves `/` (shows the Rails version), `/orders`, and `/inspector/last` (dev
 3. Use `since: "x.y.z"` only when the behaviour arrived in that gem version. It is about gem versions
    only, never Rails versions. An untagged spec applies to every gem version, and the tag is never used
    to skip a red case.
-4. Flip the row's status in the matrix to covered and run `bin/coverage-report --strict`.
+4. Flip the row's status in the matrix to covered and run `bin/coverage-report` to see the summary and what is
+   left. `bin/coverage-report --strict` fails while any row is `chưa phủ`.
 
 ## Anti-goals
 

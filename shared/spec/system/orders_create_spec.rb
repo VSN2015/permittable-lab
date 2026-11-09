@@ -1,6 +1,7 @@
 # README: Unknown parameters; Localizing default messages (I18n)
 RSpec.describe "Tạo đơn through the real form (headless Chromium)", type: :system, since: "0.12.0" do
   before do
+    Inspector::Store.clear
     @original_forgery_protection = ActionController::Base.allow_forgery_protection
     ActionController::Base.allow_forgery_protection = true
   end
