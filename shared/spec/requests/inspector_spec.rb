@@ -1,6 +1,6 @@
 # README: Instrumentation; Sensitive parameters and log redaction
 RSpec.describe "Inspector panel", type: :request, since: "0.12.0",
-  covers: %w[opt-sensitive event-payload event-once-per-request] do
+  covers: %w[opt-sensitive event-payload] do
   before { Inspector::Store.clear }
   after { Inspector::Store.clear }
 
@@ -55,10 +55,18 @@ RSpec.describe "Inspector panel", type: :request, since: "0.12.0",
   end
 
   it "does not change the response or the event count" do
-    count = 0
-    sub = ActiveSupport::Notifications.subscribe("invalid_parameters.permittable") { |*| count += 1 }
+    payloads = []
+    sub = ActiveSupport::Notifications.subscribe("invalid_parameters.permittable") { |*, payload| payloads << payload }
     invalid_post
-    expect(count).to eq 1
+    expect(payloads.size).to eq 1
+    # README Instrumentation: controller "users", action "create", mode :enforce, details [{ param:, code: }]
+    payload = payloads.first
+    expect(payload[:controller]).to eq "orders"
+    expect(payload[:action]).to eq "create"
+    expect(payload[:mode]).to eq :enforce
+    detail = payload[:details].find { |d| d[:param] == "order.customer.email" }
+    expect(detail).not_to be_nil
+    expect(detail[:code].to_s).to eq "format"
     expect(response).to have_http_status(422)
     expect(response.body).to include("sai định dạng")
     expect(panel.css("li[data-param='order.customer.email'][data-code='format']")).not_to be_empty

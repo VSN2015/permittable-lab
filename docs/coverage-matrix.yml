@@ -1711,8 +1711,8 @@
   feature: "a rejection is instrumented once per request"
   readme: "Instrumentation"
   since: "0.8.0"
-  plan: 1
-  status: "shared/spec/requests/inspector_spec.rb"
+  plan: 2
+  status: "chưa phủ"
   question: null
   reason: null
   also: []
