@@ -9,6 +9,7 @@ require_relative "support/order_payloads"
 ENV["RAILS_ENV"] ||= "test"
 require File.expand_path("config/environment", Dir.pwd)
 require "rspec/rails"
+require_relative "support/capybara"
 
 ActiveRecord::Migration.check_all_pending!
 
