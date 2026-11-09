@@ -1,4 +1,10 @@
 vi:
+  date:
+    order: [day, month, year]
+    month_names: [~, Tháng 1, Tháng 2, Tháng 3, Tháng 4, Tháng 5, Tháng 6, Tháng 7, Tháng 8, Tháng 9, Tháng 10, Tháng 11, Tháng 12]
+    abbr_month_names: [~, Th1, Th2, Th3, Th4, Th5, Th6, Th7, Th8, Th9, Th10, Th11, Th12]
+    day_names: [Chủ nhật, Thứ hai, Thứ ba, Thứ tư, Thứ năm, Thứ sáu, Thứ bảy]
+    abbr_day_names: [CN, T2, T3, T4, T5, T6, T7]
   lab:
     nav:
       home: Trang chủ
@@ -6,3 +12,46 @@ vi:
       new_order: Tạo đơn
       locale_vi: Tiếng Việt
       locale_en: English
+    orders:
+      submit: Tạo đơn
+      submit_button: Tạo đơn (nút)
+      index:
+        heading: Danh sách đơn hàng
+      new:
+        heading: Tạo đơn
+      services:
+        gift_wrap: Gói quà
+        insurance: Bảo hiểm
+        signature: Ký nhận
+      fields:
+        customer: Khách hàng
+        name: Họ tên
+        email: Email
+        phone: Số điện thoại
+        shipping_address: Địa chỉ giao hàng
+        line1: Địa chỉ
+        city: Thành phố
+        postcode: Mã bưu chính
+        delivery_on: Ngày giao
+        pickup_at: Giờ lấy hàng
+        delivery_slot: Khung giờ giao
+        priority: Ưu tiên
+        coupon_code: Mã giảm giá
+        note: Ghi chú
+        services: Dịch vụ
+        items: Sản phẩm
+        sku: Mã SKU
+        quantity: Số lượng
+        unit_price: Đơn giá
+        code: Mã đơn
+        status: Trạng thái
+        total: Tổng tiền
+  permittable:
+    errors:
+      missing: "là bắt buộc"
+      invalid_type: "sai kiểu dữ liệu"
+      inclusion: "không thuộc danh sách cho phép"
+      format: "sai định dạng"
+      length: "sai độ dài"
+      unknown: "không phải tham số hợp lệ"
+      invalid: "không hợp lệ"

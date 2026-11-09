@@ -4,6 +4,7 @@ require "lab/since"
 require "lab/report_builder"
 require "lab/report_formatter"
 require "lab/hygiene"
+require_relative "support/order_payloads"
 
 ENV["RAILS_ENV"] ||= "test"
 require File.expand_path("config/environment", Dir.pwd)

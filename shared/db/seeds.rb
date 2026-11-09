@@ -23,7 +23,7 @@ orders.each_with_index do |(code, status, priority, customer_index, items), inde
     order.priority = priority
     order.delivery_on = Date.new(2030, 1, 1) + index
     order.services = priority == "express" ? %w[signature] : []
-    order.shipping_address = { "street" => "#{index + 1} Le Loi", "city" => "Ho Chi Minh" }
+    order.shipping_address = { "line1" => "#{index + 1} Le Loi", "city" => "Ho Chi Minh", "postcode" => "700000" }
     items.each do |sku, quantity, unit_price|
       order.items.build(sku: sku, quantity: quantity, unit_price: unit_price)
     end

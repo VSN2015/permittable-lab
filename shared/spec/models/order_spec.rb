@@ -21,8 +21,7 @@ RSpec.describe Order do
 
   it "defaults status to pending" do
     order = build_order
-    expect(order.status).to eq "pending"
-    expect(Order.statuses.keys).to include("pending")
+    expect(order).to be_pending
   end
 
   it "is invalid without items" do
@@ -40,7 +39,7 @@ RSpec.describe Order do
     let(:attrs) do
       {
         "customer" => { "name" => "Binh", "email" => "b@example.com", "phone" => "0900" },
-        "shipping_address" => { "street" => "1 Main", "city" => "HCM" },
+        "shipping_address" => { "line1" => "1 Main", "city" => "HCM", "postcode" => "70000" },
         "delivery_on" => Date.new(2030, 1, 2),
         "services" => %w[gift_wrap],
         "items_attributes" => [

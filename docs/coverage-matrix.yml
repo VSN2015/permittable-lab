@@ -7,7 +7,7 @@
   readme: "Declaring a contract"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -18,7 +18,7 @@
   readme: "Declaring a contract"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -40,7 +40,7 @@
   readme: "Declaring a contract"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -51,7 +51,7 @@
   readme: "Declaring a contract"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -128,7 +128,7 @@
   readme: "The field DSL"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -139,7 +139,7 @@
   readme: "The field DSL"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -150,7 +150,7 @@
   readme: "The field DSL"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -161,7 +161,7 @@
   readme: "The field DSL"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -172,7 +172,7 @@
   readme: "The field DSL"
   since: "0.11.1"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -205,7 +205,7 @@
   readme: "Field options"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -216,7 +216,7 @@
   readme: "Field options"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -249,7 +249,7 @@
   readme: "Field options"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -260,7 +260,7 @@
   readme: "Field options"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -271,7 +271,7 @@
   readme: "Field options"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -293,7 +293,7 @@
   readme: "Field options"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -337,7 +337,7 @@
   readme: "Field options"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -359,7 +359,7 @@
   readme: "Field options"
   since: "0.9.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -535,7 +535,7 @@
   readme: "Explicit nulls (nullable:)"
   since: "0.6.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -590,7 +590,7 @@
   readme: "`format:` presets"
   since: "0.9.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -656,7 +656,7 @@
   readme: "Types and strict coercion"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -678,7 +678,7 @@
   readme: "Types and strict coercion"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -700,7 +700,7 @@
   readme: "Types and strict coercion"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -711,7 +711,7 @@
   readme: "Types and strict coercion"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -755,7 +755,7 @@
   readme: "Explicit nulls (nullable:)"
   since: "0.6.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -799,7 +799,7 @@
   readme: "Absence, defaults, and partial updates"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -810,7 +810,7 @@
   readme: "Absence, defaults, and partial updates"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -821,7 +821,7 @@
   readme: "Absence, defaults, and partial updates"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -832,7 +832,7 @@
   readme: "Absence, defaults, and partial updates"
   since: "0.12.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -854,7 +854,7 @@
   readme: "Violations and error responses"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -865,7 +865,7 @@
   readme: "Violations and error responses"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -876,7 +876,7 @@
   readme: "Violations and error responses"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -887,7 +887,7 @@
   readme: "Violations and error responses"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -898,7 +898,7 @@
   readme: "Violations and error responses"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -909,7 +909,7 @@
   readme: "Violations and error responses"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -942,7 +942,7 @@
   readme: "Violations and error responses"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -953,7 +953,7 @@
   readme: "Violations and error responses"
   since: "0.8.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -964,7 +964,7 @@
   readme: "Violations and error responses"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -975,7 +975,7 @@
   readme: "Violations and error responses"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -1008,7 +1008,7 @@
   readme: "Violations and error responses"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -1019,7 +1019,7 @@
   readme: "Violations and error responses"
   since: "0.12.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -1052,7 +1052,7 @@
   readme: "Localizing default messages (I18n)"
   since: "0.5.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -1074,7 +1074,7 @@
   readme: "Localizing default messages (I18n)"
   since: "0.5.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -1195,7 +1195,7 @@
   readme: "Unknown parameters"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -1206,7 +1206,7 @@
   readme: "Unknown parameters"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -1316,7 +1316,7 @@
   readme: "Types and strict coercion"
   since: "0.12.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -1327,7 +1327,7 @@
   readme: "Types and strict coercion"
   since: "0.12.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -1338,7 +1338,7 @@
   readme: "Types and strict coercion"
   since: "0.12.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -1349,7 +1349,7 @@
   readme: "Types and strict coercion"
   since: "0.12.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -1360,7 +1360,7 @@
   readme: "Types and strict coercion"
   since: "0.12.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []
@@ -1393,7 +1393,7 @@
   readme: "Reusing fields (Permittable.fields and use)"
   since: "0.7.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
   also: []

@@ -1,0 +1,45 @@
+<h1><%= t("lab.orders.new.heading") %></h1>
+<%= render "orders/violations", violations: @violations %>
+<%= form_with model: @order, url: orders_path do |f| %>
+  <fieldset>
+    <legend><%= t("lab.orders.fields.customer") %></legend>
+    <%= f.fields_for :customer, Customer.new do |c| %>
+      <p><%= c.label :name, t("lab.orders.fields.name") %> <%= c.text_field :name %></p>
+      <p><%= c.label :email, t("lab.orders.fields.email") %> <%= c.text_field :email %></p>
+      <p><%= c.label :phone, t("lab.orders.fields.phone") %> <%= c.text_field :phone %></p>
+    <% end %>
+  </fieldset>
+  <fieldset>
+    <legend><%= t("lab.orders.fields.shipping_address") %></legend>
+    <%= f.fields_for :shipping_address, ActiveSupport::OrderedOptions.new do |s| %>
+      <p><%= s.label :line1, t("lab.orders.fields.line1") %> <%= s.text_field :line1 %></p>
+      <p><%= s.label :city, t("lab.orders.fields.city") %> <%= s.text_field :city %></p>
+      <p><%= s.label :postcode, t("lab.orders.fields.postcode") %> <%= s.text_field :postcode %></p>
+    <% end %>
+  </fieldset>
+  <p><%= f.label :delivery_on, t("lab.orders.fields.delivery_on") %>
+     <%= f.date_select :delivery_on, prompt: true, start_year: Date.current.year, end_year: Date.current.year + 2 %></p>
+  <p><%= f.label :pickup_at, t("lab.orders.fields.pickup_at") %>
+     <%= f.datetime_select :pickup_at, include_blank: true %></p>
+  <p><%= f.label :delivery_slot, t("lab.orders.fields.delivery_slot") %>
+     <%= f.time_select :delivery_slot, include_blank: true %></p>
+  <p><%= f.label :priority, t("lab.orders.fields.priority") %> <%= f.select :priority, Order::PRIORITIES %></p>
+  <p><%= f.label :coupon_code, t("lab.orders.fields.coupon_code") %> <%= f.text_field :coupon_code %></p>
+  <p><%= f.label :note, t("lab.orders.fields.note") %> <%= f.text_area :note %></p>
+  <fieldset>
+    <legend><%= t("lab.orders.fields.services") %></legend>
+    <%= f.collection_check_boxes :services, Order::SERVICES, :to_s, :to_s do |b| %>
+      <%= b.check_box %> <%= b.label { t("lab.orders.services.#{b.value}") } %>
+    <% end %>
+  </fieldset>
+  <fieldset>
+    <legend><%= t("lab.orders.fields.items") %></legend>
+    <%= f.fields_for :items, [OrderItem.new] do |i| %>
+      <p><%= i.label :sku, t("lab.orders.fields.sku") %> <%= i.text_field :sku %></p>
+      <p><%= i.label :quantity, t("lab.orders.fields.quantity") %> <%= i.text_field :quantity %></p>
+      <p><%= i.label :unit_price, t("lab.orders.fields.unit_price") %> <%= i.text_field :unit_price %></p>
+    <% end %>
+  </fieldset>
+  <%= f.submit t("lab.orders.submit") %>
+  <%= button_tag t("lab.orders.submit_button") %>
+<% end %>

@@ -18,7 +18,6 @@ class Order < ApplicationRecord
   def self.build_from_contract(attrs)
     attrs = attrs.to_h.stringify_keys
     customer_attrs = attrs.delete("customer")
-    attrs.delete("customer_attributes")
     new(attrs).tap { |order| order.customer = Customer.new(customer_attrs) if customer_attrs }
   end
 

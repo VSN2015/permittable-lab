@@ -1,0 +1,9 @@
+<h1><%= @order.code %></h1>
+<p><%= t("lab.orders.fields.customer") %>: <%= @order.customer.name %> (<%= @order.customer.email %>)</p>
+<p><%= t("lab.orders.fields.status") %>: <%= @order.status %></p>
+<p><%= t("lab.orders.fields.total") %>: <span class="total"><%= number_with_precision(@order.total, precision: 2) %></span></p>
+<table id="items">
+  <% @order.items.each do |item| %>
+    <tr><td class="sku"><%= item.sku %></td><td><%= item.quantity %></td><td><%= item.unit_price %></td></tr>
+  <% end %>
+</table>

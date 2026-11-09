@@ -7,9 +7,11 @@
   </head>
   <body>
     <nav id="lab-nav">
-      <a href="/?locale=<%= I18n.locale %>"><%= t("lab.nav.home") %></a>
-      <a href="/orders?locale=<%= I18n.locale %>"><%= t("lab.nav.orders") %></a>
-      <a href="/orders/new?locale=<%= I18n.locale %>"><%= t("lab.nav.new_order") %></a>
+      <%= link_to t("lab.nav.home"), root_path %>
+      <%= link_to t("lab.nav.orders"), orders_path %>
+      <%= link_to t("lab.nav.new_order"), new_order_path %>
+      <%= link_to "Tiếng Việt", url_for(locale: "vi"), id: "locale-vi" %>
+      <%= link_to "English", url_for(locale: "en"), id: "locale-en" %>
       <span id="lab-gem-label"><%= lab_gem_label %></span>
     </nav>
     <main><%= yield %></main>
