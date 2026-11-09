@@ -1,7 +1,7 @@
 module Lab
   module ReportBuilder
     def self.build(rails_version:, ruby_version:, gem_source:, gem_version:, requested_version:,
-                   examples:, not_applicable:, errors_outside_examples:)
+                   examples:, not_applicable:, filtered_out:, errors_outside_examples:)
       failed = examples.select { |e| e[:status] == :failed }
       held = examples.count { |e| e[:status] == :pending }
       {
@@ -14,7 +14,8 @@ module Lab
         pending: held,
         errors_outside_examples: errors_outside_examples,
         failed: failed.map { |e| { location: e[:location], description: e[:description] } },
-        not_applicable: not_applicable
+        not_applicable: not_applicable,
+        filtered_out: filtered_out
       }
     end
   end

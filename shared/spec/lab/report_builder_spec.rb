@@ -6,7 +6,7 @@ RSpec.describe Lab::ReportBuilder do
     Lab::ReportBuilder.build(
       rails_version: "8.1.0", ruby_version: "3.3.0", gem_source: :rubygems,
       gem_version: "0.12.0", requested_version: "0.12.0",
-      examples: examples, not_applicable: [], errors_outside_examples: 0, **extra
+      examples: examples, not_applicable: [], filtered_out: [], errors_outside_examples: 0, **extra
     )
   end
 
@@ -35,10 +35,15 @@ RSpec.describe Lab::ReportBuilder do
     expect(r[:errors_outside_examples]).to eq 2
   end
 
+  it "carries filtered_out through" do
+    f = [{ description: "d", location: "./a_spec.rb:3" }]
+    expect(build([], filtered_out: f)[:filtered_out]).to eq f
+  end
+
   it "has exactly the documented keys" do
     expect(build([]).keys).to eq(
       [:rails_version, :ruby_version, :gem, :examples, :green, :failures, held.to_sym,
-       :errors_outside_examples, :failed, :not_applicable]
+       :errors_outside_examples, :failed, :not_applicable, :filtered_out]
     )
     expect(build([])[:gem]).to eq(source: :rubygems, requested_version: "0.12.0", version: "0.12.0")
   end

@@ -9,6 +9,13 @@ module Lab
     FILTER_WORDS = %w[filter_run_excluding filter_run_when_matching filter_run_including filter_run exclusion_filter].freeze
     FILTERS = FILTER_WORDS.map { |w| [/(?<![\w])#{w}(?![\w])/, w] }.freeze
     ALLOWED_FILTER_FILES = %w[shared/spec/spec_helper.rb].freeze
+    # Examples must run on every Rails version, so no metadata filter and no version branching in specs.
+    EXAMPLE_FILTERS = [
+      [/(?<![\w:])(if|unless):(?!:)/, "if:/unless: example metadata"],
+      [/:(if|unless)\s*=>/, "if:/unless: example metadata"]
+    ].freeze
+    RAILS_VERSION = [[/Rails\.(version|gem_version)(?![\w])|Rails::VERSION/, "Rails version comparison"]].freeze
+    ALLOWED_RAILS_VERSION_FILES = %w[shared/spec/spec_helper.rb shared/spec/requests/home_spec.rb].freeze
     SYSTEM = [
       [/driver\.post/, "driver.post"], [/driver\.submit/, "driver.submit"], [/(?<![\w])fetch\(/, "fetch("],
       [/XMLHttpRequest/, "XMLHttpRequest"], [/requestSubmit/, "requestSubmit"], [/\.submit\(/, ".submit("]
@@ -20,6 +27,11 @@ module Lab
       allowed_filter = normalized.include?("shared/lib/lab/") ||
         ALLOWED_FILTER_FILES.any? { |f| normalized == f || normalized.end_with?("/" + f) }
       patterns.concat(FILTERS) unless allowed_filter
+      if normalized.include?("shared/spec/")
+        patterns.concat(EXAMPLE_FILTERS)
+        allowed_version = ALLOWED_RAILS_VERSION_FILES.any? { |f| normalized == f || normalized.end_with?("/" + f) }
+        patterns.concat(RAILS_VERSION) unless allowed_version
+      end
       patterns.concat(SYSTEM) if normalized.include?("shared/spec/system/")
 
       out = []

@@ -23,17 +23,23 @@ module Lab
         { description: e.full_description, location: e.location, status: e.execution_result.status,
           since: e.metadata[:since] }
       end
-      not_applicable = world_examples.reject do |e|
+      applicable, newer = world_examples.partition do |e|
         Lab::Since.applies?(e.metadata[:since], source: source, gem_version: gem_version)
-      end.map do |e|
+      end
+      not_applicable = newer.map do |e|
         { description: e.full_description, location: e.location, since: e.metadata[:since] }
+      end
+      # Declared, applicable to this gem, yet never run: a silent filter (if:/unless:, --tag, ...).
+      ran_ids = notification.examples.map(&:id)
+      filtered_out = applicable.reject { |e| ran_ids.include?(e.id) }.map do |e|
+        { description: e.full_description, location: e.location }
       end
 
       report = Lab::ReportBuilder.build(
         rails_version: Rails.version, ruby_version: RUBY_VERSION,
         gem_source: source.source, gem_version: gem_version,
         requested_version: source.requested_version,
-        examples: examples, not_applicable: not_applicable,
+        examples: examples, not_applicable: not_applicable, filtered_out: filtered_out,
         errors_outside_examples: notification.errors_outside_of_examples_count
       )
       path = Pathname.new(path.to_s)

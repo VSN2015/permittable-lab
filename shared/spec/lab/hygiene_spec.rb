@@ -41,6 +41,26 @@ RSpec.describe Lab::Hygiene do
     expect(Lab::Hygiene.violations("benefit = 1\nskipper = 2\n", "shared/spec/a_spec.rb")).to eq []
   end
 
+  it "bans if:/unless: example metadata in specs (built by concatenation)" do
+    ["i" + "f: -> { true }", "unl" + "ess: ->(v) { v }", ":i" + "f => 1", ":unl" + "ess => 1"].each do |meta|
+      src = "it \"x\", #{meta} do\nend\n"
+      expect(Lab::Hygiene.violations(src, "shared/spec/requests/a_spec.rb")).not_to be_empty, meta
+    end
+    expect(Lab::Hygiene.violations("x = a ? b : c\nputs(\"i\" + \"f:\")\nnotify: 1\n", "shared/spec/requests/a_spec.rb")).to eq []
+    expect(Lab::Hygiene.violations("module A; end # i" + "f: here\n", "shared/spec/requests/a_spec.rb")).to eq []
+  end
+
+  it "bans Rails version comparisons in specs except spec_helper and home_spec" do
+    ["Rails." + "version", "Rails::" + "VERSION", "Rails." + "gem_version"].each do |w|
+      src = "x = #{w} >= \"8\"\n"
+      expect(Lab::Hygiene.violations(src, "shared/spec/requests/a_spec.rb")).not_to be_empty, w
+      expect(Lab::Hygiene.violations(src, "shared/spec/lab/a_spec.rb")).not_to be_empty, w
+      expect(Lab::Hygiene.violations(src, "shared/spec/spec_helper.rb")).to eq []
+      expect(Lab::Hygiene.violations(src, "shared/spec/requests/home_spec.rb")).to eq []
+      expect(Lab::Hygiene.violations(src, "shared/lib/lab/x.rb")).to eq []
+    end
+  end
+
   it "flags raw HTTP in system specs but not in request specs" do
     sample = "page.driver." + "post('/x')\n"
     expect(Lab::Hygiene.violations(sample, "shared/spec/system/a_spec.rb")).not_to be_empty

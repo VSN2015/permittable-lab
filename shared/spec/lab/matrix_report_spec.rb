@@ -6,7 +6,7 @@ RSpec.describe Lab::MatrixReport do
       "rails_version" => "8.1.4.1", "ruby_version" => "3.3.13",
       "gem" => { "source" => "local", "requested_version" => nil, "version" => "0.13.1" },
       "examples" => 5, "green" => 5, "failures" => 0, "pending" => 0,
-      "errors_outside_examples" => 0, "failed" => [], "not_applicable" => []
+      "errors_outside_examples" => 0, "failed" => [], "not_applicable" => [], "filtered_out" => []
     }.merge(overrides)
   end
 
@@ -63,6 +63,26 @@ RSpec.describe Lab::MatrixReport do
     expect(out).to include("pending: 2")
     expect(out).to include("errors outside examples: 1")
     expect(out).to include("log: tmp/x.log")
+  end
+
+  it "is red and lists the locations when examples were filtered out" do
+    dropped = [{ "description" => "quiet one", "location" => "./a_spec.rb:9" }]
+    r = row(report("filtered_out" => dropped))
+    expect(r.status).to eq :red
+    expect(r.red).to eq 1
+    out = Lab::MatrixReport.render([r])
+    expect(out).to include("RED")
+    expect(out).to include("filtered out: 1")
+    expect(out).to include("./a_spec.rb:9")
+    expect(out).to include("quiet one")
+  end
+
+  it "is failed_to_run when the report is for another Rails version" do
+    r = row(report("rails_version" => "8.0.2"), 0, version: "8.1")
+    expect(r.status).to eq :failed_to_run
+    expect(Lab::MatrixReport.render([r])).to include("report is Rails 8.0.2, expected 8.1")
+    expect(row(report("rails_version" => "8.10.0"), 0, version: "8.1").status).to eq :failed_to_run
+    expect(row(report("rails_version" => "8.1.4.1"), 0, version: "8.1").status).to eq :pass
   end
 
   it "computes the exit code" do
