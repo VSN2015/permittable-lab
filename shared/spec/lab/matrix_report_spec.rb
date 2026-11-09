@@ -48,6 +48,23 @@ RSpec.describe Lab::MatrixReport do
     expect(Lab::MatrixReport.render([row(nil, 2, version: "7.2")])).to include("FAILED TO RUN")
   end
 
+  it "explains each failed-to-run reason" do
+    log = ->(rep, st) { Lab::MatrixReport.render([Lab::MatrixReport.row(version: "8.1", report: rep, exit_status: st, log_path: "tmp/x.log")]) }
+    expect(log.(nil, 1)).to include("no report")
+    expect(log.(report("examples" => 0, "green" => 0), 0)).to include("nothing ran (0 examples)")
+    out = log.(report, 3)
+    expect(out).to include("exit 3 disagrees with report")
+    expect(out).not_to include("no report")
+  end
+
+  it "explains red rows caused by held examples or outside errors" do
+    rep = report("pending" => 2, "errors_outside_examples" => 1, "green" => 3)
+    out = Lab::MatrixReport.render([Lab::MatrixReport.row(version: "8.1", report: rep, exit_status: 1, log_path: "tmp/x.log")])
+    expect(out).to include("pending: 2")
+    expect(out).to include("errors outside examples: 1")
+    expect(out).to include("log: tmp/x.log")
+  end
+
   it "computes the exit code" do
     pass = row(report)
     expect(Lab::MatrixReport.exit_code([pass, pass])).to eq 0

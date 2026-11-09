@@ -2,12 +2,12 @@
 module Lab
   module MatrixReport
     Row = Struct.new(:version, :rails, :ruby, :gem_label, :green, :red, :not_applicable,
-                     :status, :failed, :na_list, :log_path)
+                     :status, :failed, :na_list, :log_path, :reason, :held, :outside)
 
     HEADER = %w[Rails Ruby Gem Green Red N/A Result].freeze
 
     def self.row(version:, report:, exit_status:, log_path: nil)
-      return Row.new(version, version, "-", "-", 0, 0, 0, :failed_to_run, [], [], log_path) if report.nil?
+      return Row.new(version, version, "-", "-", 0, 0, 0, :failed_to_run, [], [], log_path, "no report", 0, 0) if report.nil?
 
       failures = report["failures"].to_i
       held = report["pending"].to_i
@@ -16,16 +16,16 @@ module Lab
       na = report["not_applicable"] || []
       red = failures + held + outside
 
-      status =
-        if examples.zero? then :failed_to_run
-        elsif red.zero? && exit_status != 0 then :failed_to_run
-        elsif red.positive? then :red
-        else :pass
+      status, reason =
+        if examples.zero? then [:failed_to_run, "nothing ran (0 examples)"]
+        elsif red.zero? && exit_status != 0 then [:failed_to_run, "exit #{exit_status} disagrees with report"]
+        elsif red.positive? then [:red, nil]
+        else [:pass, nil]
         end
 
       Row.new(version, report["rails_version"] || version, report["ruby_version"] || "-",
               gem_label(report["gem"]), report["green"].to_i, red, na.size, status,
-              (report["failed"] || []).map { |f| f["location"] }, na, log_path)
+              (report["failed"] || []).map { |f| f["location"] }, na, log_path, reason, held, outside)
     end
 
     def self.gem_label(gem)
@@ -61,7 +61,10 @@ module Lab
           block << "  #{r.na_list.size} cases not applicable to #{na_gem(r)}:"
           r.na_list.each { |c| block << "    #{c['location']} (since #{c['since']}) #{c['description']}" }
         end
-        block << "  no report found; see #{r.log_path}" if r.status == :failed_to_run && r.log_path
+        block << "  pending: #{r.held}" if r.held.to_i.positive?
+        block << "  errors outside examples: #{r.outside}" if r.outside.to_i.positive?
+        block << "  #{r.reason}" if r.status == :failed_to_run
+        block << "  log: #{r.log_path}" if r.status != :pass && r.log_path
         next if block.empty?
         out << ""
         out << "Rails #{r.version}:"

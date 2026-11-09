@@ -14,8 +14,8 @@ rows = versions.map do |v|
   report_path = File.join(root, "apps", "rails-#{v.tr('.', '_')}", "tmp", "lab-report.json")
   File.delete(report_path) if File.exist?(report_path)
   $stderr.puts "== bin/test #{v} (log: #{log})"
-  ok = system(File.join(root, "bin", "test"), v, out: log, err: log)
-  status = ok.nil? ? 127 : $?.exitstatus.to_i
+  system(File.join(root, "bin", "test"), v, %i[out err] => [log, "w"])
+  status = $?.success? ? 0 : ($?.exitstatus || 128)
   report =
     begin
       File.exist?(report_path) ? JSON.parse(File.read(report_path)) : nil
