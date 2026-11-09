@@ -1,15 +1,26 @@
 RSpec.describe Lab::Hygiene do
+  # [text, expected label]; banned words are built by concatenation.
   banned = [
-    "sk" + "ip", "pen" + "ding", "x" + "it", "x" + "describe", "x" + "context", "x" + "specify",
-    "f" + "it", "f" + "describe", "f" + "context", "foc" + "us: true", ":sk" + "ip", ":pen" + "ding",
-    "RSpec::Core::" + "Pending", "filter_run_" + "excluding", "known_" + "bug"
+    ["sk" + "ip", "skip"], ["pen" + "ding", "pending"], ["x" + "it", "xit"], ["x" + "describe", "xdescribe"],
+    ["x" + "context", "xcontext"], ["x" + "specify", "xspecify"], ["x" + "example", "xexample"],
+    ["f" + "it", "fit"], ["f" + "describe", "fdescribe"], ["f" + "context", "fcontext"],
+    ["f" + "specify", "fspecify"], ["f" + "example", "fexample"],
+    ["foc" + "us \"x\" do", "focus"], [":foc" + "us", "focus"], ["foc" + "us: true", "focus: true"],
+    [":sk" + "ip", "skip"], [":pen" + "ding", "pending"],
+    ["\"sk" + "ip\": true", "skip"], ["\"pen" + "ding\":", "pending"], ["\"foc" + "us\":", "focus"],
+    [":\"sk" + "ip\"", "skip"], [":\"pen" + "ding\"", "pending"], [":\"foc" + "us\"", "focus"],
+    ["RSpec::Core::" + "Pending", "RSpec::Core::Pending"], ["known_" + "bug", "known_bug"],
+    ["filter_run_" + "excluding", "filter_run_excluding"], ["filter_run_when_" + "matching", "filter_run_when_matching"],
+    ["filter_run_" + "including", "filter_run_including"], ["filter_" + "run", "filter_run"],
+    ["exclusion_" + "filter", "exclusion_filter"]
   ]
 
-  banned.each do |word|
-    it "reports #{word.inspect} with the file name" do
-      v = Lab::Hygiene.violations("  #{word} \"x\" do\n", "shared/spec/requests/a_spec.rb")
+  banned.each do |word, label|
+    it "reports #{word.inspect} as #{label.inspect} with the file name" do
+      v = Lab::Hygiene.violations("  #{word} do\n", "shared/spec/requests/a_spec.rb")
       expect(v.size).to be >= 1
       expect(v.first).to include("shared/spec/requests/a_spec.rb")
+      expect(v.join("\n")).to include("banned #{label.inspect}")
     end
   end
 
@@ -17,6 +28,8 @@ RSpec.describe Lab::Hygiene do
     src = "config.filter_run_" + "excluding since: 1\n"
     expect(Lab::Hygiene.violations(src, "shared/spec/spec_helper.rb")).to eq []
     expect(Lab::Hygiene.violations(src, "shared/lib/lab/x.rb")).to eq []
+    expect(Lab::Hygiene.violations(src, "shared/spec/requests/spec_helper.rb")).not_to be_empty
+    expect(Lab::Hygiene.violations(src, "other/spec_helper.rb")).not_to be_empty
   end
 
   it "ignores text after a comment marker and string contents" do
