@@ -359,7 +359,7 @@
   readme: "Field options"
   since: "0.9.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/controllers/orders_contract_spec.rb"
   question: null
   reason: null
   also: []
@@ -535,7 +535,7 @@
   readme: "Explicit nulls (nullable:)"
   since: "0.6.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/controllers/orders_contract_spec.rb"
   question: null
   reason: null
   also: []
@@ -755,7 +755,7 @@
   readme: "Explicit nulls (nullable:)"
   since: "0.6.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/controllers/orders_contract_spec.rb"
   question: null
   reason: null
   also: []
@@ -766,7 +766,7 @@
   readme: "Absence, defaults, and partial updates"
   since: "0.12.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/controllers/orders_contract_spec.rb"
   question: null
   reason: null
   also: []
@@ -821,7 +821,7 @@
   readme: "Absence, defaults, and partial updates"
   since: "0.1.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/controllers/orders_contract_spec.rb"
   question: null
   reason: null
   also: []
@@ -2031,7 +2031,7 @@
   readme: "Testing contracts (RSpec matchers)"
   since: "0.5.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/controllers/orders_contract_spec.rb"
   question: null
   reason: null
   also: []
@@ -2042,7 +2042,7 @@
   readme: "Testing contracts (RSpec matchers)"
   since: "0.7.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/controllers/orders_contract_spec.rb"
   question: null
   reason: null
   also: []
@@ -2053,7 +2053,7 @@
   readme: "Testing contracts (RSpec matchers)"
   since: "0.9.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/controllers/orders_contract_spec.rb"
   question: null
   reason: null
   also: []
@@ -2064,7 +2064,7 @@
   readme: "Testing contracts (RSpec matchers)"
   since: "0.9.0"
   plan: 1
-  status: "chưa phủ"
+  status: "shared/spec/controllers/orders_contract_spec.rb"
   question: null
   reason: null
   also: []
