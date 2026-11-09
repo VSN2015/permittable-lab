@@ -41,16 +41,25 @@ Each serves `/` (shows the Rails version), `/orders`, and `/inspector/last` (dev
    (a row may be covered by several specs).
 2. Put a `# README:` comment at the top of the file quoting or pointing to the README line it checks.
 3. Use `since: "x.y.z"` only when the behaviour arrived in that gem version. It is about gem versions
-   only, never Rails versions.
+   only, never Rails versions. An untagged spec applies to every gem version, and the tag is never used
+   to skip a red case.
 4. Flip the row's status in the matrix to covered and run `bin/coverage-report --strict`.
 
 ## Anti-goals
 
-- No expectation is ever bent to match what the gem does. The README decides.
-- No version guard that hides a red case on a Rails version.
+Non-negotiable: a green run that breaks any of these counts as a failure.
+
+- Never bend an expected value to match the gem. The gem README is the truth; if the gem differs, the spec stays red.
+- No `pending`, `skip`, "known bug" list, or any other mechanism that keeps a spec green while the gem is wrong.
+- A spec must really go through what it claims. System specs fill in and submit the real rendered form and never post a hand-built payload.
+- A Rails version is never silently skipped in the matrix. A version that cannot run is reported as `FAILED TO RUN`.
+- If the gem README is ambiguous, record a `chờ tác giả` row in the matrix with the question. Never guess an expectation.
+
+Lab structure rules:
+
 - No edits to `rails new` default files beyond `bin/new-app`'s `database.yml` edit and
   what `patch_app.rb` adds (Gemfile `eval_gemfile`, `.rspec`, the `Lab::Boot` hook).
-- No per-version forks of shared code.
+- No per-version forks of shared code, and no version guard that hides a red case on a Rails version.
 
 ## Per-version notes
 
@@ -58,7 +67,8 @@ Plan 1 ran the same 189 specs on 7.2.4, 8.0.5.2 and 8.1.4.1. The only lab change
 
 - **json gem**: Rails 8.0's ActiveSupport JSON encoder passes `quirks_mode:` to `JSON.generate`, which
   json 3.x rejects (`unknown keyword: quirks_mode`, hit when a migration defines a column default).
-  `shared/gemfile.rb` pins `gem "json", "< 3.0"` for all three apps.
+  `shared/gemfile.rb` pins `gem "json", "< 3.0"` for Rails 8.0 only, keyed on the `LAB_RAILS` env var
+  that `compose.yml` sets per service. 7.2 and 8.1 stay stock installs (json 3.1.0).
 
 Checked and needing no change:
 

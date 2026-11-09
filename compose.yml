@@ -1,14 +1,16 @@
+x-lab-env: &lab-env
+  PERMITTABLE_SOURCE: ${PERMITTABLE_SOURCE:-local}
+  PERMITTABLE_VERSION: ${PERMITTABLE_VERSION:-}
+  DB_HOST: db
+  DB_USER: lab
+  DB_PASSWORD: lab
+
 x-lab-app: &lab-app
   image: permittable-lab/ruby:3.3
   build:
     context: docker
   working_dir: /app
-  environment:
-    PERMITTABLE_SOURCE: ${PERMITTABLE_SOURCE:-local}
-    PERMITTABLE_VERSION: ${PERMITTABLE_VERSION:-}
-    DB_HOST: db
-    DB_USER: lab
-    DB_PASSWORD: lab
+  environment: *lab-env
   depends_on:
     db:
       condition: service_healthy
@@ -28,6 +30,9 @@ services:
 
   rails-8_1:
     <<: *lab-app
+    environment:
+      <<: *lab-env
+      LAB_RAILS: "8.1"
     command: sh -c "bin/rails db:create db:migrate db:seed && bin/rails server -b 0.0.0.0 -p 3081"
     ports:
       - "3081:3081"
@@ -46,6 +51,9 @@ services:
 
   rails-7_2:
     <<: *lab-app
+    environment:
+      <<: *lab-env
+      LAB_RAILS: "7.2"
     command: sh -c "bin/rails db:create db:migrate db:seed && bin/rails server -b 0.0.0.0 -p 3072"
     ports:
       - "3072:3072"
@@ -58,6 +66,9 @@ services:
 
   rails-8_0:
     <<: *lab-app
+    environment:
+      <<: *lab-env
+      LAB_RAILS: "8.0"
     command: sh -c "bin/rails db:create db:migrate db:seed && bin/rails server -b 0.0.0.0 -p 3080"
     ports:
       - "3080:3080"
