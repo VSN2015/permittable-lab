@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+# Usage: bin/new-app <7.2|8.0|8.1>
+set -euo pipefail
+
+VERSION="${1:-}"
+case "$VERSION" in
+  7.2|8.0|8.1) ;;
+  *) echo "usage: bin/new-app <7.2|8.0|8.1>" >&2; exit 1 ;;
+esac
+
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+SLUG="rails-${VERSION/./_}"
+VOL="permittable-lab_bundle-${VERSION/./_}"  # fixed name set in compose.yml
+cd "$ROOT"
+
+if [ -e "apps/$SLUG" ]; then
+  echo "apps/$SLUG already exists; refusing to overwrite" >&2
+  exit 1
+fi
+
+# Plain docker run (not a compose service): the service would bind-mount the
+# not-yet-existing apps/$SLUG and create it. Flags the installed rails does
+# not know are dropped.
+docker run --rm --entrypoint "" \
+  -v "$ROOT/apps:/work" -v "$VOL:/bundle" -w /work \
+  permittable-lab/ruby:3.3 \
+  bash -c '
+    set -e
+    gem install rails -v "~> '"$VERSION"'.0" --no-document
+    HELP="$(rails new --help)"
+    KEEP=""
+    for f in --skip-git --skip-test --skip-docker --skip-kamal --skip-thruster --database=postgresql; do
+      if echo "$HELP" | grep -q -- "${f%%=*}"; then KEEP="$KEEP $f"; else echo "dropping unsupported flag $f" >&2; fi
+    done
+    echo "rails new '"$SLUG"'$KEEP"
+    rails new '"$SLUG"' $KEEP
+  '
+
+DB="apps/$SLUG/config/database.yml"
+grep -q '^default: &default$' "$DB"
+sed -i.bak '/^default: &default$/a\
+  host: <%= ENV.fetch("DB_HOST", "db") %>\
+  username: <%= ENV.fetch("DB_USER", "lab") %>\
+  password: <%= ENV.fetch("DB_PASSWORD", "lab") %>
+' "$DB"
+rm -f "$DB.bak"
+echo "Generated apps/$SLUG"

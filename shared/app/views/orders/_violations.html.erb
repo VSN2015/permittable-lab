@@ -1,0 +1,8 @@
+<% if violations.present? %>
+  <ul id="violations">
+    <% violations.each do |v| %>
+      <% v = v.to_h.with_indifferent_access %>
+      <li data-param="<%= v[:param] %>" data-code="<%= v[:code] %>"><%= v[:message].presence || v[:code] %></li>
+    <% end %>
+  </ul>
+<% end %>

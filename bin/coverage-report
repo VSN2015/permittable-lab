@@ -1,0 +1,35 @@
+#!/usr/bin/env ruby
+# Usage: bin/coverage-report [--strict]   Host Ruby >= 2.7, stdlib only.
+# Prints the matrix summary and the uncovered rows by plan. --strict exits 1 if any row is "chưa phủ".
+require_relative "../shared/lib/lab/coverage_matrix"
+
+root = File.expand_path("..", __dir__)
+strict = ARGV.delete("--strict")
+abort "usage: bin/coverage-report [--strict]" unless ARGV.empty?
+
+rows = Lab::CoverageMatrix.load(File.join(root, "docs", "coverage-matrix.yml"))
+files = Dir[File.join(root, "shared", "spec", "**", "*_spec.rb")]
+problems = Lab::CoverageMatrix.problems(rows, spec_root: root, spec_files: files)
+summary = Lab::CoverageMatrix.summary(rows)
+
+summary.each { |k, v| puts format("%-16s %d", k, v) }
+
+uncovered = rows.select { |r| r["status"] == Lab::CoverageMatrix::UNCOVERED }
+uncovered.group_by { |r| r["plan"] }.sort_by { |plan, _| plan.to_i }.each do |plan, group|
+  puts "", "plan #{plan} (#{group.size} uncovered)"
+  group.each { |r| puts "  #{r['id']}  [#{r['area']}]  #{r['feature']}" }
+end
+
+awaiting = rows.select { |r| r["status"] == Lab::CoverageMatrix::AWAITING }
+unless awaiting.empty?
+  puts "", "awaiting author"
+  awaiting.each { |r| puts "  #{r['id']}: #{r['question']}" }
+end
+
+unless problems.empty?
+  puts "", "problems"
+  problems.each { |p| puts "  #{p}" }
+  exit 2
+end
+
+exit(strict && !uncovered.empty? ? 1 : 0)

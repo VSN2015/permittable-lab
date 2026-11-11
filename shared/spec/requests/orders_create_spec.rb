@@ -1,0 +1,317 @@
+# README: Declaring a contract; Unknown parameters; Violations and error responses; Localizing default messages (I18n)
+RSpec.describe "Tao don (create order)", type: :request, since: "0.12.0",
+  covers: %w[pp-root pp-model pp-enforce-true kind-nested kind-array-hash kind-array-fields-for-hash kind-array-scalar kind-scalar opt-in-range opt-in-list opt-format-regexp opt-length-string opt-length-array opt-normalize-squish opt-normalize-email preset-email type-integer type-decimal type-date type-datetime absent-blank-array-element absent-required-missing err-code-missing err-code-invalid-type err-code-inclusion err-code-format err-code-length err-code-unknown err-status-400-root-missing err-status-400-root-wrong-shape err-status-422-field err-path-dotted-indexed err-render-error-custom err-render-error-private i18n-default-messages i18n-per-request-locale unknown-error unknown-every-level date-select-parts datetime-select-parts time-select-parts date-parts-blank date-parts-invalid use-group] do
+  def doc
+    Nokogiri::HTML(response.body)
+  end
+
+  def violation(param, code)
+    doc.css(%(li[data-param="#{param}"][data-code="#{code}"]))
+  end
+
+  def valid(overrides = {})
+    OrderPayloads.form_params(overrides)
+  end
+
+  it "renders the form with the field names a browser posts" do
+    get new_order_path
+    expect(response).to have_http_status(200)
+    expect(doc.css(%(input[name="order[items_attributes][0][quantity]"]))).not_to be_empty
+    expect(doc.css(%(select[name="order[delivery_on(1i)]"]))).not_to be_empty
+    expect(doc.css(%(input[type=checkbox][name="order[services][]"]))).not_to be_empty
+    expect(doc.css(%(input[type=hidden][name="order[services][]"]))[0]["value"]).to eq ""
+    %i[vi en].each do |locale|
+      get new_order_path(locale: locale)
+      expect(response.body).not_to match(/translation[ _]missing/i)
+    end
+    %w[customer shipping_address].zip([%w[name email phone], %w[line1 city postcode]]).each do |group, keys|
+      keys.each { |k| expect(doc.css(%(input[name="order[#{group}][#{k}]"]))).not_to be_empty }
+    end
+    posted = valid["order"]
+    %w[pickup_at delivery_slot].each do |field|
+      (1..5).each do |n|
+        name = "#{field}(#{n}i)"
+        node = doc.css(%([name="order[#{name}]"])).first
+        expect(node).not_to be_nil, "form has no #{name}"
+        rendered = node["type"] == "hidden" ? node["value"] : (node.css("option[selected]").first&.[]("value") || "")
+        expect(posted[name]).to eq(rendered), "#{name}: payload #{posted[name].inspect}, form #{rendered.inspect}"
+      end
+    end
+    expect(doc.css(%(select[name="order[pickup_at(4i)]"]))).not_to be_empty
+    expect(doc.css(%(select[name="order[delivery_slot(4i)]"]))).not_to be_empty
+    expect(doc.css("input[type=submit]").size).to eq 1
+    expect(doc.css("button[type=submit]").size).to eq 1
+    expect(doc.css(%(a#locale-vi))[0].text).to eq "Tiếng Việt"
+    expect(doc.css(%(a#locale-en))[0].text).to eq "English"
+  end
+
+  it "accepts a valid form post" do
+    params = valid("customer" => { "name" => "  Nguyễn   Văn A ", "email" => " Ana@Example.COM " })
+    expect { post orders_path, params: params }.to change(Order, :count).by(1)
+    order = Order.last
+    expect(response).to have_http_status(303)
+    expect(URI(response.location).path).to eq order_path(order)
+    expect(Rack::Utils.parse_query(URI(response.location).query)).to eq("locale" => "vi")
+    expect(order.customer.name).to eq "Nguyễn Văn A"
+    expect(order.customer.email).to eq "ana@example.com"
+    expect(order.priority).to eq "standard"
+    expect(order.status).to eq "pending"
+    expect(order.note).to be_nil
+    expect(order.services).to eq ["gift_wrap"]
+    expect(order.delivery_on).to be_a(Date)
+    expect(order.items.first.quantity).to eq 2
+    expect(order.items.first.quantity).to be_an(Integer)
+    expect(order.items.first.unit_price).to eq BigDecimal("199.5")
+  end
+
+  it "reads datetime_select and time_select parts" do
+    params = valid("pickup_at(1i)" => "2030", "pickup_at(2i)" => "2", "pickup_at(3i)" => "3",
+                   "pickup_at(4i)" => "9", "pickup_at(5i)" => "30",
+                   "delivery_slot(1i)" => "2000", "delivery_slot(2i)" => "1", "delivery_slot(3i)" => "1",
+                   "delivery_slot(4i)" => "14", "delivery_slot(5i)" => "45")
+    post orders_path, params: params
+    expect(response).to have_http_status(303)
+    order = Order.last
+    expect(order.pickup_at.utc).to eq Time.utc(2030, 2, 3, 9, 30)
+    expect(order.delivery_slot.utc.strftime("%H:%M")).to eq "14:45"
+  end
+
+  it "treats whitespace-only note as nil and an all-unchecked services as accepted" do
+    post orders_path, params: valid("note" => "   ", "services" => [""])
+    expect(response).to have_http_status(303)
+    expect(Order.last.note).to be_nil
+    expect(Order.last.services).to eq []
+  end
+
+  it "accepts the untouched time_select (hidden date 1,1,1, blank time)" do
+    post orders_path, params: valid
+    expect(response).to have_http_status(303)
+    expect(Order.last.pickup_at).to be_nil
+    expect(Order.last.delivery_slot.utc.strftime("%H:%M:%S")).to eq "00:00:00"
+  end
+
+  it "does not break on the keys the form adds (commit, button)" do
+    post orders_path, params: valid.merge("commit" => "Tạo đơn")
+    expect(response).to have_http_status(303)
+    post orders_path, params: valid.merge("commit" => "Tạo đơn", "button" => "")
+    expect(response).to have_http_status(303)
+  end
+
+  describe "violations" do
+    [
+      ["order.customer.email", "format", { "customer" => { "email" => "not-an-email" } }],
+      ["order.customer.name", "missing", { "customer" => { "name" => "" } }],
+      ["order.customer.phone", "length", { "customer" => { "phone" => "12" } }],
+      ["order.items_attributes[0].quantity", "inclusion", { "items_attributes" => { "0" => { "quantity" => "0" } } }],
+      ["order.items_attributes[0].quantity", "invalid_type", { "items_attributes" => { "0" => { "quantity" => "abc" } } }],
+      ["order.items_attributes[0].unit_price", "invalid_type", { "items_attributes" => { "0" => { "unit_price" => "abc" } } }],
+      ["order.items_attributes[0].unit_price", "inclusion", { "items_attributes" => { "0" => { "unit_price" => "-1" } } }],
+      ["order.coupon_code", "format", { "coupon_code" => "abc" }],
+      ["order.priority", "inclusion", { "priority" => "overnight" }],
+      ["order.note", "length", { "note" => "x" * 201 }],
+      ["order.services", "length", { "services" => ["", "gift_wrap", "insurance", "signature", "gift_wrap"] }],
+      ["order.shipping_address.city", "missing", { "shipping_address" => { "city" => "" } }],
+      ["order.delivery_on", "missing", { "delivery_on(2i)" => "" }],
+      ["order.delivery_on", "invalid_type", { "delivery_on(2i)" => "2", "delivery_on(3i)" => "30" }]
+    ].each do |param, code, overrides|
+      it "#{param} #{code} for #{overrides.inspect[0, 60]}" do
+        expect { post orders_path, params: valid(overrides) }.not_to change(Order, :count)
+        expect(response).to have_http_status(422)
+        expect(violation(param, code).size).to eq 1
+      end
+    end
+  end
+
+  describe "mass assignment" do
+    {
+      "order.status" => { "status" => "delivered" },
+      "order.code" => { "code" => "X" },
+      "order.customer_id" => { "customer_id" => "1" },
+      "order.customer.admin" => { "customer" => { "admin" => "1" } },
+      "order.shipping_address.admin" => { "shipping_address" => { "admin" => "1" } },
+      "order.items_attributes[0].admin" => { "items_attributes" => { "0" => { "admin" => "1" } } }
+    }.each do |param, overrides|
+      it "rejects #{param} as unknown" do
+        expect { post orders_path, params: valid(overrides) }.not_to change { [Order.count, Customer.count] }
+        expect(response).to have_http_status(422)
+        expect(violation(param, "unknown").size).to eq 1
+      end
+    end
+  end
+
+  describe "contract wiring" do
+    # README "The schema-drift guard": model: checks every non-virtual scalar against the columns at class load.
+    it "model: raises at class load for a field that is not a column" do
+      expect do
+        Class.new(BaseController) do
+          permit_params :create, root: :order, model: Order do
+            required :nope, :string
+          end
+        end
+      end.to raise_error(/'nope' does not exist in the database \(table: orders\)/)
+    end
+
+    it "model: loads a contract whose fields are columns" do
+      expect do
+        Class.new(BaseController) do
+          permit_params :create, root: :order, model: Order do
+            required :priority, :string
+          end
+        end
+      end.not_to raise_error
+    end
+
+    # README "Declaring a contract": enforce: true validates in a before_action, so the action never sees bad input.
+    it "enforce: true stops an invalid post before the action body runs" do
+      ran = []
+      allow_any_instance_of(OrdersController).to receive(:create).and_wrap_original { |m, *a| ran << :create; m.call(*a) }
+      post orders_path, params: valid("customer" => { "name" => "" })
+      expect(response).to have_http_status(422)
+      expect(ran).to eq []
+      post orders_path, params: valid
+      expect(response).to have_http_status(303)
+      expect(ran).to eq [:create]
+    end
+
+    # README "Types and strict coercion": the action receives the cast value, not the String it was sent.
+    it "hands the action a BigDecimal, an Integer and a Date, not Strings or Floats" do
+      seen = nil
+      allow(Order).to receive(:build_from_contract).and_wrap_original { |m, attrs| seen = attrs.to_h; m.call(attrs) }
+      post orders_path, params: valid
+      expect(response).to have_http_status(303)
+      item = seen["items_attributes"].first
+      expect(item["unit_price"]).to be_a(BigDecimal)
+      expect(item["unit_price"]).to eq BigDecimal("199.5")
+      expect(item["quantity"]).to be_an(Integer)
+      expect(seen["delivery_on"]).to be_a(Date)
+    end
+
+    # README "The field DSL": a scalar's type defaults to :string (the contract leaves sku untyped).
+    it "reads a Numeric sent for an untyped scalar as its String" do
+      body = valid("items_attributes" => { "0" => { "sku" => 4711 } }).to_json
+      post orders_path, params: body, headers: { "CONTENT_TYPE" => "application/json" }
+      expect(response).to have_http_status(303)
+      expect(Order.last.items.first.sku).to eq "4711"
+    end
+
+    # README "The field DSL": an array of scalars reports a failing element by its index.
+    it "names the index of a failing element in an array of scalars" do
+      body = valid("services" => ["gift_wrap", ["x"]]).to_json
+      expect { post orders_path, params: body, headers: { "CONTENT_TYPE" => "application/json" } }.not_to change(Order, :count)
+      expect(response).to have_http_status(422)
+      expect(violation("order.services[1]", "invalid_type").size).to eq 1
+      expect(doc.css("li[data-param]").size).to eq 1
+    end
+
+    # README "The field DSL": the array block also takes the index-keyed Hash fields_for sends; order of keys is kept.
+    it "reads two fields_for rows in the order they were sent" do
+      items = { "0" => { "sku" => "FIRST", "quantity" => "1", "unit_price" => "1" },
+                "1" => { "sku" => "SECOND", "quantity" => "2", "unit_price" => "2.5" } }
+      expect { post orders_path, params: valid("items_attributes" => items) }.to change(OrderItem, :count).by(2)
+      expect(response).to have_http_status(303)
+      expect(Order.last.items.order(:id).map(&:sku)).to eq %w[FIRST SECOND]
+      expect(Order.last.items.order(:id).map(&:quantity)).to eq [1, 2]
+    end
+  end
+
+  describe "bad root" do
+    it "is 400 and re-renders the form when order is absent" do
+      post orders_path
+      expect(response).to have_http_status(400)
+      expect(doc.css("form[action]")).not_to be_empty
+      expect(violation("order", "missing").size).to eq 1
+    end
+
+    it "is 400 when order is a scalar" do
+      post orders_path, params: { order: "bob" }
+      expect(response).to have_http_status(400)
+      expect(doc.css("form[action]")).not_to be_empty
+      expect(violation("order", "invalid_type").size).to eq 1
+    end
+  end
+
+  it "rejects 21 item rows with a single length violation" do
+    items = (0..20).to_h { |i| [i.to_s, { "sku" => "S#{i}", "quantity" => "1", "unit_price" => "1" }] }
+    expect { post orders_path, params: valid("items_attributes" => items) }.not_to change(Order, :count)
+    expect(response).to have_http_status(422)
+    expect(doc.css("li[data-param]").size).to eq 1
+    expect(violation("order.items_attributes", "length").size).to eq 1
+  end
+
+  describe "locale" do
+    let(:no_name) { valid("customer" => { "name" => "" }) }
+
+    it "answers in Vietnamese for locale=vi" do
+      post orders_path(locale: "vi"), params: no_name
+      expect(response).to have_http_status(422)
+      expect(violation("order.customer.name", "missing").text).to eq "là bắt buộc"
+    end
+
+    it "answers in English for locale=en (enforce path plus prepend_around_action)" do
+      post orders_path(locale: "en"), params: no_name
+      expect(response).to have_http_status(422)
+      expect(violation("order.customer.name", "missing").text).to eq "is required"
+    end
+
+    [{ "locale" => "xx" }, { "locale" => "" }].each do |q|
+      it "falls back to Vietnamese for #{q.inspect}" do
+        post "/orders?#{q.to_query}", params: no_name
+        expect(response).to have_http_status(422)
+        expect(violation("order.customer.name", "missing").text).to eq "là bắt buộc"
+      end
+    end
+
+    it "falls back to Vietnamese for locale[]=vi" do
+      post "/orders?locale[]=vi", params: no_name
+      expect(response).to have_http_status(422)
+      expect(violation("order.customer.name", "missing").text).to eq "là bắt buộc"
+    end
+  end
+
+  describe "CSRF" do
+    around do |example|
+      original = ActionController::Base.allow_forgery_protection
+      ActionController::Base.allow_forgery_protection = true
+      example.run
+    ensure
+      ActionController::Base.allow_forgery_protection = original
+    end
+
+    it "accepts the post with the real token" do
+      get new_order_path
+      token = doc.css(%(input[name="authenticity_token"]))[0]["value"]
+      expect { post orders_path, params: valid.merge("authenticity_token" => token, "commit" => "Tạo đơn") }
+        .to change(Order, :count).by(1)
+      expect(response).to have_http_status(303)
+    end
+
+    it "creates no order without the token" do
+      expect { post orders_path, params: valid }.not_to change(Order, :count)
+      expect(response).to have_http_status(422)
+      expect(doc.css("li[data-param]")).to be_empty
+    end
+  end
+
+  describe "pages" do
+    before { Rails.application.load_seed }
+
+    it "lists seeded orders with code and total" do
+      get orders_path
+      expect(response).to have_http_status(200)
+      expect(response.body).to include("ORD-SEED0002")
+      row = doc.css("tr").find { |tr| tr.text.include?("ORD-SEED0002") }
+      expect(row.css("td.total").text).to eq "17.25"
+    end
+
+    it "shows an order's items" do
+      get order_path(Order.find_by!(code: "ORD-SEED0004"))
+      expect(response).to have_http_status(200)
+      expect(doc.css("td.sku").map(&:text)).to match_array(%w[SKU-004 SKU-002 SKU-003])
+    end
+
+    it "is 404 for an unknown id" do
+      get order_path(0)
+      expect(response).to have_http_status(404)
+    end
+  end
+end

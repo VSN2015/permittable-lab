@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Usage: bin/test [7.2|8.0|8.1] [rspec args...]
+set -e
+cd "$(dirname "$0")/.."
+
+usage() { echo "usage: bin/test [7.2|8.0|8.1] [rspec args...]" >&2; exit 2; }
+
+version=8.1
+if [[ $# -gt 0 && "$1" =~ ^[0-9]+\.[0-9]+$ ]]; then
+  version="$1"; shift
+fi
+case "$version" in 7.2|8.0|8.1) ;; *) usage ;; esac
+
+slug="${version/./_}"
+[[ -d "apps/rails-$slug" ]] || { echo "missing apps/rails-$slug" >&2; usage; }
+
+rm -f "apps/rails-$slug/tmp/lab-report.json"
+exec docker compose run --rm -T "rails-$slug" bash -c \
+  'RAILS_ENV=test bin/rails db:create db:migrate && exec bundle exec rspec "$@"' --  "$@"

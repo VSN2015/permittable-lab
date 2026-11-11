@@ -1,0 +1,63 @@
+en:
+  lab:
+    nav:
+      home: Home
+      orders: Orders
+      new_order: New order
+      locale_vi: Tiếng Việt
+      locale_en: English
+    orders:
+      submit: Create order
+      submit_button: Create order (button)
+      index:
+        heading: Orders
+      new:
+        heading: Create order
+      services:
+        gift_wrap: Gift wrap
+        insurance: Insurance
+        signature: Signature
+      fields:
+        customer: Customer
+        name: Name
+        email: Email
+        phone: Phone
+        shipping_address: Shipping address
+        line1: Address line
+        city: City
+        postcode: Postcode
+        delivery_on: Delivery date
+        pickup_at: Pickup time
+        delivery_slot: Delivery slot
+        priority: Priority
+        coupon_code: Coupon code
+        note: Note
+        services: Services
+        items: Items
+        sku: SKU
+        quantity: Quantity
+        unit_price: Unit price
+        code: Code
+        status: Status
+        total: Total
+    inspector:
+      empty: No request recorded yet
+      status: Status
+      raw_params: Raw parameters
+      permitted: Permitted parameters
+      rejected: Rejected
+      not_read: The action did not read permitted_params
+      violations: Violations
+      response: Response
+      log: Log
+      events: Events
+      config: Config
+  permittable:
+    errors:
+      missing: "is required"
+      invalid_type: "is the wrong type"
+      inclusion: "is not an allowed value"
+      format: "has an invalid format"
+      length: "has the wrong length"
+      unknown: "is not a recognized parameter"
+      invalid: "is invalid"

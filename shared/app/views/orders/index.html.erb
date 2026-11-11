@@ -1,0 +1,13 @@
+<h1><%= t("lab.orders.index.heading") %></h1>
+<table id="orders">
+  <thead><tr><th><%= t("lab.orders.fields.code") %></th><th><%= t("lab.orders.fields.status") %></th><th><%= t("lab.orders.fields.total") %></th></tr></thead>
+  <tbody>
+    <% @orders.each do |order| %>
+      <tr>
+        <td><%= link_to order.code, order_path(order) %></td>
+        <td><%= order.status %></td>
+        <td class="total"><%= number_with_precision(order.total, precision: 2) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
