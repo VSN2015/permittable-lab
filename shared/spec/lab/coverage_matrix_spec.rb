@@ -17,6 +17,7 @@ RSpec.describe Lab::CoverageMatrix, covers: %w[] do
     err-code-missing err-code-invalid-type err-code-inclusion err-code-format err-code-length err-code-unknown err-code-invalid err-code-custom-symbol err-status-400-root-missing err-status-400-root-wrong-shape err-status-422-field err-path-dotted-indexed err-details-complete-message-bounded err-envelope-json err-render-error-custom err-render-error-private err-render-error-three-keyword err-rescue-from-order
     i18n-default-messages i18n-fallback-order i18n-per-request-locale msg-string msg-hash msg-violate-keyword
     problem-format problem-title-by-status problem-base-uri problem-instance problem-opts-out-render-error
+    cl-0_14_0-1 cl-0_14_0-2 cl-0_14_0-3 cl-0_14_0-7 cl-0_14_0-8 cl-0_14_0-9 cl-0_15_0-1 cl-0_15_0-2 cl-0_15_0-4 cl-0_15_0-5 cl-0_15_0-7 cl-0_15_0-8 cl-0_15_0-9
     unknown-ignore unknown-log unknown-error unknown-every-level unknown-exempt-router-keys unknown-exempt-csrf unknown-exempt-csrf-renamed unknown-exempt-form-keys unknown-exempt-commit unknown-exempt-button unknown-exempt-image-submit unknown-exempt-path-params unknown-wrapper-key date-select-parts datetime-select-parts time-select-parts date-parts-blank date-parts-invalid date-parts-own-key-wins date-parts-time-zone-recipe
     use-group use-compose use-optional use-only-except use-contract use-refuses-finalize use-override-duplicate transform-field transform-default-authored finalize-basic finalize-violate finalize-bare-runner
     drift-missing-column drift-migration-hint drift-ignored-columns drift-virtual drift-nested-implicit-virtual drift-schema-unreachable drift-check-types drift-type-groups drift-enum drift-pg-array-column
@@ -143,6 +144,33 @@ RSpec.describe Lab::CoverageMatrix, covers: %w[] do
 
     it "has the seeded anchor rows" do
       expect(anchor_ids - rows.map { |r| r["id"] }).to eq []
+    end
+
+    it "has the 0.14.0 and 0.15.0 rows with their owning plan" do
+      {
+        "cl-0_14_0-1" => ["0.14.0", 5],
+        "cl-0_14_0-2" => ["0.14.0", 6],
+        "cl-0_14_0-3" => ["0.14.0", 6],
+        "cl-0_14_0-7" => ["0.14.0", 3],
+        "cl-0_14_0-8" => ["0.14.0", 6],
+        "cl-0_14_0-9" => ["0.14.0", 2],
+        "cl-0_15_0-1" => ["0.15.0", 6],
+        "cl-0_15_0-2" => ["0.15.0", 6],
+        "cl-0_15_0-4" => ["0.15.0", 6],
+        "cl-0_15_0-5" => ["0.15.0", 3],
+        "cl-0_15_0-7" => ["0.15.0", 4],
+        "cl-0_15_0-8" => ["0.15.0", 6],
+        "cl-0_15_0-9" => ["0.15.0", 6]
+      }.each do |id, (version, plan)|
+        row = rows.find { |r| r["id"] == id }
+        expect(row).not_to be_nil, "missing #{id}"
+        expect([row["plan"], row["changelog"], row["since"]]).to eq [plan, [version], version]
+      end
+    end
+
+    it "owns the exemption rows in plan 2" do
+      ids = %w[unknown-exempt-form-keys unknown-exempt-csrf unknown-exempt-commit unknown-exempt-button]
+      expect(rows.select { |r| ids.include?(r["id"]) }.map { |r| r["plan"] }).to eq [2, 2, 2, 2]
     end
   end
 end
