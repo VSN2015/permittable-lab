@@ -141,6 +141,25 @@ RSpec.describe "Sua don (edit order)", type: :request, since: "0.12.0",
     expect(seen.size).to eq 1
   end
 
+  it "redirects the edit form of a closed order" do
+    order = make(status: "delivered")
+    get edit_order_path(order, locale: "vi")
+    expect(response).to have_http_status(303)
+    expect(URI(response.location).path).to eq order_path(order)
+    follow_redirect!
+    expect(doc.css("#flash-alert").text).to eq "Đơn đã đóng, không thể thay đổi"
+  end
+
+  it "announces the attempted fields on success" do
+    order = make
+    patch_order(order, "note" => "n", "priority" => "express")
+    expect(response).to have_http_status(303)
+    follow_redirect!
+    text = doc.css("#flash-notice").text
+    expect(text).to start_with("Đã cập nhật: ")
+    expect(text.delete_prefix("Đã cập nhật: ").split(", ").sort).to eq %w[note priority]
+  end
+
   it "instruments a rejection once however often the params are read", covers: %w[event-once-per-request] do
     reads = 0
     allow_any_instance_of(OrdersController).to receive(:permitted_params).and_wrap_original { |m, *a| reads += 1; m.call(*a) }
@@ -208,6 +227,21 @@ RSpec.describe "Sua don (edit order)", type: :request, since: "0.12.0",
       patch_order(order, "pickup_at" => "2026-09-05 -05:00")
       expect(response).to have_http_status(303)
       expect(order.reload.pickup_at.utc).to eq Time.utc(2026, 9, 5, 5, 0, 0)
+    end
+
+    it "stores pickup_at 2026-09-05 +05:00 as midnight at +05:00" do
+      order = make
+      patch_order(order, "pickup_at" => "2026-09-05 +05:00")
+      expect(response).to have_http_status(303)
+      expect(order.reload.pickup_at.utc).to eq Time.utc(2026, 9, 4, 19, 0, 0)
+    end
+
+    ["2026-09-05 -0500", "2026-09-05 +5"].each do |literal|
+      it "refuses delivery_on #{literal}" do
+        patch_order(make, "delivery_on" => literal)
+        expect(response).to have_http_status(422)
+        expect(violation("order.delivery_on", "invalid_type").size).to eq 1
+      end
     end
 
     ["Sep 5 2026 -05:00", "2026-09-05T"].each do |literal|
