@@ -72,7 +72,7 @@ Plan 1 ran the same 189 specs on 7.2.4, 8.0.5.2 and 8.1.4.1. The only lab change
   `shared/gemfile.rb` pins `gem "json", "< 3.0"` for Rails 8.0 only, keyed on the `LAB_RAILS` env var
   that `compose.yml` sets per service. 7.2 and 8.1 stay stock installs (json 3.1.0).
 
-Plan 2 (310 specs on all three) needed no further lab change.
+Plan 2 (313 specs on all three) needed no further lab change.
 
 Checked and needing no change:
 
@@ -92,7 +92,7 @@ observed behaviour and a minimal repro, and is never fixed by editing the expect
 
 ## Findings (gem vs README)
 
-None so far. Plan 1: 189 examples, 0 failures on Rails 7.2, 8.0, 8.1. Plan 2: 310 examples, 0 failures
+None so far. Plan 1: 189 examples, 0 failures on Rails 7.2, 8.0, 8.1. Plan 2: 313 examples, 0 failures
 on each of Rails 7.2.4, 8.0.5.2 and 8.1.4.1 (permittable 0.15.1 local, Ruby 3.3.13). Coverage report:
 total 282, covered 76, uncovered 200, awaiting_author 0, out_of_scope 6.
 
@@ -104,7 +104,7 @@ which is master v0.15.1 plus README/CHANGELOG text only. An earlier revision of 
 ### Notes for the author
 
 Not findings, and no spec tests them. The README is correct on both; the CHANGELOG wording was wrong and
-is already corrected on the gem branch `docs/readme-changelog-gaps` (commit 1d56638).
+is already corrected on the gem branch `docs/readme-changelog-gaps` (commit d7af5bb, rebased onto v0.15.1).
 
 - **0.12.0 #123**: the CHANGELOG said a `:json` default reaches the action "frozen". In fact the action
   gets an unfrozen, per-call copy; only the stored default is frozen.
