@@ -1,7 +1,7 @@
 <%= render "orders/violations", violations: @violations ||= [] %>
 <h1><%= @order.code %></h1>
 <p><%= t("lab.orders.fields.customer") %>: <%= @order.customer.name %> (<%= @order.customer.email %>)</p>
-<p><%= t("lab.orders.fields.status") %>: <%= @order.status %></p>
+<p><%= t("lab.orders.fields.status") %>: <%= t("lab.orders.statuses.#{@order.status}") %></p>
 <p><%= t("lab.orders.fields.total") %>: <span class="total"><%= number_with_precision(@order.total, precision: 2) %></span></p>
 <% if @order.cancel_reason %><p id="cancel-reason"><%= t("lab.orders.cancel_reason_line", reason: t("lab.orders.cancel_reasons.#{@order.cancel_reason}")) %></p><% end %>
 <% if @order.remind_after %><p id="remind-after"><%= t("lab.orders.remind_after_line", seconds: @order.remind_after) %></p><% end %>
