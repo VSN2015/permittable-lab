@@ -1,7 +1,7 @@
 # README: Standalone contracts (no controller)
 RSpec.describe StatusChange, covers: %w[] do
   def violations(hash)
-    StatusChange.call(hash).violations.map { |v| [v[:param].to_s, v[:code].to_s] }
+    StatusChange.call(hash).violations.map { |v| [v[:param], v[:code].to_s] }
   end
 
   it "fills remind_after with its default as authored" do
