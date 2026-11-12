@@ -27,8 +27,22 @@ class OrdersController < BaseController
     end
   end
 
-  before_action :set_order, only: %i[show edit update]
-  before_action :guard_closed_order, only: %i[edit update]
+  permit_params :change_status, unknown: :error, desc: "Đổi trạng thái" do
+    use StatusChange
+    optional :locale, :string
+    finalize do |p|
+      cancelling = p[:status] == "cancelled"
+      if cancelling && p[:cancel_reason].blank?
+        violate!("cancel_reason", :required_when_cancelled, message: I18n.t("lab.orders.errors.cancel_reason_required"))
+      elsif !cancelling && p[:cancel_reason].present?
+        violate!("cancel_reason", :only_when_cancelled, message: I18n.t("lab.orders.errors.cancel_reason_only_when_cancelled"))
+      end
+      p.except(:locale)
+    end
+  end
+
+  before_action :set_order, only: %i[show edit update change_status]
+  before_action :guard_closed_order, only: %i[edit update change_status]
   before_action :record_attempted_fields, only: :update
 
   def index
@@ -58,6 +72,11 @@ class OrdersController < BaseController
     @order.update!(permitted_params.to_h)
     redirect_to order_path(@order), status: :see_other,
                 notice: t("lab.orders.updated", fields: @attempted.join(", "))
+  end
+
+  def change_status
+    @order.update!(permitted_params.to_h)
+    redirect_to order_path(@order), status: :see_other
   end
 
   private

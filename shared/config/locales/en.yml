@@ -11,6 +11,26 @@ en:
       edit_link: "Edit order"
       updated: "Updated: %{fields}"
       closed: "This order is closed and cannot be changed"
+      cancel_reason_line: "Cancel reason: %{reason}"
+      remind_after_line: "Remind customer after: %{seconds} seconds"
+      status_form:
+        heading: "Change status"
+        submit: "Update status"
+        submit_button: "Update status (button)"
+      statuses:
+        pending: "Pending"
+        confirmed: "Confirmed"
+        shipped: "Shipped"
+        delivered: "Delivered"
+        cancelled: "Cancelled"
+      cancel_reasons:
+        changed_mind: "Changed mind"
+        wrong_address: "Wrong address"
+        out_of_stock: "Out of stock"
+        other: "Other"
+      errors:
+        cancel_reason_required: "is required when the status is cancelled"
+        cancel_reason_only_when_cancelled: "is only allowed when the status is cancelled"
       edit:
         heading: "Edit order"
       submit: Create order
@@ -46,6 +66,8 @@ en:
         code: Code
         status: Status
         total: Total
+        cancel_reason: "Cancel reason"
+        remind_after: "Remind customer after (minutes)"
     inspector:
       empty: No request recorded yet
       status: Status

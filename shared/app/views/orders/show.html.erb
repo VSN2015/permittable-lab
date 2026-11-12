@@ -3,9 +3,23 @@
 <p><%= t("lab.orders.fields.customer") %>: <%= @order.customer.name %> (<%= @order.customer.email %>)</p>
 <p><%= t("lab.orders.fields.status") %>: <%= @order.status %></p>
 <p><%= t("lab.orders.fields.total") %>: <span class="total"><%= number_with_precision(@order.total, precision: 2) %></span></p>
+<% if @order.cancel_reason %><p id="cancel-reason"><%= t("lab.orders.cancel_reason_line", reason: t("lab.orders.cancel_reasons.#{@order.cancel_reason}")) %></p><% end %>
+<% if @order.remind_after %><p id="remind-after"><%= t("lab.orders.remind_after_line", seconds: @order.remind_after) %></p><% end %>
 <table id="items">
   <% @order.items.each do |item| %>
     <tr><td class="sku"><%= item.sku %></td><td><%= item.quantity %></td><td><%= item.unit_price %></td></tr>
   <% end %>
 </table>
 <%= link_to t("lab.orders.edit_link"), edit_order_path(@order), id: "edit-order" unless @order.closed? %>
+<% unless @order.closed? %>
+  <h2><%= t("lab.orders.status_form.heading") %></h2>
+  <%= form_with url: order_status_path(@order), method: :patch do |f| %>
+    <p><%= f.label :status, t("lab.orders.fields.status") %>
+       <%= f.select :status, Order.statuses.keys.map { |k| [t("lab.orders.statuses.#{k}"), k] }, selected: @order.status %></p>
+    <p><%= f.label :cancel_reason, t("lab.orders.fields.cancel_reason") %>
+       <%= f.select :cancel_reason, Order.cancel_reasons.keys.map { |k| [t("lab.orders.cancel_reasons.#{k}"), k] }, include_blank: true %></p>
+    <p><%= f.label :remind_after, t("lab.orders.fields.remind_after") %> <%= f.text_field :remind_after %></p>
+    <%= f.submit t("lab.orders.status_form.submit") %>
+    <%= f.button t("lab.orders.status_form.submit_button") %>
+  <% end %>
+<% end %>

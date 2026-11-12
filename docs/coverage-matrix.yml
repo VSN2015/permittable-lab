@@ -238,7 +238,7 @@
   readme: "Field options"
   since: "0.9.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_status_spec.rb"
   question: null
   reason: null
   also: []
@@ -370,7 +370,7 @@
   readme: "Field options"
   since: "0.1.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_status_spec.rb"
   question: null
   reason: null
   also: []
@@ -1107,7 +1107,7 @@
   readme: "Custom error messages (message:)"
   since: "0.2.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_status_spec.rb"
   question: null
   reason: null
   also: []
@@ -1228,7 +1228,7 @@
   readme: "Unknown parameters"
   since: "0.7.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_status_spec.rb"
   question: null
   reason: null
   also: []
@@ -1250,7 +1250,7 @@
   readme: "Unknown parameters"
   since: "0.7.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_status_spec.rb"
   question: null
   reason: null
   also: []
@@ -1261,7 +1261,7 @@
   readme: "Unknown parameters"
   since: "0.7.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_status_spec.rb"
   question: null
   reason: null
   also: []
@@ -1272,7 +1272,7 @@
   readme: "Unknown parameters"
   since: "0.11.1"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_status_spec.rb"
   question: null
   reason: null
   also: []
@@ -1294,7 +1294,7 @@
   readme: "Unknown parameters"
   since: "0.9.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_status_spec.rb"
   question: null
   reason: null
   also: []
@@ -1437,7 +1437,7 @@
   readme: "Reusing fields (Permittable.fields and use)"
   since: "0.7.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_status_spec.rb"
   question: null
   reason: null
   also: []
@@ -1492,7 +1492,7 @@
   readme: "Output reshaping (transform: and finalize)"
   since: "0.1.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_status_spec.rb"
   question: null
   reason: null
   also: []
@@ -1506,7 +1506,7 @@
   status: "shared/spec/controllers/use_dsl_spec.rb"
   question: null
   reason: null
-  also: []
+  also: ["shared/spec/requests/orders_status_spec.rb"]
   changelog: []
 - id: finalize-bare-runner
   area: reshape
