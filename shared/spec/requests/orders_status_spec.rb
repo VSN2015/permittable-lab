@@ -47,6 +47,7 @@ RSpec.describe "Doi trang thai (change status)", type: :request, since: "0.12.0"
       order = make
       change(order, { "status" => "shipped", key => value })
       expect(response).to have_http_status(303)
+      expect(request.request_parameters).to have_key(key)
       expect(Inspector::Store.latest.permitted.keys).to eq %w[status remind_after]
       expect(order.reload.status).to eq "shipped"
 
@@ -153,6 +154,7 @@ RSpec.describe "Doi trang thai (change status)", type: :request, since: "0.12.0"
     order = make
     patch "#{order_status_path(order)}?locale=xx", params: { "status" => "shipped" }
     expect(response).to have_http_status(303)
+    expect(response.location).to include("locale=vi")
     expect(order.reload.status).to eq "shipped"
     patch "#{order_status_path(make)}?locale[]=vi", params: { "status" => "shipped" }
     expect(response).to have_http_status(422)

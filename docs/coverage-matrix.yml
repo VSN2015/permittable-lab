@@ -241,7 +241,7 @@
   status: "shared/spec/requests/orders_status_spec.rb"
   question: null
   reason: null
-  also: []
+  also: ["shared/spec/controllers/orders_edit_contract_spec.rb"]
   changelog: []
 - id: opt-format-regexp
   area: field-option
@@ -1297,7 +1297,7 @@
   status: "shared/spec/requests/orders_status_spec.rb"
   question: null
   reason: null
-  also: []
+  also: ["shared/spec/controllers/orders_edit_contract_spec.rb"]
   changelog: []
 - id: unknown-wrapper-key
   area: unknown-params
@@ -1440,7 +1440,7 @@
   status: "shared/spec/requests/orders_status_spec.rb"
   question: null
   reason: null
-  also: []
+  also: ["shared/spec/controllers/orders_edit_contract_spec.rb"]
   changelog: []
 - id: use-refuses-finalize
   area: reuse
@@ -2045,8 +2045,8 @@
   status: "shared/spec/controllers/orders_contract_spec.rb"
   question: null
   reason: null
-  also: ["shared/spec/requests/orders_update_spec.rb"]
-  changelog: ["0.12.0", "0.14.0"]
+  also: ["shared/spec/requests/orders_update_spec.rb", "shared/spec/controllers/orders_edit_contract_spec.rb"]
+  changelog: ["0.12.0", "0.14.0", "0.15.0"]
 - id: matcher-negated
   area: beyond-controller
   feature: "negated matchers fail on an unknown action"
@@ -3015,7 +3015,7 @@
   readme: "Explicit nulls (nullable:)"
   since: "0.14.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/controllers/orders_edit_contract_spec.rb"
   question: null
   reason: null
   also: []
