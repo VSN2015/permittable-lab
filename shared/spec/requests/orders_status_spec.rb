@@ -66,7 +66,7 @@ RSpec.describe "Doi trang thai (change status)", type: :request, since: "0.12.0"
   end
 
   it "in: Order.statuses is read as its keys", covers: %w[opt-in-enum-hash] do
-    %w[pending confirmed shipped delivered].each do |status|
+    (Order.statuses.keys - %w[cancelled]).each do |status|
       change(make, { "status" => status })
       expect(response).to have_http_status(303)
     end
