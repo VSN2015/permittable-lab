@@ -4,12 +4,10 @@ require "tmpdir"
 require "fileutils"
 
 RSpec.describe Lab::CoverageMatrix, covers: %w[] do
-  ROOT = File.expand_path("../../..", __dir__)
-  UNCOVERED = "chưa phủ".freeze
-  AWAITING = "chờ tác giả".freeze
-  OUT = "ngoài phạm vi".freeze
+  let(:root) { File.expand_path("../../..", __dir__) }
 
-  ANCHOR_IDS = %w[
+  let(:anchor_ids) do
+    %w[
     pp-root pp-model pp-model-true-infer pp-unknown pp-enforce-true pp-enforce-lazy pp-mode-monitor pp-desc pp-catch-all pp-last-rule-wins pp-subclass-override
     kind-scalar kind-nested kind-array-scalar kind-array-hash kind-array-fields-for-hash kind-array-length-short-circuit kind-json
     opt-in-range opt-in-list opt-in-live-include opt-in-enum-hash opt-format-regexp opt-length-string opt-length-array opt-length-integer-exact opt-normalize-squish opt-normalize-strip opt-normalize-downcase opt-normalize-upcase opt-normalize-email opt-normalize-proc opt-default-cast opt-default-as-authored-with-transform opt-validate-falsy opt-validate-symbol-code opt-transform opt-virtual opt-sensitive opt-sensitive-cascade opt-sensitive-false-opt-out opt-message-string opt-message-hash opt-of opt-max-depth opt-required-array opt-desc opt-example opt-nullable opt-nullable-required opt-nullable-default-nil opt-nullable-array-nested opt-check-order
@@ -26,11 +24,12 @@ RSpec.describe Lab::CoverageMatrix, covers: %w[] do
     rake-audit-table rake-audit-strict rake-audit-stale rake-audit-ignore rake-audit-outside-root rake-audit-engines rake-audit-metal rake-audit-routes-order rake-openapi-stdout rake-openapi-file rake-openapi-engines rake-openapi-metal rake-openapi-path-params rake-openapi-problem rake-openapi-monitor-extension rake-generate-all rake-generate-one rake-generate-expect-permit rake-generate-monitor-draft rake-generate-ignore rake-generate-pg-array
     matcher-permit-param matcher-accept-reject matcher-negated matcher-preset contract-call contract-call-bang contract-json-schema contract-always-enforces contract-no-router-exemption contract-no-memo contract-input-errors contract-unknown-log audit-entries-plain generator-draft-plain registry-swap alias-concerns-on-rails
     cfg-mode cfg-error-format cfg-problem-base-uri cfg-check-column-types cfg-audit-ignore cfg-audit-ignore-outside-root
-  ].freeze
+  ]
+  end
 
   def good(overrides = {})
     { "id" => "r1", "area" => "field-option", "feature" => "f", "readme" => "R", "since" => "0.6.0",
-      "plan" => 1, "status" => UNCOVERED, "question" => nil, "reason" => nil, "also" => [], "changelog" => [] }.merge(overrides)
+      "plan" => 1, "status" => Lab::CoverageMatrix::UNCOVERED, "question" => nil, "reason" => nil, "also" => [], "changelog" => [] }.merge(overrides)
   end
 
   def problems(rows, root: @root, files: @files)
@@ -71,7 +70,7 @@ RSpec.describe Lab::CoverageMatrix, covers: %w[] do
   it("reports a missing plan on an in-scope row") { expect_problem([good("plan" => nil)], "r1") }
 
   it "allows a missing plan only for out-of-scope rows" do
-    row = good("area" => "out-of-scope", "plan" => nil, "status" => OUT, "reason" => "not here")
+    row = good("area" => "out-of-scope", "plan" => nil, "status" => Lab::CoverageMatrix::OUT_OF_SCOPE, "reason" => "not here")
     expect(problems([row])).to eq []
   end
 
@@ -81,7 +80,7 @@ RSpec.describe Lab::CoverageMatrix, covers: %w[] do
 
   it "reports an existing file that lacks covers: for the id" do
     rel = write_spec("shared/spec/a_spec.rb", meta(%w[other]))
-    msgs = problems([good("status" => rel), good("id" => "other", "status" => UNCOVERED)])
+    msgs = problems([good("status" => rel), good("id" => "other", "status" => Lab::CoverageMatrix::UNCOVERED)])
     expect(msgs.grep(/r1/)).not_to be_empty
   end
 
@@ -90,15 +89,15 @@ RSpec.describe Lab::CoverageMatrix, covers: %w[] do
     expect(problems([good("status" => rel)])).to eq []
   end
 
-  it("reports an awaiting-author row with no question") { expect_problem([good("status" => AWAITING)], "r1") }
-  it("accepts an awaiting-author row with a question") { expect(problems([good("status" => AWAITING, "question" => "?")])).to eq [] }
+  it("reports an awaiting-author row with no question") { expect_problem([good("status" => Lab::CoverageMatrix::AWAITING)], "r1") }
+  it("accepts an awaiting-author row with a question") { expect(problems([good("status" => Lab::CoverageMatrix::AWAITING, "question" => "?")])).to eq [] }
 
   it "reports an out-of-scope row with no reason" do
-    expect_problem([good("area" => "out-of-scope", "plan" => nil, "status" => OUT)], "r1")
+    expect_problem([good("area" => "out-of-scope", "plan" => nil, "status" => Lab::CoverageMatrix::OUT_OF_SCOPE)], "r1")
   end
 
   it "reports an out-of-scope status on a row whose area is not out-of-scope" do
-    expect_problem([good("plan" => nil, "status" => OUT, "reason" => "x")], "r1")
+    expect_problem([good("plan" => nil, "status" => Lab::CoverageMatrix::OUT_OF_SCOPE, "reason" => "x")], "r1")
   end
 
   it("reports a status outside the four forms") { expect_problem([good("status" => "done")], "r1") }
@@ -111,22 +110,39 @@ RSpec.describe Lab::CoverageMatrix, covers: %w[] do
   end
 
   it "summarises the rows" do
-    rows = [good("id" => "a"), good("id" => "b", "status" => AWAITING, "question" => "?"),
-            good("id" => "c", "area" => "out-of-scope", "plan" => nil, "status" => OUT, "reason" => "x"),
+    rows = [good("id" => "a"), good("id" => "b", "status" => Lab::CoverageMatrix::AWAITING, "question" => "?"),
+            good("id" => "c", "area" => "out-of-scope", "plan" => nil, "status" => Lab::CoverageMatrix::OUT_OF_SCOPE, "reason" => "x"),
             good("id" => "d", "status" => "shared/spec/a_spec.rb")]
     expect(Lab::CoverageMatrix.summary(rows)).to eq(total: 4, covered: 1, uncovered: 1, awaiting_author: 1, out_of_scope: 1)
   end
 
+  it "covers_in ignores comments" do
+    kw = "cov" + "ers"
+    src = "# #{kw}: %w[ghost]\nRSpec.describe 'x', #{kw}: %w[real] do\nend # #{kw}: %w[tail]\n=begin\n#{kw}: %w[block]\n=end\n"
+    expect(Lab::CoverageMatrix.covers_in(src)).to eq %w[real]
+  end
+
+  it "covers_in still reads %w[] and quoted arrays" do
+    kw = "cov" + "ers"
+    ['%w[a b]', '%i[a b]', '["a", "b"]'].each do |lit|
+      expect(Lab::CoverageMatrix.covers_in("x #{kw}: #{lit}\n")).to eq %w[a b]
+    end
+  end
+
+  it "defines no top-level constants" do
+    expect(%i[ROOT UNCOVERED AWAITING OUT ANCHOR_IDS].select { |c| Object.const_defined?(c, false) }).to eq []
+  end
+
   context "with the real matrix" do
-    let(:rows) { Lab::CoverageMatrix.load(File.join(ROOT, "docs/coverage-matrix.yml")) }
+    let(:rows) { Lab::CoverageMatrix.load(File.join(root, "docs/coverage-matrix.yml")) }
 
     it "the real matrix is consistent" do
-      files = Dir[File.join(ROOT, "shared/spec/**/*_spec.rb")]
-      expect(Lab::CoverageMatrix.problems(rows, spec_root: ROOT, spec_files: files)).to eq []
+      files = Dir[File.join(root, "shared/spec/**/*_spec.rb")]
+      expect(Lab::CoverageMatrix.problems(rows, spec_root: root, spec_files: files)).to eq []
     end
 
     it "has the seeded anchor rows" do
-      expect(ANCHOR_IDS - rows.map { |r| r["id"] }).to eq []
+      expect(anchor_ids - rows.map { |r| r["id"] }).to eq []
     end
   end
 end

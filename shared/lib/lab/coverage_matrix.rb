@@ -1,5 +1,6 @@
 # Stdlib only, Ruby 2.7 compatible: bin/coverage-report runs on the host's Ruby.
 require "yaml"
+require "ripper"
 
 module Lab
   # docs/coverage-matrix.yml ties each README/CHANGELOG feature to the spec that tests it.
@@ -25,7 +26,8 @@ module Lab
 
     # Ids a spec file declares with covers: %w[...] (or a quoted array).
     def self.covers_in(source)
-      source.scan(COVERS).flat_map do |words, quoted|
+      code = Ripper.lex(source).reject { |t| t[1] == :on_comment || t[1].to_s.start_with?("on_embdoc") }.map { |t| t[2] }.join
+      code.scan(COVERS).flat_map do |words, quoted|
         words ? words.split : quoted.to_s.scan(/["']([^"']+)["']|:([\w-]+)/).map { |a, b| a || b }
       end
     end
