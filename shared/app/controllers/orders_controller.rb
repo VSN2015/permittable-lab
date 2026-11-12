@@ -8,13 +8,8 @@ class OrdersController < BaseController
     required :shipping_address do
       use ShippingAddressFields
     end
-    required :delivery_on, :date
-    optional :pickup_at, :datetime
-    optional :delivery_slot, :datetime
-    optional :priority, :string, in: Order::PRIORITIES, default: "standard"
-    optional :coupon_code, :string, format: /\A[A-Z]{3}\d{3}\z/
-    optional :note, :string, length: 1..200, normalize: :squish, nullable: true
-    array :services, of: :string, length: 0..3
+    use OrderScheduleFields
+    use OrderExtrasFields
     array :items_attributes, required: true, length: 1..20 do
       required :sku, length: 1..40
       required :quantity, :integer, in: 1..99

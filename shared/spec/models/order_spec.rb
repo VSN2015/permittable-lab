@@ -64,4 +64,24 @@ RSpec.describe Order do
       expect(Order.nested_attributes_options).not_to have_key(:customer)
     end
   end
+
+  # README: Field options (in: takes a Hash)
+  describe "cancel_reason" do
+    it "maps cancel reasons to integers" do
+      expect(Order.cancel_reasons).to eq({ "changed_mind" => 0, "wrong_address" => 1, "out_of_stock" => 2, "other" => 3 })
+      expect(Order.cancel_reasons.keys).not_to eq Order.cancel_reasons.values
+    end
+
+    it "closed? is true for delivered and cancelled only" do
+      closed = Order.statuses.keys.to_h { |s| [s, Order.new(status: s).closed?] }
+      expect(closed).to eq({ "pending" => false, "confirmed" => false, "shipped" => false,
+                             "delivered" => true, "cancelled" => true })
+    end
+
+    it "stores a cancel reason by key" do
+      order = build_order.tap(&:save!)
+      order.update!(status: "cancelled", cancel_reason: "wrong_address")
+      expect(order.read_attribute_before_type_cast("cancel_reason")).to eq 1
+    end
+  end
 end

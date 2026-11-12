@@ -8,6 +8,7 @@ class Order < ApplicationRecord
 
   enum :status, { pending: "pending", confirmed: "confirmed", shipped: "shipped",
                   delivered: "delivered", cancelled: "cancelled" }
+  enum :cancel_reason, { changed_mind: 0, wrong_address: 1, out_of_stock: 2, other: 3 }, prefix: :cancelled_for
 
   before_validation :assign_code, on: :create
 
@@ -19,6 +20,10 @@ class Order < ApplicationRecord
     attrs = attrs.to_h.stringify_keys
     customer_attrs = attrs.delete("customer")
     new(attrs).tap { |order| order.customer = Customer.new(customer_attrs) if customer_attrs }
+  end
+
+  def closed?
+    delivered? || cancelled?
   end
 
   def total
