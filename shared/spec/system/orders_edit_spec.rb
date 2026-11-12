@@ -14,8 +14,11 @@ RSpec.describe "Sửa đơn through the real forms (headless Chromium)", type: :
     %(//*[@id="inspector-raw-params"]//tr[td[1][normalize-space()="#{name}"] and td[2][normalize-space()="#{value}"]])
   end
 
-  it "edits an order through the real form", covers: %w[use-optional absent-optional-omitted] do
+  it "edits an order through the real form", covers: %w[absent-optional-omitted] do
     order = create_order(priority: "express", note: "keep", services: %w[gift_wrap])
+    # not on the edit form, so the browser never sends them
+    order.update!(pickup_at: Time.utc(2030, 3, 10, 8, 30), delivery_slot: Time.utc(1, 1, 1, 9, 30))
+    pickup_at, delivery_slot = order.pickup_at, order.delivery_slot
     visit order_path(order, locale: :vi)
     click_link "Sửa đơn"
 
@@ -33,6 +36,8 @@ RSpec.describe "Sửa đơn through the real forms (headless Chromium)", type: :
     expect(order.note).to eq("giao buổi sáng")
     expect(order.services).to eq(%w[insurance])
     expect(order.priority).to eq("express")
+    expect(order.pickup_at).to eq(pickup_at)
+    expect(order.delivery_slot).to eq(delivery_slot)
 
     within_frame("inspector-frame") do
       expect(page).to have_css("#inspector-status p:first-of-type", text: /\APATCH \/orders\/#{order.id} → 303\z/)
@@ -49,7 +54,7 @@ RSpec.describe "Sửa đơn through the real forms (headless Chromium)", type: :
     click_button "Lưu thay đổi"
 
     expect(page).to have_css(%(li[data-param="order.coupon_code"][data-code="format"]))
-    expect(page).to have_css("form")
+    expect(page).to have_field("Mã giảm giá") # the view re-renders the stored order, not the input
     expect(page).to have_current_path(order_path(order), ignore_query: true)
     within_frame("inspector-frame") do
       expect(page).to have_css("#inspector-status p:first-of-type", text: /422/)
@@ -68,7 +73,7 @@ RSpec.describe "Sửa đơn through the real forms (headless Chromium)", type: :
 
       expect(page).to have_css(%(li[data-param="cancel_reason"][data-code="required_when_cancelled"]), text: "bắt buộc khi trạng thái là Đã huỷ")
       within_frame("inspector-frame") do
-        expect(page).to have_css("#inspector-status p:first-of-type", text: /422/)
+        expect(page).to have_css("#inspector-status p:first-of-type", text: /\APATCH \/orders\/#{order.id}\/status → 422\z/)
         expect(page).to have_css("#inspector-violations", text: "cancel_reason")
       end
 
@@ -77,7 +82,7 @@ RSpec.describe "Sửa đơn through the real forms (headless Chromium)", type: :
       select "Sai địa chỉ", from: "cancel_reason"
       click_button "Cập nhật trạng thái", exact: true
 
-      expect(page).to have_text("Đã huỷ")
+      expect(page).to have_css("p", text: /\ATrạng thái: Đã huỷ\z/)
       expect(page).to have_css("#cancel-reason", text: "Lý do huỷ: Sai địa chỉ")
       expect(page).to have_css("#remind-after", text: "Nhắc khách sau: 1800 giây")
       within_frame("inspector-frame") do

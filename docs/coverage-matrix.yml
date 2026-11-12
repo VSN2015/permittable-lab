@@ -1418,7 +1418,7 @@
   status: "shared/spec/requests/orders_update_spec.rb"
   question: null
   reason: null
-  also: ["shared/spec/system/orders_edit_spec.rb"]
+  also: []
   changelog: ["0.12.0"]
 - id: use-only-except
   area: reuse
