@@ -16,6 +16,13 @@ module Lab
         config.eager_load_paths << dir
       end
 
+      # Concerns dirs are roots too: app/models/concerns/x.rb defines X, not Models::Concerns::X.
+      Dir[shared.join("app/*/concerns").to_s].sort.each do |dir|
+        next if File.basename(File.dirname(dir)) == "views"
+        config.autoload_paths << dir
+        config.eager_load_paths << dir
+      end
+
       # Constants that initializers use (the Inspector middleware) must load
       # before the main autoloader is set up, and are never reloaded.
       config.autoload_once_paths << shared.join("app/inspector").to_s

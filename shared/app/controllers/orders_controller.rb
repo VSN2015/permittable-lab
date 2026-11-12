@@ -1,4 +1,6 @@
 class OrdersController < BaseController
+  permit_params(unknown: :error) { optional :locale, :string }
+
   permit_params :create, root: :order, model: Order, unknown: :error, enforce: true, desc: "Tạo đơn" do
     required :customer do
       required :name,  :string, length: 1..80, normalize: :squish
@@ -8,13 +10,8 @@ class OrdersController < BaseController
     required :shipping_address do
       use ShippingAddressFields
     end
-    required :delivery_on, :date
-    optional :pickup_at, :datetime
-    optional :delivery_slot, :datetime
-    optional :priority, :string, in: Order::PRIORITIES, default: "standard"
-    optional :coupon_code, :string, format: /\A[A-Z]{3}\d{3}\z/
-    optional :note, :string, length: 1..200, normalize: :squish, nullable: true
-    array :services, of: :string, length: 0..3
+    use OrderScheduleFields
+    use OrderExtrasFields
     array :items_attributes, required: true, length: 1..20 do
       required :sku, length: 1..40
       required :quantity, :integer, in: 1..99
@@ -22,12 +19,38 @@ class OrdersController < BaseController
     end
   end
 
+  permit_params :update, root: :order, model: Order, unknown: :error, desc: "Sửa đơn" do
+    use OrderScheduleFields, optional: true
+    use OrderExtrasFields, optional: true
+    optional :shipping_address do
+      use ShippingAddressFields
+    end
+  end
+
+  permit_params :change_status, unknown: :error, desc: "Đổi trạng thái" do
+    use StatusChange
+    optional :locale, :string
+    finalize do |p|
+      cancelling = p[:status] == "cancelled"
+      if cancelling && p[:cancel_reason].blank?
+        violate!("cancel_reason", :required_when_cancelled, message: I18n.t("lab.orders.errors.cancel_reason_required"))
+      elsif !cancelling && p[:cancel_reason].present?
+        violate!("cancel_reason", :only_when_cancelled, message: I18n.t("lab.orders.errors.cancel_reason_only_when_cancelled"))
+      end
+      p.except(:locale)
+    end
+  end
+
+  before_action :set_order, only: %i[show edit update change_status]
+  before_action :guard_closed_order, only: %i[edit update change_status]
+  before_action :record_attempted_fields, only: :update
+
   def index
     @orders = Order.includes(:customer, :items).order(:id)
   end
 
   def show
-    @order = Order.includes(:customer, :items).find(params[:id])
+    @violations ||= []
   end
 
   def new
@@ -41,11 +64,45 @@ class OrdersController < BaseController
     redirect_to order_path(order), status: :see_other
   end
 
+  def edit
+    @violations = []
+  end
+
+  def update
+    @order.update!(permitted_params.to_h)
+    redirect_to order_path(@order), status: :see_other,
+                notice: t("lab.orders.updated", fields: @attempted.join(", "))
+  end
+
+  def change_status
+    @order.update!(permitted_params.to_h)
+    redirect_to order_path(@order), status: :see_other
+  end
+
   private
+
+  def set_order
+    @order = Order.includes(:customer, :items).find(params[:id])
+  end
+
+  def guard_closed_order
+    redirect_to order_path(@order), status: :see_other, alert: t("lab.orders.closed") if @order.closed?
+  end
+
+  def record_attempted_fields
+    @attempted = permitted_params.keys
+  rescue Permittable::InvalidParameters
+    @attempted = []
+  end
 
   def render_error(message:, code:, status:, errors: [])
     @violations = errors
-    @order = Order.new
-    render :new, status: status
+    case action_name
+    when "update" then render :edit, status: status
+    when "change_status" then render :show, status: status
+    else
+      @order = Order.new
+      render :new, status: status
+    end
   end
 end

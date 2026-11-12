@@ -21,6 +21,32 @@ vi:
       locale_vi: Tiếng Việt
       locale_en: English
     orders:
+      submit_edit: "Lưu thay đổi"
+      edit_link: "Sửa đơn"
+      updated: "Đã cập nhật: %{fields}"
+      closed: "Đơn đã đóng, không thể thay đổi"
+      cancel_reason_line: "Lý do huỷ: %{reason}"
+      remind_after_line: "Nhắc khách sau: %{seconds} giây"
+      status_form:
+        heading: "Đổi trạng thái"
+        submit: "Cập nhật trạng thái"
+        submit_button: "Cập nhật trạng thái (nút)"
+      statuses:
+        pending: "Chờ xử lý"
+        confirmed: "Đã xác nhận"
+        shipped: "Đang giao"
+        delivered: "Đã giao"
+        cancelled: "Đã huỷ"
+      cancel_reasons:
+        changed_mind: "Đổi ý"
+        wrong_address: "Sai địa chỉ"
+        out_of_stock: "Hết hàng"
+        other: "Khác"
+      errors:
+        cancel_reason_required: "bắt buộc khi trạng thái là Đã huỷ"
+        cancel_reason_only_when_cancelled: "chỉ dùng khi trạng thái là Đã huỷ"
+      edit:
+        heading: "Sửa đơn"
       submit: Tạo đơn
       submit_button: Tạo đơn (nút)
       index:
@@ -54,6 +80,8 @@ vi:
         code: Mã đơn
         status: Trạng thái
         total: Tổng tiền
+        cancel_reason: "Lý do huỷ"
+        remind_after: "Nhắc khách sau (phút)"
     inspector:
       empty: Chưa có yêu cầu nào được ghi lại
       status: Trạng thái

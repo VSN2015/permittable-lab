@@ -21,6 +21,8 @@ orders.each_with_index do |(code, status, priority, customer_index, items), inde
     order.customer = customers[customer_index]
     order.status = status
     order.priority = priority
+    order.cancel_reason = "changed_mind" if status == "cancelled"
+    order.remind_after = 1800 if status == "shipped"
     order.delivery_on = Date.new(2030, 1, 1) + index
     order.services = priority == "express" ? %w[signature] : []
     order.shipping_address = { "line1" => "#{index + 1} Le Loi", "city" => "Ho Chi Minh", "postcode" => "700000" }

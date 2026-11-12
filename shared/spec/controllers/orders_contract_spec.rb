@@ -93,11 +93,28 @@ RSpec.describe OrdersController, since: "0.12.0",
     expect(described_class).not_to reject_params(OrderPayloads.form_params).for_action(:create)
   end
 
-  it "fails negated matchers when no rule covers the action" do
+  it "fails negated matchers when no rule covers the action (HomeController has none; OrdersController's catch-all covers every action)" do
     fails = RSpec::Expectations::ExpectationNotMetError
-    expect { expect(described_class).not_to permit_param(:status).for_action(:index) }.to raise_error(fails)
-    expect { expect(described_class).not_to accept_params(OrderPayloads.form_params).for_action(:index) }.to raise_error(fails)
-    expect { expect(described_class).not_to reject_params(OrderPayloads.form_params).for_action(:index) }.to raise_error(fails)
+    expect { expect(HomeController).not_to permit_param(:status).for_action(:show) }.to raise_error(fails)
+    expect { expect(HomeController).not_to accept_params(OrderPayloads.form_params).for_action(:show) }.to raise_error(fails)
+    expect { expect(HomeController).not_to reject_params(OrderPayloads.form_params).for_action(:show) }.to raise_error(fails)
+  end
+
+  describe "negated matchers on a controller whose rules skip the action" do
+    let(:controller_class) { Class.new(BaseController) { permit_params(:create) { optional :a, :string } } }
+    let(:fails) { RSpec::Expectations::ExpectationNotMetError }
+
+    it "fails not_to permit_param" do
+      expect { expect(controller_class).not_to permit_param(:a).for_action(:index) }.to raise_error(fails)
+    end
+
+    it "fails not_to accept_params" do
+      expect { expect(controller_class).not_to accept_params({}).for_action(:index) }.to raise_error(fails)
+    end
+
+    it "fails not_to reject_params" do
+      expect { expect(controller_class).not_to reject_params({}).for_action(:index) }.to raise_error(fails)
+    end
   end
 
   it "raises on a qualified negated permit_param" do

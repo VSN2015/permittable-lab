@@ -62,7 +62,7 @@
   readme: "How a request flows"
   since: "0.1.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_update_spec.rb"
   question: null
   reason: null
   also: []
@@ -106,10 +106,10 @@
   readme: "Declaring a contract"
   since: "0.1.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/controllers/use_dsl_spec.rb"
   question: null
   reason: null
-  also: []
+  also: ["shared/spec/requests/orders_update_spec.rb"]
   changelog: []
 - id: pp-subclass-override
   area: declaring
@@ -238,10 +238,10 @@
   readme: "Field options"
   since: "0.9.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_status_spec.rb"
   question: null
   reason: null
-  also: []
+  also: ["shared/spec/controllers/orders_edit_contract_spec.rb"]
   changelog: []
 - id: opt-format-regexp
   area: field-option
@@ -370,7 +370,7 @@
   readme: "Field options"
   since: "0.1.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_status_spec.rb"
   question: null
   reason: null
   also: []
@@ -703,8 +703,8 @@
   status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
-  also: []
-  changelog: []
+  also: ["shared/spec/requests/orders_update_spec.rb"]
+  changelog: ["0.14.0", "0.15.0"]
 - id: type-datetime
   area: type
   feature: ":datetime strict coercion"
@@ -714,8 +714,8 @@
   status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
-  also: []
-  changelog: []
+  also: ["shared/spec/requests/orders_update_spec.rb"]
+  changelog: ["0.14.0", "0.15.0"]
 - id: type-json
   area: type
   feature: ":json type"
@@ -799,10 +799,10 @@
   readme: "Absence, defaults, and partial updates"
   since: "0.1.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_update_spec.rb"
   question: null
   reason: null
-  also: []
+  also: ["shared/spec/system/orders_edit_spec.rb"]
   changelog: []
 - id: absent-required-missing
   area: absence
@@ -1107,10 +1107,10 @@
   readme: "Custom error messages (message:)"
   since: "0.2.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_status_spec.rb"
   question: null
   reason: null
-  also: []
+  also: ["shared/spec/system/orders_edit_spec.rb"]
   changelog: []
 - id: problem-format
   area: problem
@@ -1227,11 +1227,11 @@
   feature: "authenticity_token is exempt"
   readme: "Unknown parameters"
   since: "0.7.0"
-  plan: 5
-  status: "chưa phủ"
+  plan: 2
+  status: "shared/spec/requests/orders_status_spec.rb"
   question: null
   reason: null
-  also: []
+  also: ["shared/spec/system/orders_edit_spec.rb"]
   changelog: []
 - id: unknown-exempt-csrf-renamed
   area: unknown-params
@@ -1249,33 +1249,33 @@
   feature: "_method and utf8 are exempt"
   readme: "Unknown parameters"
   since: "0.7.0"
-  plan: 5
-  status: "chưa phủ"
+  plan: 2
+  status: "shared/spec/requests/orders_status_spec.rb"
   question: null
   reason: null
-  also: []
+  also: ["shared/spec/system/orders_edit_spec.rb"]
   changelog: []
 - id: unknown-exempt-commit
   area: unknown-params
   feature: "commit from f.submit is exempt"
   readme: "Unknown parameters"
   since: "0.7.0"
-  plan: 5
-  status: "chưa phủ"
+  plan: 2
+  status: "shared/spec/requests/orders_status_spec.rb"
   question: null
   reason: null
-  also: []
+  also: ["shared/spec/system/orders_edit_spec.rb"]
   changelog: []
 - id: unknown-exempt-button
   area: unknown-params
   feature: "button from f.button is exempt"
   readme: "Unknown parameters"
   since: "0.11.1"
-  plan: 5
-  status: "chưa phủ"
+  plan: 2
+  status: "shared/spec/requests/orders_status_spec.rb"
   question: null
   reason: null
-  also: []
+  also: ["shared/spec/system/orders_edit_spec.rb"]
   changelog: ["0.11.1"]
 - id: unknown-exempt-image-submit
   area: unknown-params
@@ -1294,10 +1294,10 @@
   readme: "Unknown parameters"
   since: "0.9.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_status_spec.rb"
   question: null
   reason: null
-  also: []
+  also: ["shared/spec/controllers/orders_edit_contract_spec.rb", "shared/spec/system/orders_edit_spec.rb"]
   changelog: []
 - id: unknown-wrapper-key
   area: unknown-params
@@ -1404,7 +1404,7 @@
   readme: "Reusing fields (Permittable.fields and use)"
   since: "0.7.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_update_spec.rb"
   question: null
   reason: null
   also: []
@@ -1415,7 +1415,7 @@
   readme: "Reusing fields (Permittable.fields and use)"
   since: "0.7.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_update_spec.rb"
   question: null
   reason: null
   also: []
@@ -1426,7 +1426,7 @@
   readme: "Reusing fields (Permittable.fields and use)"
   since: "0.7.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/controllers/use_dsl_spec.rb"
   question: null
   reason: null
   also: []
@@ -1437,10 +1437,10 @@
   readme: "Reusing fields (Permittable.fields and use)"
   since: "0.7.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_status_spec.rb"
   question: null
   reason: null
-  also: []
+  also: ["shared/spec/controllers/orders_edit_contract_spec.rb"]
   changelog: []
 - id: use-refuses-finalize
   area: reuse
@@ -1448,7 +1448,7 @@
   readme: "Reusing fields (Permittable.fields and use)"
   since: "0.12.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/controllers/use_dsl_spec.rb"
   question: null
   reason: null
   also: []
@@ -1459,7 +1459,7 @@
   readme: "Reusing fields (Permittable.fields and use)"
   since: "0.7.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/controllers/use_dsl_spec.rb"
   question: null
   reason: null
   also: []
@@ -1492,7 +1492,7 @@
   readme: "Output reshaping (transform: and finalize)"
   since: "0.1.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_status_spec.rb"
   question: null
   reason: null
   also: []
@@ -1503,10 +1503,10 @@
   readme: "Output reshaping (transform: and finalize)"
   since: "0.1.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/controllers/use_dsl_spec.rb"
   question: null
   reason: null
-  also: []
+  also: ["shared/spec/requests/orders_status_spec.rb", "shared/spec/system/orders_edit_spec.rb"]
   changelog: []
 - id: finalize-bare-runner
   area: reshape
@@ -1514,7 +1514,7 @@
   readme: "Output reshaping (transform: and finalize)"
   since: "0.1.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/controllers/use_dsl_spec.rb"
   question: null
   reason: null
   also: []
@@ -1712,7 +1712,7 @@
   readme: "Instrumentation"
   since: "0.8.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_update_spec.rb"
   question: null
   reason: null
   also: []
@@ -2045,8 +2045,8 @@
   status: "shared/spec/controllers/orders_contract_spec.rb"
   question: null
   reason: null
-  also: []
-  changelog: ["0.12.0"]
+  also: ["shared/spec/controllers/orders_edit_contract_spec.rb"]
+  changelog: ["0.12.0", "0.14.0", "0.15.0"]
 - id: matcher-negated
   area: beyond-controller
   feature: "negated matchers fail on an unknown action"
@@ -2954,3 +2954,146 @@
   reason: "Gem repository tooling, not behaviour of the gem inside an app"
   also: []
   changelog: []
+- id: cl-0_14_0-1
+  area: changelog
+  feature: "`:file` field type and `of: :file` accept uploads, refuse a String"
+  readme: "The field DSL"
+  since: "0.14.0"
+  plan: 5
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.14.0"]
+- id: cl-0_14_0-2
+  area: changelog
+  feature: "an operation with a `:file` field is exported as `multipart/form-data`"
+  readme: "Exporting OpenAPI (docs that cannot drift)"
+  since: "0.14.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.14.0"]
+- id: cl-0_14_0-3
+  area: changelog
+  feature: "`OpenAPI.rails_routes` descriptors carry an optional `defaults:` key"
+  readme: "Exporting OpenAPI (docs that cannot drift)"
+  since: "0.14.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.14.0"]
+- id: cl-0_14_0-7
+  area: changelog
+  feature: "a bare Metal controller enforces its rules whichever include order, or raises at class load"
+  readme: "How a request flows"
+  since: "0.14.0"
+  plan: 3
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.14.0"]
+- id: cl-0_14_0-8
+  area: changelog
+  feature: "a name the route fills from `defaults:` leaves the OpenAPI request body"
+  readme: "Unknown parameters"
+  since: "0.14.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.14.0"]
+- id: cl-0_14_0-9
+  area: changelog
+  feature: "a blank default on a nullable field reads as `nil`; a field with `transform:` keeps its default as authored"
+  readme: "Explicit nulls (nullable:)"
+  since: "0.14.0"
+  plan: 2
+  status: "shared/spec/controllers/orders_edit_contract_spec.rb"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.14.0"]
+- id: cl-0_15_0-1
+  area: changelog
+  feature: "the audit lists controllers a route names that nothing has loaded"
+  readme: "Auditing coverage (permittable:audit)"
+  since: "0.15.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.15.0"]
+- id: cl-0_15_0-2
+  area: changelog
+  feature: "matchers print hashes with sensitive values redacted and name `differs at:` paths"
+  readme: "Testing contracts (RSpec matchers)"
+  since: "0.15.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.15.0"]
+- id: cl-0_15_0-4
+  area: changelog
+  feature: "an authored `:json` default the export cannot carry fails at class load; a `:date` `in:` member is published as `YYYY-MM-DD`"
+  readme: "Exporting OpenAPI (docs that cannot drift)"
+  since: "0.15.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.15.0"]
+- id: cl-0_15_0-5
+  area: changelog
+  feature: "a blank default on a nullable `:json` field reads as `nil`"
+  readme: "Explicit nulls (nullable:)"
+  since: "0.15.0"
+  plan: 3
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.15.0"]
+- id: cl-0_15_0-7
+  area: changelog
+  feature: "a bare Metal rule that cannot run is audited as uncovered"
+  readme: "Auditing coverage (permittable:audit)"
+  since: "0.15.0"
+  plan: 4
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.15.0"]
+- id: cl-0_15_0-8
+  area: changelog
+  feature: "the exported body of a rootless `unknown: :error` contract lists Rails' form keys"
+  readme: "Exporting OpenAPI (docs that cannot drift)"
+  since: "0.15.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.15.0"]
+- id: cl-0_15_0-9
+  area: changelog
+  feature: "`alias_attribute` and `store_accessor` fields are checked against the column behind them"
+  readme: "The schema-drift guard"
+  since: "0.15.0"
+  plan: 6
+  status: "chưa phủ"
+  question: null
+  reason: null
+  also: []
+  changelog: ["0.15.0"]

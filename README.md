@@ -72,6 +72,8 @@ Plan 1 ran the same 189 specs on 7.2.4, 8.0.5.2 and 8.1.4.1. The only lab change
   `shared/gemfile.rb` pins `gem "json", "< 3.0"` for Rails 8.0 only, keyed on the `LAB_RAILS` env var
   that `compose.yml` sets per service. 7.2 and 8.1 stay stock installs (json 3.1.0).
 
+Plan 2 (313 specs on all three) needed no further lab change.
+
 Checked and needing no change:
 
 - `rails new` flags: `--skip-kamal` and `--skip-thruster` do not exist in 7.2; `bin/new-app` drops them.
@@ -90,4 +92,22 @@ observed behaviour and a minimal repro, and is never fixed by editing the expect
 
 ## Findings (gem vs README)
 
-None so far (Plan 1: 189 examples, 0 failures on Rails 7.2, 8.0, 8.1).
+None so far. Plan 1: 189 examples, 0 failures on Rails 7.2, 8.0, 8.1. Plan 2: 313 examples, 0 failures
+on each of Rails 7.2.4, 8.0.5.2 and 8.1.4.1 (permittable 0.15.1 local, Ruby 3.3.13). Coverage report:
+total 282, covered 76, uncovered 200, awaiting_author 0, out_of_scope 6.
+
+Expected values in Plan 2 come from the README of the gem branch `docs/readme-changelog-gaps` at d7af5bb,
+which is master v0.15.1 plus README/CHANGELOG text only. An earlier revision of that branch predated
+0.15.1's code changes (#179 date parsing, #180 OpenAPI export). Plan 2's date literals were checked against
+#179's cases and are unaffected, and the matrix ran on 0.15.1 and passed.
+
+### Notes for the author
+
+Not findings, and no spec tests them. The README is correct on both; the CHANGELOG wording was wrong and
+is already corrected on the gem branch `docs/readme-changelog-gaps` (commit d7af5bb, rebased onto v0.15.1).
+
+- **0.12.0 #123**: the CHANGELOG said a `:json` default reaches the action "frozen". In fact the action
+  gets an unfrozen, per-call copy; only the stored default is frozen.
+- **0.15.0 #176**: the CHANGELOG said the Metal audit's inert rule applies when the effective mode is
+  "enforce or monitor". The code makes a rule inert only when it declares `enforce: true` or its
+  effective mode is `:monitor`.

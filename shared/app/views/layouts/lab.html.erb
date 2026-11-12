@@ -19,7 +19,11 @@
       <span id="lab-gem-label"><%= lab_gem_label %></span>
     </nav>
     <div id="lab-columns">
-      <main><%= yield %></main>
+      <main>
+        <% if flash[:notice] %><p id="flash-notice"><%= flash[:notice] %></p><% end %>
+        <% if flash[:alert] %><p id="flash-alert"><%= flash[:alert] %></p><% end %>
+        <%= yield %>
+      </main>
       <% if Inspector.enabled? %>
         <iframe id="inspector-frame" src="/inspector/last" title="Inspector"></iframe>
       <% end %>

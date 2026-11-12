@@ -42,6 +42,11 @@ module OrderPayloads
     }
   end
 
+  # Model-level setup, not through the gem.
+  def create_order(**attrs)
+    Order.build_from_contract(contract_output.merge(attrs.transform_keys(&:to_s))).tap(&:save!)
+  end
+
   def stringify(value)
     case value
     when Hash then value.each_with_object({}) { |(k, v), h| h[k.to_s] = stringify(v) }

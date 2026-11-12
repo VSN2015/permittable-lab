@@ -1,0 +1,24 @@
+<h1><%= t("lab.orders.edit.heading") %></h1>
+<%= render "orders/violations", violations: @violations %>
+<%= form_with model: @order, url: order_path(@order), method: :patch do |f| %>
+  <fieldset>
+    <legend><%= t("lab.orders.fields.shipping_address") %></legend>
+    <%= f.fields_for :shipping_address, ActiveSupport::OrderedOptions.new do |s| %>
+      <p><%= s.label :line1, t("lab.orders.fields.line1") %> <%= s.text_field :line1, value: @order.shipping_address["line1"] %></p>
+      <p><%= s.label :city, t("lab.orders.fields.city") %> <%= s.text_field :city, value: @order.shipping_address["city"] %></p>
+      <p><%= s.label :postcode, t("lab.orders.fields.postcode") %> <%= s.text_field :postcode, value: @order.shipping_address["postcode"] %></p>
+    <% end %>
+  </fieldset>
+  <p><%= f.label :delivery_on, t("lab.orders.fields.delivery_on") %>
+     <%= f.date_select :delivery_on, prompt: true, start_year: [Date.current.year, @order.delivery_on&.year].compact.min, end_year: [Date.current.year + 2, @order.delivery_on&.year].compact.max %></p>
+  <p><%= f.label :priority, t("lab.orders.fields.priority") %> <%= f.select :priority, Order::PRIORITIES %></p>
+  <p><%= f.label :coupon_code, t("lab.orders.fields.coupon_code") %> <%= f.text_field :coupon_code %></p>
+  <p><%= f.label :note, t("lab.orders.fields.note") %> <%= f.text_area :note %></p>
+  <fieldset>
+    <legend><%= t("lab.orders.fields.services") %></legend>
+    <%= f.collection_check_boxes :services, Order::SERVICES, :to_s, :to_s do |b| %>
+      <%= b.check_box %> <%= b.label { t("lab.orders.services.#{b.value}") } %>
+    <% end %>
+  </fieldset>
+  <%= f.submit t("lab.orders.submit_edit") %>
+<% end %>
