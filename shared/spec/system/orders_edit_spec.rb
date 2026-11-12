@@ -57,7 +57,7 @@ RSpec.describe "Sửa đơn through the real forms (headless Chromium)", type: :
     expect(page).to have_field("Mã giảm giá") # the view re-renders the stored order, not the input
     expect(page).to have_current_path(order_path(order), ignore_query: true)
     within_frame("inspector-frame") do
-      expect(page).to have_css("#inspector-status p:first-of-type", text: /422/)
+      expect(page).to have_css("#inspector-status p:first-of-type", text: /\APATCH \/orders\/#{order.id} → 422\z/)
       expect(page).to have_css("#inspector-permitted", text: "Bị từ chối")
     end
   end
