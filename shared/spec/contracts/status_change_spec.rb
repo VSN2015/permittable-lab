@@ -18,6 +18,7 @@ RSpec.describe StatusChange, covers: %w[] do
   end
 
   it "reads in: Hash as its keys, refusing the stored integer" do
+    expect(violations({ "status" => "cancelled", "cancel_reason" => "wrong_address" })).to eq []
     expect(violations({ "status" => "cancelled", "cancel_reason" => "1" })).to eq [%w[cancel_reason inclusion]]
   end
 

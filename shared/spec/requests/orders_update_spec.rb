@@ -1,6 +1,6 @@
 # README: How a request flows; Absence, defaults, and partial updates; Reusing fields; Instrumentation; Types and strict coercion
 RSpec.describe "Sua don (edit order)", type: :request, since: "0.12.0",
-  covers: %w[pp-enforce-lazy pp-last-rule-wins use-compose use-optional absent-optional-omitted event-once-per-request type-date type-datetime matcher-accept-reject] do
+  covers: %w[pp-enforce-lazy pp-last-rule-wins use-compose use-optional absent-optional-omitted event-once-per-request type-date type-datetime] do
   before { Inspector::Store.clear }
 
   def doc
@@ -197,7 +197,8 @@ RSpec.describe "Sua don (edit order)", type: :request, since: "0.12.0",
     expect(seen).to be_empty
   end
 
-  it "a nil array element sent as JSON is dropped by Rails before the contract", since: "0.14.0", covers: %w[matcher-accept-reject] do
+  # Rails deep-munge control: no gem matcher is called here.
+  it "a nil array element sent as JSON is dropped by Rails before the contract", since: "0.14.0" do
     order = make
     patch order_path(order, locale: "vi"), params: { order: { services: ["gift_wrap", nil] } }, as: :json
     expect(response).to have_http_status(303)

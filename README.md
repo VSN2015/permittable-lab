@@ -96,8 +96,10 @@ None so far. Plan 1: 189 examples, 0 failures on Rails 7.2, 8.0, 8.1. Plan 2: 31
 on each of Rails 7.2.4, 8.0.5.2 and 8.1.4.1 (permittable 0.15.1 local, Ruby 3.3.13). Coverage report:
 total 282, covered 76, uncovered 200, awaiting_author 0, out_of_scope 6.
 
-Expected values in Plan 2 come from the README of the gem branch `docs/readme-changelog-gaps`, which
-differs from master 0.15.0 only in README/CHANGELOG text.
+Expected values in Plan 2 come from the README of the gem branch `docs/readme-changelog-gaps` at d7af5bb,
+which is master v0.15.1 plus README/CHANGELOG text only. An earlier revision of that branch predated
+0.15.1's code changes (#179 date parsing, #180 OpenAPI export). Plan 2's date literals were checked against
+#179's cases and are unaffected, and the matrix ran on 0.15.1 and passed.
 
 ### Notes for the author
 

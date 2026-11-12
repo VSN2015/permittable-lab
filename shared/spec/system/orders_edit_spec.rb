@@ -54,7 +54,7 @@ RSpec.describe "Sửa đơn through the real forms (headless Chromium)", type: :
     click_button "Lưu thay đổi"
 
     expect(page).to have_css(%(li[data-param="order.coupon_code"][data-code="format"]))
-    expect(page).to have_field("Mã giảm giá") # the view re-renders the stored order, not the input
+    expect(page).to have_field("Mã giảm giá", with: "") # the view re-renders the stored order, not the input
     expect(page).to have_current_path(order_path(order), ignore_query: true)
     within_frame("inspector-frame") do
       expect(page).to have_css("#inspector-status p:first-of-type", text: /\APATCH \/orders\/#{order.id} → 422\z/)
