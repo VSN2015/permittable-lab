@@ -62,7 +62,7 @@
   readme: "How a request flows"
   since: "0.1.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_update_spec.rb"
   question: null
   reason: null
   also: []
@@ -109,7 +109,7 @@
   status: "shared/spec/controllers/use_dsl_spec.rb"
   question: null
   reason: null
-  also: []
+  also: ["shared/spec/requests/orders_update_spec.rb"]
   changelog: []
 - id: pp-subclass-override
   area: declaring
@@ -703,8 +703,8 @@
   status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
-  also: []
-  changelog: []
+  also: ["shared/spec/requests/orders_update_spec.rb"]
+  changelog: ["0.14.0", "0.15.0"]
 - id: type-datetime
   area: type
   feature: ":datetime strict coercion"
@@ -714,8 +714,8 @@
   status: "shared/spec/requests/orders_create_spec.rb"
   question: null
   reason: null
-  also: []
-  changelog: []
+  also: ["shared/spec/requests/orders_update_spec.rb"]
+  changelog: ["0.14.0", "0.15.0"]
 - id: type-json
   area: type
   feature: ":json type"
@@ -799,7 +799,7 @@
   readme: "Absence, defaults, and partial updates"
   since: "0.1.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_update_spec.rb"
   question: null
   reason: null
   also: []
@@ -1404,7 +1404,7 @@
   readme: "Reusing fields (Permittable.fields and use)"
   since: "0.7.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_update_spec.rb"
   question: null
   reason: null
   also: []
@@ -1415,7 +1415,7 @@
   readme: "Reusing fields (Permittable.fields and use)"
   since: "0.7.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_update_spec.rb"
   question: null
   reason: null
   also: []
@@ -1712,7 +1712,7 @@
   readme: "Instrumentation"
   since: "0.8.0"
   plan: 2
-  status: "chưa phủ"
+  status: "shared/spec/requests/orders_update_spec.rb"
   question: null
   reason: null
   also: []
@@ -2045,8 +2045,8 @@
   status: "shared/spec/controllers/orders_contract_spec.rb"
   question: null
   reason: null
-  also: []
-  changelog: ["0.12.0"]
+  also: ["shared/spec/requests/orders_update_spec.rb"]
+  changelog: ["0.12.0", "0.14.0"]
 - id: matcher-negated
   area: beyond-controller
   feature: "negated matchers fail on an unknown action"

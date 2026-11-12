@@ -76,7 +76,7 @@ RSpec.describe "use, finalize and rule order on anonymous controllers", since: "
     it "runs on a bare runner with no controller state" do
       klass = anon do
         required :a
-        finalize { |p| p.merge("on_controller" => is_a?(ActionController::Base), "has_params" => respond_to?(:params, true)) }
+        finalize { |p| p.merge("on_controller" => is_a?(ActionController::Base), "has_params" => (begin; params; true; rescue NameError; false; end)) }
       end
       expect(klass).to accept_params("a" => "x").for_action(:show)
         .returning("a" => "x", "on_controller" => false, "has_params" => false)

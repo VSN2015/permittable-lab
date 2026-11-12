@@ -1,3 +1,4 @@
+<%= render "orders/violations", violations: @violations ||= [] %>
 <h1><%= @order.code %></h1>
 <p><%= t("lab.orders.fields.customer") %>: <%= @order.customer.name %> (<%= @order.customer.email %>)</p>
 <p><%= t("lab.orders.fields.status") %>: <%= @order.status %></p>
@@ -7,3 +8,4 @@
     <tr><td class="sku"><%= item.sku %></td><td><%= item.quantity %></td><td><%= item.unit_price %></td></tr>
   <% end %>
 </table>
+<%= link_to t("lab.orders.edit_link"), edit_order_path(@order), id: "edit-order" unless @order.closed? %>

@@ -21,6 +21,12 @@ vi:
       locale_vi: Tiếng Việt
       locale_en: English
     orders:
+      submit_edit: "Lưu thay đổi"
+      edit_link: "Sửa đơn"
+      updated: "Đã cập nhật: %{fields}"
+      closed: "Đơn đã đóng, không thể thay đổi"
+      edit:
+        heading: "Sửa đơn"
       submit: Tạo đơn
       submit_button: Tạo đơn (nút)
       index:
